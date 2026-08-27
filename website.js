@@ -1,8 +1,8 @@
 (() => {
   "use strict";
 
-  const REPO = "gabytz777/vib-MC";
-  const STABLE_TAG = "v0.0.5-hotfix.1";
+  const REPO = "vib-studios/vib-MC";
+  const STABLE_TAG = "v0.0.6";
   const API = `https://api.github.com/repos/${REPO}/releases/tags/${STABLE_TAG}`;
   const FALLBACK_JAR = `https://github.com/${REPO}/releases/download/${STABLE_TAG}/vib-mc.jar`;
 
