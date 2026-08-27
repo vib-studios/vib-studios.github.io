@@ -129,7 +129,7 @@
         `Release: ${(bugVersion && bugVersion.value.trim()) || STABLE_TAG}`,
         `Log: ${(bugLog && bugLog.value.trim()) || "not provided"}`,
       ].join("\n");
-      const url = `https://github.com/gabytz777/vib-MC/issues/new?title=${encodeURIComponent(title)}&body=${encodeURIComponent(body)}`;
+      const url = `https://github.com/vib-studios/vib-MC/issues/new?title=${encodeURIComponent(title)}&body=${encodeURIComponent(body)}`;
       window.open(url, "_blank", "noopener");
     });
   }

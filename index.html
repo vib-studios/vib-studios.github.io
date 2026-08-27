@@ -16,6 +16,7 @@
   <meta name="theme-color" content="#f97316">
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' fill='%23f97316'/%3E%3Crect x='3' y='3' width='4' height='4' fill='%2309090f'/%3E%3Crect x='9' y='9' width='4' height='4' fill='%2309090f'/%3E%3C/svg%3E">
   <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="extras.css">
 </head>
 <body class="min-h-[100dvh] font-sans antialiased bg-void-950 text-zinc-200 overflow-x-hidden selection:bg-ember-400 selection:text-void-950">
 
@@ -460,13 +461,32 @@
           <a href="#top" class="hover:text-zinc-100 transition-colors">back to top ↑</a>
         </nav>
       </div>
+      <div class="contrib-inline pt-6 border-t border-zinc-800/80" hidden>
+        <span class="contrib-inline__label">contributors</span>
+        <ul class="contrib-inline__list" data-contributors></ul>
+      </div>
       <div class="pt-6 border-t border-zinc-800/80 flex flex-wrap items-center justify-between gap-3 font-mono text-[12px] text-zinc-600">
-        <p>MIT licensed. Do whatever you want with this AI-generated mess.</p>
+        <p>Licensed <a href="https://github.com/vib-studios/vib-MC/blob/main/LICENSE" target="_blank" rel="noopener" class="hover:text-zinc-300 underline underline-offset-4">GPL-3.0-or-later</a>.</p>
         <p>Made with prompts. No humans were involved.</p>
       </div>
     </div>
   </footer>
 
+
+  <!-- Contributors: fixed rail on wide screens, footer list everywhere else.
+       Both mounts are filled by contributors.js. -->
+  <aside class="contrib-rail" aria-label="Contributors" hidden>
+    <div class="contrib-rail__panel" id="contrib-rail-panel">
+      <ul class="contrib-rail__list" data-contributors></ul>
+    </div>
+    <button type="button" class="contrib-rail__toggle" aria-expanded="true"
+            aria-controls="contrib-rail-panel" aria-label="Hide contributors">
+      <i class="ph ph-caret-right contrib-rail__caret" aria-hidden="true"></i>
+      <span class="contrib-rail__label">contributors</span>
+    </button>
+  </aside>
+
   <script src="website.js"></script>
+  <script src="contributors.js"></script>
 </body>
 </html>
