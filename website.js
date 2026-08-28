@@ -2,7 +2,7 @@
   "use strict";
 
   const REPO = "vib-studios/vib-MC";
-  const STABLE_TAG = "v0.0.6-hotfix.1";
+  const STABLE_TAG = "v0.0.7";
   const API = `https://api.github.com/repos/${REPO}/releases/tags/${STABLE_TAG}`;
   const FALLBACK_JAR = `https://github.com/${REPO}/releases/download/${STABLE_TAG}/vib-mc.jar`;
 
