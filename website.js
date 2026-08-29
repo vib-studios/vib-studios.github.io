@@ -88,7 +88,7 @@
   const copyLabel = document.getElementById("copy-label");
   if (copyBtn) {
     copyBtn.addEventListener("click", async () => {
-      await copyText("gradle build\njava -jar build/libs/vib-mc.jar");
+      await copyText("./gradlew build\njava -jar build/libs/vib-mc.jar");
       if (copyLabel) {
         const prev = copyLabel.textContent;
         copyLabel.textContent = "copied ✓";

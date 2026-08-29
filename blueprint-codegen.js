@@ -25,7 +25,7 @@
    * Every action the palette offers.
    *
    * `code` returns the Java lines for one action. `player` is an expression for the
-   * PlayerEntity, `tell` is how to send that player a message - they differ between a
+   * ServerPlayer, `tell` is how to send that player a message - they differ between a
    * command (where the sender may be the console) and an event (where there is always a
    * player). `needsPlayer` marks the actions a console cannot perform, so a command that
    * uses one gets a guard.
@@ -81,8 +81,8 @@
       code: (a, ctx) => [
         `${ctx.player}.setHealth(${ctx.player}.getMaxHealth());`,
         `${ctx.player}.setFoodLevel(20);`,
-        // NOTE: as of v0.0.6 there is no public API to push a health update, so
-        // the client's hearts only refresh on the next server-sent health packet.
+        // v0.0.7 made sendHealth() public, so the client's hearts update immediately.
+        `${ctx.player}.sendHealth();`,
       ],
     },
     time: {
@@ -177,7 +177,7 @@
       if (spec) imports.add("net.vibmc.plugin.event." + spec.event);
     });
     model.commands.forEach((c) => {
-      if (needsPlayer(c.actions)) imports.add("net.vibmc.entity.PlayerEntity");
+      if (needsPlayer(c.actions)) imports.add("net.vibmc.entity.ServerPlayer");
     });
     const all = model.commands.concat(model.listeners);
     all.forEach((unit) => {
@@ -197,7 +197,7 @@
       lines.push(`    sender.sendMessage(${msg("Only a player can use /" + cmd.name)});`);
       lines.push("    return true;");
       lines.push("}");
-      lines.push("PlayerEntity player = sender.getPlayer();");
+      lines.push("ServerPlayer player = sender.getPlayer();");
     }
     const ctx = { player: "player", tell: guarded ? "player.sendMessage" : "sender.sendMessage" };
     cmd.actions.forEach((a) => {

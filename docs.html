@@ -78,7 +78,7 @@
             That's the whole server &#8212; no extra files to hunt down.
           </p>
           <p class="mt-4 font-mono text-[12px] text-zinc-600">
-            latest release: <a href="https://github.com/vib-studios/vib-MC/releases/latest" target="_blank" rel="noopener" class="text-ember-400 hover:text-ember-300 underline underline-offset-4">v0.0.6</a>
+            latest release: <a href="https://github.com/vib-studios/vib-MC/releases/latest" target="_blank" rel="noopener" class="text-ember-400 hover:text-ember-300 underline underline-offset-4">v0.0.7</a>
           </p>
         </div>
         <div class="card rounded-2xl p-6 reveal" style="--reveal-delay:160ms">
@@ -146,7 +146,10 @@
           <code class="font-mono text-zinc-500">/weather</code>, <code class="font-mono text-zinc-500">/give</code>,
           <code class="font-mono text-zinc-500">/kill</code>, <code class="font-mono text-zinc-500">/say</code>,
           <code class="font-mono text-zinc-500">/seed</code>, <code class="font-mono text-zinc-500">/save-all</code>,
-          <code class="font-mono text-zinc-500">/stop</code>, <code class="font-mono text-zinc-500">/list</code>.
+          <code class="font-mono text-zinc-500">/save-on</code>, <code class="font-mono text-zinc-500">/save-off</code>,
+          <code class="font-mono text-zinc-500">/stop</code>, <code class="font-mono text-zinc-500">/list</code>,
+          <code class="font-mono text-zinc-500">/op</code>, <code class="font-mono text-zinc-500">/deop</code>,
+          <code class="font-mono text-zinc-500">/kick</code>, <code class="font-mono text-zinc-500">/dimension</code>.
         </p>
       </div>
     </section>
@@ -200,7 +203,7 @@ jar cf MyPlugin.jar -C out . plugin.yml</code></pre>
 
 import net.vibmc.command.Command;
 import net.vibmc.command.CommandSender;
-import net.vibmc.entity.PlayerEntity;
+import net.vibmc.entity.ServerPlayer;
 import net.vibmc.player.GameMode;
 import net.vibmc.plugin.VibMCPlugin;
 
@@ -215,7 +218,7 @@ public class MyPlugin extends VibMCPlugin {
                     sender.sendMessage("{\"text\":\"&#167;cOnly players can use /gmc\"}");
                     return false;
                 }
-                PlayerEntity player = sender.getPlayer();
+                ServerPlayer player = sender.getPlayer();
                 player.setGameMode(GameMode.CREATIVE);
                 player.sendMessage("{\"text\":\"&#167;aYou are now in creative mode.\"}");
                 return true;
@@ -409,7 +412,7 @@ public class JoinListener implements Listener {
             </tr>
             <tr>
               <td class="px-5 py-3.5 text-zinc-100">send messages / packets</td>
-              <td class="px-5 py-3.5 text-zinc-400">player.sendMessage(json), player.sendPacket(packet)</td>
+              <td class="px-5 py-3.5 text-zinc-400">player.sendMessage(json), player.getUser().sendPacket(packet)</td>
             </tr>
           </tbody>
         </table>

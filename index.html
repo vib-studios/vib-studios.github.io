@@ -271,7 +271,7 @@
         <div class="px-6 py-3 border-b border-zinc-800 bg-void-800/60 font-mono text-[12px] uppercase tracking-[0.12em] text-zinc-500">
           quickstart
         </div>
-        <pre class="p-6 font-mono text-[13.5px] leading-7 text-zinc-300 overflow-x-auto"><code><span class="text-zinc-600">$</span> gradle build
+        <pre class="p-6 font-mono text-[13.5px] leading-7 text-zinc-300 overflow-x-auto"><code><span class="text-zinc-600">$</span> ./gradlew build
 <span class="text-zinc-600">$</span> java -jar build/libs/vib-mc.jar</code></pre>
         <button id="copy-btn" class="w-full border-t border-zinc-800 px-6 py-3 font-mono text-[12px] uppercase tracking-[0.12em] text-zinc-500 hover:text-ember-400 hover:bg-ember-500/10 transition-colors flex items-center justify-center gap-2">
           <span id="copy-label">copy commands</span>
@@ -298,8 +298,14 @@
         <button class="copy-cmd reveal btn px-4 py-2 rounded-full" style="--reveal-delay:280ms">/say</button>
         <button class="copy-cmd reveal btn px-4 py-2 rounded-full" style="--reveal-delay:320ms">/seed</button>
         <button class="copy-cmd reveal btn px-4 py-2 rounded-full" style="--reveal-delay:360ms">/save-all</button>
-        <button class="copy-cmd reveal btn px-4 py-2 rounded-full" style="--reveal-delay:400ms">/stop</button>
-        <button class="copy-cmd reveal btn px-4 py-2 rounded-full" style="--reveal-delay:440ms">/list</button>
+        <button class="copy-cmd reveal btn px-4 py-2 rounded-full" style="--reveal-delay:400ms">/save-on</button>
+        <button class="copy-cmd reveal btn px-4 py-2 rounded-full" style="--reveal-delay:440ms">/save-off</button>
+        <button class="copy-cmd reveal btn px-4 py-2 rounded-full" style="--reveal-delay:480ms">/stop</button>
+        <button class="copy-cmd reveal btn px-4 py-2 rounded-full" style="--reveal-delay:520ms">/list</button>
+        <button class="copy-cmd reveal btn px-4 py-2 rounded-full" style="--reveal-delay:560ms">/op</button>
+        <button class="copy-cmd reveal btn px-4 py-2 rounded-full" style="--reveal-delay:600ms">/deop</button>
+        <button class="copy-cmd reveal btn px-4 py-2 rounded-full" style="--reveal-delay:640ms">/kick</button>
+        <button class="copy-cmd reveal btn px-4 py-2 rounded-full" style="--reveal-delay:680ms">/dimension</button>
       </div>
     </section>
 
@@ -309,7 +315,7 @@
         <div class="reveal">
           <h2 class="text-3xl md:text-4xl font-bold tracking-tight text-zinc-50 leading-tight">Internal structure</h2>
           <p class="mt-4 text-base text-zinc-400 leading-relaxed max-w-[65ch]">
-            Nine packages, zero humans. The whole thing was coaxed into existence
+            Fourteen packages, zero humans. The whole thing was coaxed into existence
             with prompts, then patched with more prompts.
           </p>
           <p class="mt-5 font-mono text-[13px] text-zinc-500">
@@ -318,15 +324,20 @@
         </div>
         <div class="card rounded-2xl p-6 font-mono text-[13px] leading-8 text-zinc-400 overflow-x-auto reveal" style="--reveal-delay:100ms">
 <pre>net.vibmc
-├─ server       makes it go
-├─ network      talks to minecraft
-├─ world        blocks and stuff
-├─ world.gen    makes the ground
-├─ entity       things that move
-├─ player       the people
-├─ plugin       mod support
-├─ command      slash commands
-└─ permission   who can do what</pre>
+├─ server          makes it go
+├─ network         talks to minecraft
+├─ world           blocks and stuff
+├─ world.gen       makes the ground
+├─ world.storage   saves the ground
+├─ world.structure villages and trees
+├─ entity          things that move
+├─ player          the people
+├─ inventory       slots and windows
+├─ crafting        recipes and smelting
+├─ registry        minecraft data
+├─ plugin          mod support
+├─ command         slash commands
+└─ permission      who can do what</pre>
         </div>
       </div>
     </section>
