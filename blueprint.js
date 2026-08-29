@@ -3,7 +3,7 @@
  *
  * The scripts live in a plain state object and the DOM is rendered from it, rather than
  * the state living in the DOM and being scraped back out. That is what makes moving a
- * block, undoing to the last save, and the live code preview all work off one source.
+ * block, undoing to the last save, and the generated download all work off one source.
  *
  * Code generation lives in blueprint-codegen.js, which knows nothing about the page.
  */
@@ -214,7 +214,7 @@
       btn.classList.toggle("sb-disabled", disabled);
     });
 
-    renderPreview();
+    regenerate();
   }
 
   function currentModel() {
@@ -232,13 +232,8 @@
 
   let generated = null;
 
-  function renderPreview() {
+  function regenerate() {
     generated = window.BlueprintCodegen.generate(currentModel());
-    const tab = root.querySelector(".sb-tab.sb-tab-on");
-    const which = tab ? tab.getAttribute("data-tab") : "java";
-    const code = which === "yml" ? generated.yml : generated.java;
-    $("bp-code").textContent = code;
-    $("bp-filename").textContent = which === "yml" ? "plugin.yml" : generated.path;
 
     const warnings = $("bp-warnings");
     if (generated.warnings.length) {
@@ -269,7 +264,7 @@
       state.version = $("bp-version").value;
       state.description = $("bp-description").value;
       save();
-      renderPreview();
+      regenerate();
     });
   });
 
@@ -324,7 +319,7 @@
         unit.name = e.target.value;
       }
       save();
-      renderPreview();
+      regenerate();
     });
 
     // A dropdown change can alter what is legal (a chat script allows "cancel"), so a
@@ -340,26 +335,6 @@
       if (unit.kind !== "chat") unit.actions = unit.actions.filter((a) => a.action !== "cancel");
       commit();
     });
-  });
-
-  root.querySelectorAll(".sb-tab").forEach((tab) => {
-    tab.addEventListener("click", () => {
-      root.querySelectorAll(".sb-tab").forEach((t) => t.classList.remove("sb-tab-on"));
-      tab.classList.add("sb-tab-on");
-      renderPreview();
-    });
-  });
-
-  $("bp-copy").addEventListener("click", () => {
-    const text = $("bp-code").textContent;
-    const done = () => {
-      const label = $("bp-copy");
-      label.textContent = "copied";
-      window.setTimeout(() => { label.textContent = "copy"; }, 1400);
-    };
-    if (navigator.clipboard && navigator.clipboard.writeText) {
-      navigator.clipboard.writeText(text).then(done, () => {});
-    }
   });
 
   $("bp-reset").addEventListener("click", () => {

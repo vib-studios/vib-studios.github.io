@@ -256,9 +256,9 @@ public class JoinListener implements Listener {
       <div class="max-w-2xl">
         <h2 class="text-3xl md:text-4xl font-bold tracking-tight text-zinc-50 leading-tight">Plugin blueprint</h2>
         <p class="mt-4 text-base text-zinc-400 leading-relaxed">
-          Snap pieces together, watch the Java write itself, download a zip that builds.
-          No programming needed &#8212; but the code is right there, so you can learn from it
-          or take it apart. Your work is kept in this browser, so a refresh will not lose it.
+          Snap pieces together and download a zip that builds. No programming needed
+          &#8212; the Java is written for you, and it is ordinary source you can open and
+          change. Your work is kept in this browser, so a refresh will not lose it.
         </p>
       </div>
 
@@ -339,20 +339,7 @@ public class JoinListener implements Listener {
       </div>
 
       <div class="card rounded-2xl p-6 md:p-8 mt-6 reveal" style="--reveal-delay:140ms">
-        <div class="flex flex-wrap items-center justify-between gap-4">
-          <h3 class="text-lg font-semibold tracking-tight text-zinc-50">3. The code it writes</h3>
-          <div class="flex items-center gap-2">
-            <button type="button" class="sb-tab sb-tab-on" data-tab="java">Main.java</button>
-            <button type="button" class="sb-tab" data-tab="yml">plugin.yml</button>
-            <button type="button" id="bp-copy" class="sb-tab">copy</button>
-          </div>
-        </div>
-        <p class="mt-3 font-mono text-[12px] text-zinc-500" id="bp-filename">src/com/example/MyPlugin.java</p>
-        <pre class="sb-code mt-3"><code id="bp-code"></code></pre>
-      </div>
-
-      <div class="card rounded-2xl p-6 md:p-8 mt-6 reveal" style="--reveal-delay:200ms">
-        <h3 class="text-lg font-semibold tracking-tight text-zinc-50">4. Grab it</h3>
+        <h3 class="text-lg font-semibold tracking-tight text-zinc-50">3. Grab it</h3>
         <div class="mt-4 flex flex-wrap items-center gap-3">
           <button type="button" id="bp-download" class="btn btn-primary px-6 py-3">download .zip</button>
           <button type="button" id="bp-reset" class="btn px-5 py-3">start over</button>
