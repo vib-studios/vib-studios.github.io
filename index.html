@@ -4,9 +4,9 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>vib-MC - A Minecraft server, vibed into existence</title>
-  <meta name="description" content="vib-MC is a Minecraft server written entirely by AI, one prompt at a time. Download the latest .jar release.">
+  <meta name="description" content="vib-MC is a Minecraft server written entirely by AI, one prompt at a time. Minecraft 1.8 through 26.1.2 (excluding 1.16, 1.16.1 and 1.19.3), with a real survival loop. Download the latest .jar release.">
   <meta property="og:title" content="vib-MC">
-  <meta property="og:description" content="A Minecraft server written entirely by AI, one prompt at a time. java 8+.">
+  <meta property="og:description" content="A Minecraft server written entirely by AI, one prompt at a time. Minecraft 1.8 through 26.1.2, survival included. java 8+.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="index.html">
   <meta property="og:image" content="files/og-vibmc.png">
@@ -60,7 +60,8 @@
         </h1>
 
         <p class="mt-5 text-lg md:text-xl text-zinc-400 leading-relaxed max-w-[60ch]">
-          One prompt at a time. It connects, generates terrain, and occasionally works.
+          One prompt at a time. It connects, generates terrain, takes clients from Minecraft 1.8 through 26.1.2
+          (excluding 1.16, 1.16.1 and 1.19.3), and now has a real survival loop.
         </p>
 
         <div class="mt-8 flex flex-wrap items-center gap-4">
@@ -96,8 +97,8 @@
             <dd id="release-size" class="mt-1 font-mono text-xl font-bold text-zinc-100">fetching...</dd>
           </div>
           <div>
-            <dt class="font-mono text-[11px] uppercase tracking-[0.12em] text-zinc-500">protocol</dt>
-            <dd class="mt-1 font-mono text-xl font-bold text-zinc-100">Any</dd>
+            <dt class="font-mono text-[11px] uppercase tracking-[0.12em] text-zinc-500">versions</dt>
+            <dd class="mt-1 font-mono text-xl font-bold text-zinc-100">1.8&ndash;26.1.2</dd>
           </div>
         </dl>
         <p class="mt-6 pt-5 border-t border-zinc-800 text-[13px] leading-6 text-zinc-400 max-w-[50ch]" id="release-notes">
@@ -112,13 +113,13 @@
     <div class="flex w-max motion-safe:animate-marquee gap-12 whitespace-nowrap font-mono text-[13px] uppercase tracking-[0.18em] text-void-950"
          data-marquee>
       <span>protocol 340</span><span class="text-void-950/50">/</span>
-      <span>minecraft 1.12.2</span><span class="text-void-950/50">/</span>
+      <span>minecraft 1.8 &rarr; 26.1.2</span><span class="text-void-950/50">/</span>
       <span>java 8</span><span class="text-void-950/50">/</span>
       <span>vibecoded</span><span class="text-void-950/50">/</span>
       <span>no humans involved</span><span class="text-void-950/50">/</span>
       <span>mit license</span><span class="text-void-950/50">/</span>
       <span>protocol 340</span><span class="text-void-950/50">/</span>
-      <span>minecraft 1.12.2</span><span class="text-void-950/50">/</span>
+      <span>minecraft 1.8 &rarr; 26.1.2</span><span class="text-void-950/50">/</span>
       <span>java 8</span><span class="text-void-950/50">/</span>
       <span>vibecoded</span><span class="text-void-950/50">/</span>
       <span>no humans involved</span><span class="text-void-950/50">/</span>
@@ -148,13 +149,13 @@
         <div class="card rounded-2xl p-6 reveal" style="--reveal-delay:60ms">
           <span class="inline-flex h-9 w-9 items-center justify-center rounded-xl bg-ember-400 text-void-950"><i class="ph ph-users-three text-lg" aria-hidden="true"></i></span>
           <h3 class="mt-4 text-lg font-semibold tracking-tight text-zinc-50">People can join</h3>
-          <p class="mt-2 text-sm text-zinc-400 leading-relaxed">Handshake, login, spawn. Occasionally in that order.</p>
+          <p class="mt-2 text-sm text-zinc-400 leading-relaxed">Handshake, login, spawn &mdash; from Minecraft 1.8 to 26.1.2, minus 1.16, 1.16.1 and 1.19.3.</p>
         </div>
 
         <div class="card rounded-2xl p-6 reveal" style="--reveal-delay:120ms">
           <span class="inline-flex h-9 w-9 items-center justify-center rounded-xl bg-ember-400 text-void-950"><i class="ph ph-mountains text-lg" aria-hidden="true"></i></span>
           <h3 class="mt-4 text-lg font-semibold tracking-tight text-zinc-50">Terrain generates</h3>
-          <p class="mt-2 text-sm text-zinc-400 leading-relaxed">Somewhere. Coordinates undisclosed, even to us.</p>
+          <p class="mt-2 text-sm text-zinc-400 leading-relaxed">Procedural, seeded, deterministic. Biomes, caves, ores, trees, a village at spawn.</p>
         </div>
 
         <div class="card rounded-2xl p-6 reveal" style="--reveal-delay:100ms">
@@ -233,7 +234,7 @@
             </tr>
             <tr>
               <td class="px-5 py-3.5 font-semibold text-zinc-100">Breaking blocks</td>
-              <td class="px-5 py-3.5"><span class="text-ember-400"><i class="ph ph-check text-base" aria-hidden="true"></i></span> <span class="text-zinc-500 ml-1">no crafting yet</span></td>
+              <td class="px-5 py-3.5"><span class="text-ember-400"><i class="ph ph-check text-base" aria-hidden="true"></i></span> <span class="text-zinc-500 ml-1">with drops, tools and physics</span></td>
               <td class="px-5 py-3.5 text-zinc-400"><i class="ph ph-check text-base" aria-hidden="true"></i></td>
             </tr>
             <tr>
@@ -248,7 +249,7 @@
             </tr>
             <tr>
               <td class="px-5 py-3.5 font-semibold text-zinc-100">Working game</td>
-              <td class="px-5 py-3.5"><span class="text-zinc-600"><i class="ph ph-x text-base" aria-hidden="true"></i></span> <span class="text-zinc-500 ml-1">soon</span></td>
+              <td class="px-5 py-3.5"><span class="text-zinc-600"><i class="ph ph-x text-base" aria-hidden="true"></i></span> <span class="text-zinc-500 ml-1">survival yes, mobs no</span></td>
               <td class="px-5 py-3.5 text-zinc-400"><i class="ph ph-check text-base" aria-hidden="true"></i></td>
             </tr>
           </tbody>
@@ -335,7 +336,7 @@
       <div class="max-w-2xl">
         <h2 class="text-3xl md:text-4xl font-bold tracking-tight text-zinc-50 leading-tight">Releases</h2>
         <p class="mt-4 text-base text-zinc-400 leading-relaxed">
-          Every jar, from first breath to latest patch. Sorted by vibe, then by version.
+          First experimental server, then multi-version networking, then survival. Every jar, in the order it was vibed.
         </p>
       </div>
       <div class="mt-10 grid lg:grid-cols-3 gap-5">
@@ -344,7 +345,7 @@
           <div class="flex items-center gap-2 font-mono text-[11.5px] uppercase tracking-[0.12em] text-zinc-500">
             <span>v0.0.1</span><span class="text-zinc-700">/</span><span>oldest</span>
           </div>
-          <p class="mt-3 text-sm text-zinc-400 leading-relaxed">First breath. Terrain generates, nobody knows where.</p>
+          <p class="mt-3 text-sm text-zinc-400 leading-relaxed">First breath. One client version, terrain generates, nobody knows where.</p>
           <p class="mt-4 font-mono text-[12px] text-zinc-600">requires java 21+</p>
           <a href="https://github.com/vib-studios/vib-MC/releases/tag/Alpha" target="_blank" rel="noopener"
              class="mt-auto pt-5 font-mono text-[12.5px] font-bold text-zinc-400 hover:text-ember-400 transition-colors inline-flex items-center gap-1.5">releases <i class="ph ph-arrow-up-right text-sm" aria-hidden="true"></i></a>
@@ -354,7 +355,7 @@
           <div class="flex items-center gap-2 font-mono text-[11.5px] uppercase tracking-[0.12em] text-void-950/70">
             <span id="version-stable">v0.0.7</span><span class="text-void-950/40">/</span><span>latest stable</span>
           </div>
-          <p class="mt-3 text-sm text-void-950/80 leading-relaxed">The one you want. Blocks drop, sand falls, water flows, and you can craft, smelt, starve, drown and fight.</p>
+          <p class="mt-3 text-sm text-void-950/80 leading-relaxed">The one you want. Blocks drop, physics react, and you can craft, smelt, starve, drown, store items and fight &mdash; on Minecraft 1.8 through 26.1.2, minus 1.16, 1.16.1 and 1.19.3.</p>
           <p class="mt-4 font-mono text-[12px] text-void-950/70">requires java 8+</p>
           <a href="https://github.com/vib-studios/vib-MC/releases/tag/v0.0.7" target="_blank" rel="noopener"
              class="mt-auto pt-5 font-mono text-[12.5px] font-bold text-void-950 underline underline-offset-4 inline-flex items-center gap-1.5">releases <i class="ph ph-arrow-up-right text-sm" aria-hidden="true"></i></a>
@@ -364,7 +365,7 @@
           <div class="flex items-center gap-2 font-mono text-[11.5px] uppercase tracking-[0.12em] text-zinc-500">
             <span>v0.0.6-hotfix.1</span><span class="text-zinc-700">/</span><span>previous</span>
           </div>
-          <p class="mt-3 text-sm text-zinc-400 leading-relaxed">The one you wanted before. Multi-version through PacketEvents, with spawns and villages kept out of the water.</p>
+          <p class="mt-3 text-sm text-zinc-400 leading-relaxed">The multi-version milestone. PacketEvents networking opened the doors to 1.8 through 26.1.2, with spawns and villages kept out of the water.</p>
           <p class="mt-4 font-mono text-[12px] text-zinc-600">requires java 8+</p>
           <a href="https://github.com/vib-studios/vib-MC/releases/tag/v0.0.6-hotfix.1" target="_blank" rel="noopener"
              class="mt-auto pt-5 font-mono text-[12.5px] font-bold text-zinc-400 hover:text-ember-400 transition-colors inline-flex items-center gap-1.5">releases <i class="ph ph-arrow-up-right text-sm" aria-hidden="true"></i></a>
@@ -433,8 +434,8 @@
       <div class="rounded-2xl bg-ember-400 px-8 md:px-12 py-12 md:py-14 text-center reveal">
         <h2 class="text-3xl md:text-4xl font-bold tracking-tight text-void-950 leading-tight">Ready to vibe?</h2>
         <p class="mt-4 text-base md:text-lg text-void-950/75 leading-relaxed max-w-[55ch] mx-auto">
-          Download vib-MC and experience a Minecraft server written entirely by AI.
-          No humans were involved in this decision.
+          Download vib-MC, point almost any Minecraft client from 1.8 to 26.1.2 at it, and play survival
+          on a server written entirely by AI. No humans were involved in this decision.
         </p>
         <div class="mt-8 flex items-center justify-center">
           <a href="#" id="download-btn-cta" data-fallback-url="https://github.com/vib-studios/vib-MC/releases/download/v0.0.7/vib-mc.jar"
