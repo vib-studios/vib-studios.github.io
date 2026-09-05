@@ -198,13 +198,16 @@
     </div>`;
   }
 
-  function render() {
-    const commands = state.units.filter((u) => u.kind === "cmd");
-    const listeners = state.units.filter((u) => u.kind !== "cmd");
-    $("bp-commands").innerHTML = commands.map(unitHtml).join("")
-      || '<p class="sb-empty">no commands yet</p>';
-    $("bp-listeners").innerHTML = listeners.map(unitHtml).join("")
-      || '<p class="sb-empty">no listeners yet</p>';
+  /**
+   * Highlight the active script and enable only the pieces that suit it.
+   * Touches classes and attributes only, never innerHTML, so it is safe to
+   * call while someone has the caret in one of the fields.
+   */
+  function syncActive() {
+    root.querySelectorAll("[data-unit]").forEach((el) => {
+      const isActive = Number(el.getAttribute("data-unit")) === state.activeId;
+      el.classList.toggle("sb-active", isActive);
+    });
 
     // "cancel the chat" only means anything inside a chat script.
     const chatActive = isChat(activeUnit());
@@ -213,7 +216,17 @@
       btn.disabled = disabled;
       btn.classList.toggle("sb-disabled", disabled);
     });
+  }
 
+  function render() {
+    const commands = state.units.filter((u) => u.kind === "cmd");
+    const listeners = state.units.filter((u) => u.kind !== "cmd");
+    $("bp-commands").innerHTML = commands.map(unitHtml).join("")
+      || '<p class="sb-empty">no commands yet</p>';
+    $("bp-listeners").innerHTML = listeners.map(unitHtml).join("")
+      || '<p class="sb-empty">no listeners yet</p>';
+
+    syncActive();
     regenerate();
   }
 
@@ -280,8 +293,16 @@
 
       const button = e.target.closest("button");
       if (!button) {
-        state.activeId = unit.id;
-        commit();
+        // Selecting a script must not redraw the stacks. A click often lands in
+        // one of the script's own text fields, and a redraw would replace that
+        // field mid-click and throw the caret and the selection away. The only
+        // thing that changes here is which script is highlighted, so change
+        // exactly that, in place.
+        if (state.activeId !== unit.id) {
+          state.activeId = unit.id;
+          save();
+          syncActive();
+        }
         return;
       }
       const act = button.getAttribute("data-act");
@@ -334,6 +355,14 @@
       state.activeId = unit.id;
       if (unit.kind !== "chat") unit.actions = unit.actions.filter((a) => a.action !== "cancel");
       commit();
+
+      // This one does need the redraw, because a chat script allows a piece the
+      // others do not. The redraw replaced this dropdown, so move the keyboard
+      // to the one that took its place.
+      const replacement = root.querySelector(
+        '[data-unit="' + unit.id + '"] [data-field="kind"]'
+      );
+      if (replacement) replacement.focus();
     });
   });
 

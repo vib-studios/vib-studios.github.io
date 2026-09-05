@@ -1356,6 +1356,10 @@ body {
 
 .sb-oval:focus { outline: 2px solid var(--ember); outline-offset: 0; }
 
+/* .sb-unit is clickable, and cursor inherits, so the fields inside it would
+   otherwise show a pointer where a caret belongs. */
+.sb-oval { cursor: auto; }
+
 .sb-prefix { opacity: .8; }
 
 .sb-row { display: flex; align-items: center; gap: 6px; }
