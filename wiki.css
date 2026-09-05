@@ -1147,10 +1147,17 @@ body {
    -------------------------------------------------------------------------- */
 
 @media (max-width: 980px) {
-  .mcw-layout { flex-direction: column; padding-bottom: 28px; }
-  .mcw-rail { order: 2; flex: 1 1 auto; width: 100%; padding-top: 18px; }
-  .mcw-body { order: 1; width: 100%; }
-  .mcw-logo { padding: 2px 2px 14px; text-align: left; }
+  .mcw-layout { flex-direction: column; align-items: stretch; padding-bottom: 28px; }
+
+  /* The rail's own box dissolves here, so each panel becomes an item of the
+     column and can be placed on its own. The wordmark and the download panel
+     go above the article; the rest of the rail stays below it. Ordering the
+     rail as a single block would drag the download to the foot of the page. */
+  .mcw-rail { display: contents; }
+  .mcw-logo { order: 1; padding: 2px 2px 12px; text-align: left; }
+  .mcw-portal { order: 4; }
+  .mcw-portal--download { order: 2; }
+  .mcw-body { order: 3; width: 100%; margin-bottom: 20px; }
   .mcw-infobox { float: none; width: auto; margin: 0 0 16px; }
   .mcw-topbar { flex-wrap: wrap; gap: 8px; padding-top: 12px; }
   .mcw-search { width: 100%; }
