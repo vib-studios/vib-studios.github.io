@@ -1,479 +1,612 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" data-skin="wiki">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>vib-MC Docs - Run it, build plugins</title>
-  <meta name="description" content="vib-MC docs: how to run the server, what you need, and how to write plugins with the plugin API.">
-  <meta property="og:title" content="vib-MC Docs">
-  <meta property="og:description" content="Run the server, download the requirements, and build your own plugins.">
-  <meta property="og:type" content="website">
-  <meta property="og:url" content="https://vib-studios.github.io/docs.html">
-  <meta property="og:image" content="https://vib-studios.github.io/files/og-vibmc.png">
-  <meta property="og:image:width" content="1200">
-  <meta property="og:image:height" content="630">
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="theme-color" content="#f97316">
-  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' fill='%23f97316'/%3E%3Crect x='3' y='3' width='4' height='4' fill='%2309090f'/%3E%3Crect x='9' y='9' width='4' height='4' fill='%2309090f'/%3E%3C/svg%3E">
-  <link rel="stylesheet" href="styles.css">
-  <link rel="stylesheet" href="extras.css">
+  <title>vib-MC/Documentation - vib-MC Wiki</title>
+  <meta name="description" content="How to run a vib-MC server and write plugins for it: requirements, configuration, the plugin contract, events and the API surface.">
+  <meta name="theme-color" content="#303030">
+  <link rel="icon" href="favicon.ico" sizes="any">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 3 3' shape-rendering='crispEdges'%3E%3Cpath fill='%2337639f' d='M0 0h3v3H0z'/%3E%3Cpath fill='%232b4f80' d='M1 0h1v1H1zM0 1h1v1H0zM2 1h1v1H2zM1 2h1v1H1z'/%3E%3Cpath fill='%230f0f11' d='M1 1h1v1H1z'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="wiki.css">
+  <script>
+    /* Applied before paint so a chosen theme never flashes the other one. */
+    try {
+      var t = localStorage.getItem("vibmc-wiki-theme");
+      if (t === "dark" || t === "light") document.documentElement.setAttribute("data-theme", t);
+    } catch (e) {}
+  </script>
+  <script src="skin.js"></script>
 </head>
-<body class="min-h-[100dvh] font-sans antialiased bg-void-950 text-zinc-200 overflow-x-hidden selection:bg-ember-400 selection:text-void-950">
+<body>
 
-  <!-- Header: wordmark, nav, back -->
-  <header class="max-w-[1100px] mx-auto px-4 md:px-8 h-16 flex items-center justify-between border-b border-zinc-800/80">
-    <a href="index.html#top" class="flex items-center gap-2.5">
-      <span class="h-5 w-5 rounded-[4px] bg-ember-400 shadow-[inset_0_0_0_2px_oklch(0.13_0.02_40)]" aria-hidden="true"></span>
-      <span class="font-pixel text-[11px] text-zinc-100">vib-MC</span>
+<div class="mcw-band" aria-hidden="true"></div>
+
+<div class="mcw-layout" id="top">
+
+  <!-- ====================================================================
+       Left rail
+       ==================================================================== -->
+  <div class="mcw-rail">
+
+    <a class="mcw-logo" href="index.html">
+      <span class="mcw-logo__mark" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span>
+      <span class="mcw-logo__word">vib-MC</span>
+      <span class="mcw-logo__sub">wiki</span>
     </a>
-    <nav class="hidden md:flex items-center gap-7 font-mono text-[13px] text-zinc-400">
-      <a href="#requirements" class="hover:text-zinc-100 transition-colors">requirements</a>
-      <a href="#run" class="hover:text-zinc-100 transition-colors">run it</a>
-      <a href="#plugins" class="hover:text-zinc-100 transition-colors">plugins</a>
-      <a href="#blueprint" class="hover:text-zinc-100 transition-colors">blueprint</a>
-      <a href="#api" class="hover:text-zinc-100 transition-colors">api reference</a>
+
+    <nav class="mcw-portal" aria-labelledby="p-nav">
+      <h3 id="p-nav">Navigation</h3>
+      <ul>
+        <li><a href="index.html">Main article</a></li>
+        <li><a href="docs.html" class="is-current">Documentation</a></li>
+        <li><a href="#requirements">Requirements</a></li>
+        <li><a href="#run">Running the server</a></li>
+        <li><a href="#plugins">Writing a plugin</a></li>
+        <li><a href="#builder">Plugin blueprint</a></li>
+        <li><a href="#api">API reference</a></li>
+        <li><a href="privacy.html">Privacy policy</a></li>
+        <li><a href="terms.html">Terms</a></li>
+      </ul>
     </nav>
-    <a href="index.html" class="btn px-4 py-1.5 text-[13px]">back to vib-MC</a>
-  </header>
 
-  <main class="max-w-[1100px] mx-auto px-4 md:px-8">
+    <nav class="mcw-portal" aria-labelledby="p-dl">
+      <h3 id="p-dl">Download</h3>
+      <a class="mcw-railbtn" id="download-btn" href="#"
+         data-fallback-url="https://github.com/vib-studios/vib-MC/releases/download/v0.0.7/vib-mc.jar">
+        <span id="download-label">Download .jar</span>
+      </a>
+      <p class="mcw-portal__note">Latest stable: <b id="version-stable">v0.0.7</b></p>
+      <p class="mcw-portal__note">You need this jar on the classpath to compile a plugin.</p>
+    </nav>
 
-    <!-- Hero -->
-    <section id="top" class="pt-16 pb-10">
-      <span class="inline-flex items-center gap-1.5 rounded-full bg-ember-500/10 border border-ember-500/30 px-3 py-1 font-mono text-[11.5px] uppercase tracking-[0.14em] text-ember-400">
-        docs
-      </span>
-      <h1 class="mt-5 text-[clamp(2.2rem,5.5vw,3.2rem)] font-bold tracking-[-0.03em] leading-[1.08] text-zinc-50">
-        Run it. Break it. <span class="text-ember-400">Plugin it.</span>
-      </h1>
-      <p class="mt-4 text-base md:text-lg text-zinc-400 leading-relaxed max-w-[65ch]">
-        Everything you need to get a vib-MC server up and to write your own plugins.
-        Written by an AI, for whoever wants to continue the vibe.
+    <nav class="mcw-portal" aria-labelledby="p-src">
+      <h3 id="p-src">Source</h3>
+      <ul>
+        <li><a href="https://github.com/vib-studios/vib-MC" target="_blank" rel="noopener">Repository</a></li>
+        <li><a href="https://github.com/vib-studios/vib-MC/tree/main/plugins" target="_blank" rel="noopener">Example plugins</a></li>
+        <li><a href="https://github.com/vib-studios/vib-MC/issues" target="_blank" rel="noopener">Issue tracker</a></li>
+        <li><a href="https://adoptium.net/" target="_blank" rel="noopener">Get a JDK (Temurin)</a></li>
+      </ul>
+    </nav>
+
+  </div>
+
+  <!-- ====================================================================
+       Article
+       ==================================================================== -->
+  <div class="mcw-body">
+
+    <div class="mcw-topbar">
+      <ul class="mcw-tabs">
+        <li><a class="mcw-tab" href="index.html">Article</a></li>
+        <li><a class="mcw-tab is-active" href="docs.html">Documentation</a></li>
+        <li><a class="mcw-tab" href="privacy.html">Privacy</a></li>
+        <li><a class="mcw-tab" href="terms.html">Terms</a></li>
+      </ul>
+
+      <div class="mcw-topbar__right">
+        <div class="mcw-tools">
+          <button type="button" class="mcw-tool" id="theme-toggle" aria-pressed="false">
+            <span class="mcw-tool__icon" aria-hidden="true"></span>
+            <span class="mcw-tool__label">Dark</span>
+          </button>
+          <a class="mcw-tool mcw-tool--skin" href="classic/index.html"
+             data-skin-switch="classic" title="Go back to the original vib-MC layout">Classic layout</a>
+        </div>
+
+        <form class="mcw-search" id="page-search" role="search">
+          <div class="mcw-search__row">
+            <label for="search-input" hidden>Search this page</label>
+            <input id="search-input" type="search" autocomplete="off" placeholder="Search this page">
+            <button type="submit">Go</button>
+          </div>
+          <p class="mcw-search__msg" id="search-msg" role="status"></p>
+        </form>
+      </div>
+    </div>
+
+    <article class="mcw-sheet">
+
+      <h1 class="mcw-title">vib-MC/Documentation</h1>
+      <p class="mcw-subtitle">From the vib-MC Wiki, the documentation for a server nobody wrote by hand.</p>
+
+      <p class="mcw-hatnote">
+        This page covers running the server and writing plugins.
+        For what the server does and does not support, see <a href="index.html">vib-MC</a>.
       </p>
-    </section>
 
-    <!-- Requirements -->
-    <section id="requirements" class="py-10">
-      <div class="max-w-2xl">
-        <h2 class="text-3xl md:text-4xl font-bold tracking-tight text-zinc-50 leading-tight">Requirements</h2>
-        <p class="mt-4 text-base text-zinc-400 leading-relaxed">
-          What you need before anything else. Keep it simple.
-        </p>
-      </div>
-      <div class="mt-8 grid md:grid-cols-2 gap-5">
-        <div class="card rounded-2xl p-6 reveal">
-          <h3 class="text-lg font-semibold tracking-tight text-zinc-50">Java 8 or newer</h3>
-          <p class="mt-2 text-sm text-zinc-400 leading-relaxed">
-            Both the server and plugins compile and run against Java 8+.
-            If in doubt, install the latest LTS (e.g. Temurin 21 or 17) &#8212; it still runs Java 8 bytecode.
-          </p>
-          <p class="mt-4 font-mono text-[12px] text-zinc-600">
-            download: <a href="https://adoptium.net/" target="_blank" rel="noopener" class="text-ember-400 hover:text-ember-300 underline underline-offset-4">adoptium.net</a> (Temurin)
-          </p>
+      <p>
+        A vib-MC server is one jar in one folder. A vib-MC plugin is one jar in the
+        <code>plugins/</code> folder next to it, carrying a <code>plugin.yml</code> and one
+        class that extends <code>VibMCPlugin</code>. That is the entire contract.
+      </p>
+
+      <nav class="mcw-toc" id="toc" data-collapsed="false" aria-labelledby="toc-head">
+        <div class="mcw-toc__head" id="toc-head">
+          Contents
+          <button type="button" class="mcw-toc__toggle" id="toc-toggle" aria-expanded="true" aria-controls="toc-list">[hide]</button>
         </div>
-        <div class="card rounded-2xl p-6 reveal" style="--reveal-delay:80ms">
-          <h3 class="text-lg font-semibold tracking-tight text-zinc-50">The vib-MC jar</h3>
-          <p class="mt-2 text-sm text-zinc-400 leading-relaxed">
-            Grab the latest release jar from the downloads section on the main page.
-            That's the whole server &#8212; no extra files to hunt down.
-          </p>
-          <p class="mt-4 font-mono text-[12px] text-zinc-600">
-            latest release: <a href="https://github.com/vib-studios/vib-MC/releases/latest" target="_blank" rel="noopener" class="text-ember-400 hover:text-ember-300 underline underline-offset-4">v0.0.7</a>
-          </p>
+        <ol id="toc-list">
+          <li><a href="#requirements">Requirements</a></li>
+          <li><a href="#run">Running the server</a>
+            <ol>
+              <li><a href="#first-start">What the first start does</a></li>
+              <li><a href="#config">Configuration</a></li>
+              <li><a href="#console">Server console</a></li>
+            </ol>
+          </li>
+          <li><a href="#plugins">Writing a plugin</a>
+            <ol>
+              <li><a href="#plugin-yml">The plugin.yml file</a></li>
+              <li><a href="#main-class">The main class</a></li>
+              <li><a href="#example">Worked example: /gmc</a></li>
+              <li><a href="#events">Listening to events</a></li>
+            </ol>
+          </li>
+          <li><a href="#builder">Plugin blueprint</a>
+            <ol>
+              <li><a href="#bp-basics">The basics</a></li>
+              <li><a href="#bp-scripts">Scripts</a></li>
+              <li><a href="#bp-grab">Grab it</a></li>
+            </ol>
+          </li>
+          <li><a href="#api">API reference</a>
+            <ol>
+              <li><a href="#api-entry">Entry points</a></li>
+              <li><a href="#api-events">Events</a></li>
+            </ol>
+          </li>
+          <li><a href="#gotchas">Notes and gotchas</a></li>
+        </ol>
+      </nav>
+
+      <!-- Requirements -------------------------------------------------- -->
+      <h2 id="requirements">
+        <span class="mcw-editsection">[<a class="mcw-ext" href="https://github.com/vib-studios/vib-MC#readme" target="_blank" rel="noopener">edit</a>]</span>
+        Requirements
+      </h2>
+
+      <table class="mcw-table mcw-table--wide">
+        <thead>
+          <tr>
+            <th scope="col">You need</th>
+            <th scope="col">Why</th>
+            <th scope="col">Where</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th scope="row">Java 8 or newer</th>
+            <td>Both the server and plugins compile and run against Java 8+. If in doubt,
+              install the latest LTS: it still runs Java 8 bytecode.</td>
+            <td><a class="mcw-ext" href="https://adoptium.net/" target="_blank" rel="noopener">adoptium.net</a></td>
+          </tr>
+          <tr>
+            <th scope="row">The vib-MC jar</th>
+            <td>The whole server. There are no extra files to hunt down.</td>
+            <td><a class="mcw-ext" href="https://github.com/vib-studios/vib-MC/releases/latest" target="_blank" rel="noopener">Latest release</a></td>
+          </tr>
+          <tr>
+            <th scope="row">A Minecraft client</th>
+            <td>Anything from 1.8 to 26.1.2, except 1.16, 1.16.1 and 1.19.3. No mods, no
+              Forge, no Fabric: a vanilla launcher profile is enough.</td>
+            <td class="mcw-note">Any launcher that can pin a version</td>
+          </tr>
+          <tr>
+            <th scope="row">A JDK <span class="mcw-note">plugins only</span></th>
+            <td>Running the server needs only a JRE. Compiling a plugin needs a full JDK
+              and the vib-MC jar on the classpath. Gradle is optional, <code>javac</code> is fine.</td>
+            <td class="mcw-note">javac and jar from any JDK 8+</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <!-- Run ----------------------------------------------------------- -->
+      <h2 id="run">
+        <span class="mcw-editsection">[<a class="mcw-ext" href="https://github.com/vib-studios/vib-MC#readme" target="_blank" rel="noopener">edit</a>]</span>
+        Running the server
+      </h2>
+
+      <p>Put the jar in an empty folder and start it. There is nothing to configure first.</p>
+
+      <div class="mcw-codebox">
+        <div class="mcw-codebox__head">
+          <span>Terminal</span>
+          <button type="button" class="mcw-codebox__copy copy-cmd">java -jar vib-mc.jar</button>
         </div>
-        <div class="card rounded-2xl p-6 reveal" style="--reveal-delay:160ms">
-          <h3 class="text-lg font-semibold tracking-tight text-zinc-50">A Minecraft client</h3>
-          <p class="mt-2 text-sm text-zinc-400 leading-relaxed">
-            Since v0.0.6 the server speaks many protocol versions &#8212; anything from 1.8 to 26.1.2, except 1.16, 1.16.1 and 1.19.3. A vanilla launcher profile works &#8212;
-            or any launcher that can pin that version.
-          </p>
-          <p class="mt-4 font-mono text-[12px] text-zinc-600">no mods needed, no forge, no fabric</p>
-        </div>
-        <div class="card rounded-2xl p-6 reveal" style="--reveal-delay:240ms">
-          <h3 class="text-lg font-semibold tracking-tight text-zinc-50">Only for plugins: a JDK</h3>
-          <p class="mt-2 text-sm text-zinc-400 leading-relaxed">
-            Running the server needs a JRE. Compiling plugins needs a full JDK and
-            the vib-MC jar on the classpath. Gradle is optional &#8212; javac works fine.
-          </p>
-          <p class="mt-4 font-mono text-[12px] text-zinc-600">javac / jar from any JDK 8+</p>
-        </div>
-      </div>
-    </section>
-
-    <!-- Run it -->
-    <section id="run" class="py-10">
-      <div class="max-w-2xl">
-        <h2 class="text-3xl md:text-4xl font-bold tracking-tight text-zinc-50 leading-tight">Run the server</h2>
-        <p class="mt-4 text-base text-zinc-400 leading-relaxed">
-          Three commands, zero configuration. First run generates everything it needs.
-        </p>
+<pre><code><span class="mcw-com"># put vib-mc.jar in an empty folder first</span>
+<span class="mcw-prompt">$ </span>java -jar vib-mc.jar</code></pre>
       </div>
 
-      <div class="card rounded-2xl overflow-hidden mt-8 reveal">
-        <div class="px-6 py-3 border-b border-zinc-800 bg-void-800/60 font-mono text-[12px] uppercase tracking-[0.12em] text-zinc-500">quickstart</div>
-        <pre class="p-6 font-mono text-[13.5px] leading-7 text-zinc-300 overflow-x-auto"><code><span class="text-zinc-600"># 1. put vib-mc.jar in an empty folder</span>
-<span class="text-zinc-600">$</span> java -jar vib-mc.jar</code></pre>
-        <button class="copy-cmd w-full border-t border-zinc-800 px-6 py-3 font-mono text-[12px] uppercase tracking-[0.12em] text-zinc-500 hover:text-ember-400 hover:bg-ember-500/10 transition-colors">java -jar vib-mc.jar</button>
-      </div>
+      <h3 id="first-start">What the first start does</h3>
 
-      <div class="mt-8 grid md:grid-cols-2 gap-5">
-        <div class="card rounded-2xl p-6 reveal">
-          <h3 class="text-lg font-semibold tracking-tight text-zinc-50">What happens</h3>
-          <p class="mt-2 text-sm text-zinc-400 leading-relaxed">
-            The server binds to <code class="font-mono text-ember-400">0.0.0.0:25565</code>,
-            generates a <code class="font-mono text-zinc-500">server.properties</code>,
-            and opens a <code class="font-mono text-zinc-500">plugins/</code> folder.
-            Join with any supported client on <code class="font-mono text-zinc-500">localhost</code>.
-          </p>
-        </div>
-        <div class="card rounded-2xl p-6 reveal" style="--reveal-delay:80ms">
-          <h3 class="text-lg font-semibold tracking-tight text-zinc-50">Config</h3>
-          <p class="mt-2 text-sm text-zinc-400 leading-relaxed">
-            <code class="font-mono text-zinc-500">server.properties</code> holds the port,
-            world name, seed, view distance, and the online-mode switch. Edit it before
-            or while the server is stopped.
-          </p>
-          <p class="mt-4 font-mono text-[12px] text-zinc-600">port: 25565 &#183; seed: blank (random per new world) &#183; online-mode: true</p>
-        </div>
-      </div>
+      <p>
+        The server binds to <code>0.0.0.0:25565</code>, writes a <code>server.properties</code>,
+        and creates a <code>plugins/</code> folder. Join with any supported client on
+        <code>localhost</code>.
+      </p>
 
-      <div class="card rounded-2xl p-6 mt-8 reveal">
-        <h3 class="text-lg font-semibold tracking-tight text-zinc-50">Server console</h3>
-        <p class="mt-2 text-sm text-zinc-400 leading-relaxed">
-          The console accepts the same commands as players:
-          <code class="font-mono text-zinc-500">/help</code>, <code class="font-mono text-zinc-500">/tp</code>,
-          <code class="font-mono text-zinc-500">/gamemode</code>, <code class="font-mono text-zinc-500">/time</code>,
-          <code class="font-mono text-zinc-500">/weather</code>, <code class="font-mono text-zinc-500">/give</code>,
-          <code class="font-mono text-zinc-500">/kill</code>, <code class="font-mono text-zinc-500">/say</code>,
-          <code class="font-mono text-zinc-500">/seed</code>, <code class="font-mono text-zinc-500">/save-all</code>,
-          <code class="font-mono text-zinc-500">/save-on</code>, <code class="font-mono text-zinc-500">/save-off</code>,
-          <code class="font-mono text-zinc-500">/stop</code>, <code class="font-mono text-zinc-500">/list</code>,
-          <code class="font-mono text-zinc-500">/op</code>, <code class="font-mono text-zinc-500">/deop</code>,
-          <code class="font-mono text-zinc-500">/kick</code>, <code class="font-mono text-zinc-500">/dimension</code>.
-        </p>
-      </div>
-    </section>
+      <h3 id="config">Configuration</h3>
 
-    <!-- Plugins -->
-    <section id="plugins" class="py-10">
-      <div class="max-w-2xl">
-        <h2 class="text-3xl md:text-4xl font-bold tracking-tight text-zinc-50 leading-tight">Write a plugin</h2>
-        <p class="mt-4 text-base text-zinc-400 leading-relaxed">
-          A plugin is a jar dropped into <code class="font-mono text-zinc-500">plugins/</code>.
-          It ships a <code class="font-mono text-zinc-500">plugin.yml</code> and one class
-          that extends <code class="font-mono text-zinc-500">VibMCPlugin</code>. That's the whole contract.
-        </p>
-      </div>
+      <p>
+        <code>server.properties</code> holds the port, world name, seed, view distance and
+        the online-mode switch. Edit it before starting, or while the server is stopped:
+        values are read at boot only.
+      </p>
 
-      <div class="mt-8 space-y-8">
-        <div class="card rounded-2xl p-6 reveal">
-          <h3 class="text-lg font-semibold tracking-tight text-zinc-50">1. plugin.yml</h3>
-          <p class="mt-2 text-sm text-zinc-400 leading-relaxed">
-            Lives at the root of the jar. It is read as a Java properties file &#8212; plain
-            <code class="font-mono text-zinc-500">key=value</code> lines. Only
-            <code class="font-mono text-zinc-500">name</code>, <code class="font-mono text-zinc-500">version</code>
-            and <code class="font-mono text-zinc-500">main</code> are required.
-          </p>
-          <pre class="mt-4 p-5 rounded-xl bg-void-800/60 font-mono text-[13px] leading-7 text-zinc-300 overflow-x-auto"><code>name=MyPlugin
+      <table class="mcw-table">
+        <thead>
+          <tr>
+            <th scope="col">Key</th>
+            <th scope="col">Default</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><th scope="row"><code>port</code></th><td>25565</td></tr>
+          <tr><th scope="row"><code>seed</code></th><td>blank, meaning random per new world</td></tr>
+          <tr><th scope="row"><code>online-mode</code></th><td>true</td></tr>
+        </tbody>
+      </table>
+
+      <h3 id="console">Server console</h3>
+
+      <p>
+        The console accepts the same commands players do. Select one to copy it.
+      </p>
+
+      <ul class="mcw-cmds">
+        <li><button type="button" class="copy-cmd">/help</button></li>
+        <li><button type="button" class="copy-cmd">/tp</button></li>
+        <li><button type="button" class="copy-cmd">/gamemode</button></li>
+        <li><button type="button" class="copy-cmd">/time</button></li>
+        <li><button type="button" class="copy-cmd">/weather</button></li>
+        <li><button type="button" class="copy-cmd">/give</button></li>
+        <li><button type="button" class="copy-cmd">/kill</button></li>
+        <li><button type="button" class="copy-cmd">/say</button></li>
+        <li><button type="button" class="copy-cmd">/seed</button></li>
+        <li><button type="button" class="copy-cmd">/save-all</button></li>
+        <li><button type="button" class="copy-cmd">/save-on</button></li>
+        <li><button type="button" class="copy-cmd">/save-off</button></li>
+        <li><button type="button" class="copy-cmd">/stop</button></li>
+        <li><button type="button" class="copy-cmd">/list</button></li>
+        <li><button type="button" class="copy-cmd">/op</button></li>
+        <li><button type="button" class="copy-cmd">/deop</button></li>
+        <li><button type="button" class="copy-cmd">/kick</button></li>
+        <li><button type="button" class="copy-cmd">/dimension</button></li>
+      </ul>
+
+      <!-- Plugins ------------------------------------------------------- -->
+      <h2 id="plugins">
+        <span class="mcw-editsection">[<a class="mcw-ext" href="https://github.com/vib-studios/vib-MC/tree/main/plugins" target="_blank" rel="noopener">edit</a>]</span>
+        Writing a plugin
+      </h2>
+
+      <h3 id="plugin-yml">The plugin.yml file</h3>
+
+      <p>
+        It lives at the root of the jar and is read as a Java properties file, so plain
+        <code>key=value</code> lines. Only <code>name</code>, <code>version</code> and
+        <code>main</code> are required.
+      </p>
+
+      <div class="mcw-codebox">
+        <div class="mcw-codebox__head"><span>plugin.yml</span></div>
+<pre><code>name=MyPlugin
 version=1.0.0
 main=com.example.MyPlugin
 description=Does a thing, sometimes
 authors=you</code></pre>
-        </div>
+      </div>
 
-        <div class="card rounded-2xl p-6 reveal">
-          <h3 class="text-lg font-semibold tracking-tight text-zinc-50">2. The main class</h3>
-          <p class="mt-2 text-sm text-zinc-400 leading-relaxed">
-            Extend <code class="font-mono text-zinc-500">VibMCPlugin</code>. Override
-            <code class="font-mono text-zinc-500">onEnable()</code> to register commands
-            and listeners. Compile against the vib-MC jar:
-          </p>
-          <pre class="mt-4 p-5 rounded-xl bg-void-800/60 font-mono text-[13px] leading-7 text-zinc-300 overflow-x-auto"><code>javac -cp vib-mc.jar -d out src/com/example/MyPlugin.java
-jar cf MyPlugin.jar -C out . plugin.yml</code></pre>
-        </div>
+      <h3 id="main-class">The main class</h3>
 
-        <div class="card rounded-2xl p-6 reveal">
-          <h3 class="text-lg font-semibold tracking-tight text-zinc-50">3. A working example: /gmc</h3>
-          <p class="mt-2 text-sm text-zinc-400 leading-relaxed">
-            This is the full source of a real plugin that puts you in creative mode when
-            you type <code class="font-mono text-zinc-500">/gmc</code>. Copy it, compile it, drop it in
-            <code class="font-mono text-zinc-500">plugins/</code>, restart, done.
-          </p>
-          <pre class="mt-4 p-5 rounded-xl bg-void-800/60 font-mono text-[13px] leading-7 text-zinc-300 overflow-x-auto"><code>package com.example;
+      <p>
+        Extend <code>VibMCPlugin</code> and override <code>onEnable()</code> to register
+        commands and listeners. Compile against the vib-MC jar:
+      </p>
 
-import net.vibmc.command.Command;
-import net.vibmc.command.CommandSender;
-import net.vibmc.entity.ServerPlayer;
-import net.vibmc.player.GameMode;
-import net.vibmc.plugin.VibMCPlugin;
+      <div class="mcw-codebox">
+        <div class="mcw-codebox__head"><span>Terminal</span></div>
+<pre><code><span class="mcw-prompt">$ </span>javac -cp vib-mc.jar -d out src/com/example/MyPlugin.java
+<span class="mcw-prompt">$ </span>jar cf MyPlugin.jar -C out . plugin.yml</code></pre>
+      </div>
 
-public class MyPlugin extends VibMCPlugin {
+      <h3 id="example">Worked example: /gmc</h3>
+
+      <p>
+        The full source of a real plugin that puts you in creative mode when you type
+        <code>/gmc</code>. Copy it, compile it, drop the jar in <code>plugins/</code>,
+        restart the server.
+      </p>
+
+      <div class="mcw-codebox">
+        <div class="mcw-codebox__head"><span>src/com/example/MyPlugin.java</span></div>
+<pre><code><span class="mcw-kw">package</span> com.example;
+
+<span class="mcw-kw">import</span> net.vibmc.command.Command;
+<span class="mcw-kw">import</span> net.vibmc.command.CommandSender;
+<span class="mcw-kw">import</span> net.vibmc.entity.ServerPlayer;
+<span class="mcw-kw">import</span> net.vibmc.player.GameMode;
+<span class="mcw-kw">import</span> net.vibmc.plugin.VibMCPlugin;
+
+<span class="mcw-kw">public class</span> MyPlugin <span class="mcw-kw">extends</span> VibMCPlugin {
     @Override
-    public void onEnable() {
-        getCommandManager().register(new Command("gmc",
-                "Switch to creative mode", "/gmc", null) {
+    <span class="mcw-kw">public void</span> onEnable() {
+        getCommandManager().register(<span class="mcw-kw">new</span> Command(<span class="mcw-str">"gmc"</span>,
+                <span class="mcw-str">"Switch to creative mode"</span>, <span class="mcw-str">"/gmc"</span>, <span class="mcw-kw">null</span>) {
             @Override
-            public boolean execute(CommandSender sender, String[] args) {
-                if (!sender.isPlayer()) {
-                    sender.sendMessage("{\"text\":\"&#167;cOnly players can use /gmc\"}");
-                    return false;
+            <span class="mcw-kw">public boolean</span> execute(CommandSender sender, String[] args) {
+                <span class="mcw-kw">if</span> (!sender.isPlayer()) {
+                    sender.sendMessage(<span class="mcw-str">"{\"text\":\"&#167;cOnly players can use /gmc\"}"</span>);
+                    <span class="mcw-kw">return false</span>;
                 }
                 ServerPlayer player = sender.getPlayer();
                 player.setGameMode(GameMode.CREATIVE);
-                player.sendMessage("{\"text\":\"&#167;aYou are now in creative mode.\"}");
-                return true;
+                player.sendMessage(<span class="mcw-str">"{\"text\":\"&#167;aYou are now in creative mode.\"}"</span>);
+                <span class="mcw-kw">return true</span>;
             }
         });
     }
 }</code></pre>
-        </div>
+      </div>
 
-        <div class="card rounded-2xl p-6 reveal">
-          <h3 class="text-lg font-semibold tracking-tight text-zinc-50">4. Listening to events</h3>
-          <p class="mt-2 text-sm text-zinc-400 leading-relaxed">
-            Implement <code class="font-mono text-zinc-500">Listener</code>, annotate methods with
-            <code class="font-mono text-zinc-500">@EventHandler</code>, then register them in
-            <code class="font-mono text-zinc-500">onEnable()</code>:
-          </p>
-          <pre class="mt-4 p-5 rounded-xl bg-void-800/60 font-mono text-[13px] leading-7 text-zinc-300 overflow-x-auto"><code>import net.vibmc.plugin.Listener;
-import net.vibmc.plugin.EventHandler;
-import net.vibmc.plugin.event.PlayerJoinEvent;
+      <h3 id="events">Listening to events</h3>
 
-public class JoinListener implements Listener {
+      <p>
+        Implement <code>Listener</code>, annotate methods with <code>@EventHandler</code>,
+        then register the listener in <code>onEnable()</code>.
+      </p>
+
+      <div class="mcw-codebox">
+        <div class="mcw-codebox__head"><span>JoinListener.java</span></div>
+<pre><code><span class="mcw-kw">import</span> net.vibmc.plugin.Listener;
+<span class="mcw-kw">import</span> net.vibmc.plugin.EventHandler;
+<span class="mcw-kw">import</span> net.vibmc.plugin.event.PlayerJoinEvent;
+
+<span class="mcw-kw">public class</span> JoinListener <span class="mcw-kw">implements</span> Listener {
     @EventHandler
-    public void onJoin(PlayerJoinEvent event) {
+    <span class="mcw-kw">public void</span> onJoin(PlayerJoinEvent event) {
         event.getPlayer().sendMessage(
-            "{\"text\":\"&#167;aWelcome to the vibe.\"}");
+                <span class="mcw-str">"{\"text\":\"&#167;aWelcome to the vibe.\"}"</span>);
     }
 }</code></pre>
-          <pre class="mt-3 p-5 rounded-xl bg-void-800/60 font-mono text-[13px] leading-7 text-zinc-300 overflow-x-auto"><code>getPluginManager().registerEvents(new JoinListener(), this);</code></pre>
-        </div>
-      </div>
-    </section>
-
-    <!-- Plugin blueprint: the no-code builder -->
-    <section id="blueprint" class="py-10">
-      <div class="max-w-2xl">
-        <h2 class="text-3xl md:text-4xl font-bold tracking-tight text-zinc-50 leading-tight">Plugin blueprint</h2>
-        <p class="mt-4 text-base text-zinc-400 leading-relaxed">
-          Snap pieces together and download a zip that builds. No programming needed
-          &#8212; the Java is written for you, and it is ordinary source you can open and
-          change. Your work is kept in this browser, so a refresh will not lose it.
-        </p>
       </div>
 
-      <div class="card rounded-2xl p-6 md:p-8 mt-8 reveal">
-        <h3 class="text-lg font-semibold tracking-tight text-zinc-50">1. The basics</h3>
-        <div class="mt-5 grid md:grid-cols-2 gap-5">
-          <div>
-            <label for="bp-name" class="block font-mono text-[12px] uppercase tracking-[0.12em] text-zinc-400 mb-2">plugin name</label>
-            <input id="bp-name" type="text" value="MyPlugin"
-                   class="w-full rounded-lg border border-zinc-700 bg-void-950 px-4 py-3 font-mono text-sm text-zinc-100 placeholder-zinc-600 focus:outline-none focus:border-ember-400 transition-colors">
-          </div>
-          <div>
-            <label for="bp-package" class="block font-mono text-[12px] uppercase tracking-[0.12em] text-zinc-400 mb-2">package</label>
-            <input id="bp-package" type="text" value="com.example"
-                   class="w-full rounded-lg border border-zinc-700 bg-void-950 px-4 py-3 font-mono text-sm text-zinc-100 placeholder-zinc-600 focus:outline-none focus:border-ember-400 transition-colors">
-          </div>
-          <div>
-            <label for="bp-version" class="block font-mono text-[12px] uppercase tracking-[0.12em] text-zinc-400 mb-2">version</label>
-            <input id="bp-version" type="text" value="1.0.0"
-                   class="w-full rounded-lg border border-zinc-700 bg-void-950 px-4 py-3 font-mono text-sm text-zinc-100 placeholder-zinc-600 focus:outline-none focus:border-ember-400 transition-colors">
-          </div>
-          <div>
-            <label for="bp-description" class="block font-mono text-[12px] uppercase tracking-[0.12em] text-zinc-400 mb-2">description (optional)</label>
-            <input id="bp-description" type="text" placeholder="Does a thing, sometimes"
-                   class="w-full rounded-lg border border-zinc-700 bg-void-950 px-4 py-3 font-mono text-sm text-zinc-100 placeholder-zinc-600 focus:outline-none focus:border-ember-400 transition-colors">
-          </div>
-        </div>
+      <div class="mcw-codebox">
+        <div class="mcw-codebox__head"><span>Inside onEnable()</span></div>
+<pre><code>getPluginManager().registerEvents(<span class="mcw-kw">new</span> JoinListener(), <span class="mcw-kw">this</span>);</code></pre>
       </div>
 
-      <div class="card rounded-2xl p-6 md:p-8 mt-6 reveal" style="--reveal-delay:80ms">
-        <h3 class="text-lg font-semibold tracking-tight text-zinc-50">2. Scripts</h3>
-        <p class="mt-2 text-sm text-zinc-400 leading-relaxed">
-          A <span class="text-zinc-200">start</span> piece opens a script. <span class="text-zinc-200">Do</span>
-          pieces snap onto whichever script is highlighted &#8212; click a script to switch.
-          Steps run top to bottom; use &uarr; &darr; to reorder and &times; to remove.
-        </p>
+      <!-- Blueprint ----------------------------------------------------- -->
+      <h2 id="builder">
+        <span class="mcw-editsection">[<a class="mcw-ext" href="https://github.com/vib-studios/vib-MC/tree/main/plugins" target="_blank" rel="noopener">edit</a>]</span>
+        Plugin blueprint
+      </h2>
 
-        <div class="mt-5 flex flex-wrap items-start gap-6">
-          <div>
-            <div class="sb-stack-label">start</div>
-            <div class="flex flex-wrap gap-3">
-              <button type="button" data-hat="cmd" class="sb-piece sb-cmd">when player runs /&#8230;</button>
-              <button type="button" data-hat="join" class="sb-piece sb-lsn">when player joins</button>
-              <button type="button" data-hat="quit" class="sb-piece sb-lsn">when player quits</button>
-              <button type="button" data-hat="chat" class="sb-piece sb-lsn">when player chats</button>
+      <p>
+        Snap pieces together and download a zip that builds. No programming needed:
+        the Java is written for you, and it is ordinary source you can open and change.
+        Your work is kept in this browser, so a refresh will not lose it.
+      </p>
+
+      <div id="blueprint">
+
+        <h3 id="bp-basics">1. The basics</h3>
+
+        <div class="sb-board">
+          <div class="sb-fields">
+            <div class="mcw-field">
+              <label for="bp-name">Plugin name</label>
+              <input id="bp-name" type="text" value="MyPlugin">
             </div>
-          </div>
-          <div>
-            <div class="sb-stack-label">do</div>
-            <div class="flex flex-wrap gap-3">
-              <button type="button" data-do="say" class="sb-piece sb-act">say &#8230;</button>
-              <button type="button" data-do="broadcast" class="sb-piece sb-act">tell everyone &#8230;</button>
-              <button type="button" data-do="gamemode" class="sb-piece sb-act">set game mode &#8230;</button>
-              <button type="button" data-do="give" class="sb-piece sb-act">give item &#8230;</button>
-              <button type="button" data-do="teleport" class="sb-piece sb-act">teleport to &#8230;</button>
-              <button type="button" data-do="heal" class="sb-piece sb-act">heal them</button>
-              <button type="button" data-do="time" class="sb-piece sb-act">set time &#8230;</button>
-              <button type="button" data-do="weather" class="sb-piece sb-act">set weather &#8230;</button>
-              <button type="button" data-do="log" class="sb-piece sb-act">log to console &#8230;</button>
-              <button type="button" data-do="kick" class="sb-piece sb-cancel">kick them &#8230;</button>
-              <button type="button" data-do="cancel" class="sb-piece sb-cancel">cancel the chat</button>
+            <div class="mcw-field">
+              <label for="bp-package">Package</label>
+              <input id="bp-package" type="text" value="com.example">
+            </div>
+            <div class="mcw-field">
+              <label for="bp-version">Version</label>
+              <input id="bp-version" type="text" value="1.0.0">
+            </div>
+            <div class="mcw-field">
+              <label for="bp-description">Description
+                <span class="mcw-field__hint">Optional.</span>
+              </label>
+              <input id="bp-description" type="text" placeholder="Does a thing, sometimes">
             </div>
           </div>
         </div>
 
-        <div class="mt-6 grid md:grid-cols-2 gap-5">
-          <div>
-            <div class="sb-stack-label">commands</div>
-            <div id="bp-commands" class="sb-stack"></div>
+        <h3 id="bp-scripts">2. Scripts</h3>
+
+        <p>
+          A <b>start</b> piece opens a script. <b>Do</b> pieces snap onto whichever script
+          is highlighted, so click a script to switch. Steps run top to bottom: use the
+          arrow buttons to reorder one and the cross to remove it.
+        </p>
+
+        <div class="sb-board">
+          <div class="sb-palette">
+            <div>
+              <div class="sb-stack-label">start</div>
+              <div class="sb-pieces">
+                <button type="button" data-hat="cmd" class="sb-piece sb-cmd">when player runs /&#8230;</button>
+                <button type="button" data-hat="join" class="sb-piece sb-lsn">when player joins</button>
+                <button type="button" data-hat="quit" class="sb-piece sb-lsn">when player quits</button>
+                <button type="button" data-hat="chat" class="sb-piece sb-lsn">when player chats</button>
+              </div>
+            </div>
+            <div>
+              <div class="sb-stack-label">do</div>
+              <div class="sb-pieces">
+                <button type="button" data-do="say" class="sb-piece sb-act">say &#8230;</button>
+                <button type="button" data-do="broadcast" class="sb-piece sb-act">tell everyone &#8230;</button>
+                <button type="button" data-do="gamemode" class="sb-piece sb-act">set game mode &#8230;</button>
+                <button type="button" data-do="give" class="sb-piece sb-act">give item &#8230;</button>
+                <button type="button" data-do="teleport" class="sb-piece sb-act">teleport to &#8230;</button>
+                <button type="button" data-do="heal" class="sb-piece sb-act">heal them</button>
+                <button type="button" data-do="time" class="sb-piece sb-act">set time &#8230;</button>
+                <button type="button" data-do="weather" class="sb-piece sb-act">set weather &#8230;</button>
+                <button type="button" data-do="log" class="sb-piece sb-act">log to console &#8230;</button>
+                <button type="button" data-do="kick" class="sb-piece sb-cancel">kick them &#8230;</button>
+                <button type="button" data-do="cancel" class="sb-piece sb-cancel">cancel the chat</button>
+              </div>
+            </div>
           </div>
-          <div>
-            <div class="sb-stack-label">listeners</div>
-            <div id="bp-listeners" class="sb-stack"></div>
+
+          <div class="sb-grid">
+            <div>
+              <div class="sb-stack-label">commands</div>
+              <div id="bp-commands" class="sb-stack"></div>
+            </div>
+            <div>
+              <div class="sb-stack-label">listeners</div>
+              <div id="bp-listeners" class="sb-stack"></div>
+            </div>
           </div>
+
+          <ul id="bp-warnings" class="sb-warnings" hidden></ul>
         </div>
 
-        <ul id="bp-warnings" class="sb-warnings" hidden></ul>
-      </div>
+        <h3 id="bp-grab">3. Grab it</h3>
 
-      <div class="card rounded-2xl p-6 md:p-8 mt-6 reveal" style="--reveal-delay:140ms">
-        <h3 class="text-lg font-semibold tracking-tight text-zinc-50">3. Grab it</h3>
-        <div class="mt-4 flex flex-wrap items-center gap-3">
-          <button type="button" id="bp-download" class="btn btn-primary px-6 py-3">download .zip</button>
-          <button type="button" id="bp-reset" class="btn px-5 py-3">start over</button>
-          <span class="font-mono text-[12px] text-zinc-500">plugin.yml + source + build scripts</span>
+        <div class="sb-board">
+          <div class="sb-actions">
+            <button type="button" id="bp-download" class="mcw-btn">Download .zip</button>
+            <button type="button" id="bp-reset" class="mcw-btn mcw-btn--ghost">Start over</button>
+            <p class="sb-hint">plugin.yml, source and build scripts</p>
+          </div>
+          <p class="sb-hint sb-hint--block">
+            The zip bundles a build script that fetches <code>vib-mc.jar</code>, compiles,
+            and packages your plugin. Drop the resulting jar into <code>plugins/</code> and
+            restart the server. It is ordinary Java in there, so open it and change anything.
+          </p>
         </div>
-        <p class="mt-4 text-sm text-zinc-400 leading-relaxed">
-          The zip bundles a build script that fetches
-          <code class="font-mono text-zinc-500">vib-mc.jar</code>, compiles, and packages your plugin.
-          Drop the resulting jar into <code class="font-mono text-zinc-500">plugins/</code>,
-          restart the server, done. It is ordinary Java in there &#8212; open it and change anything.
-        </p>
-      </div>
-    </section>
-
-    <!-- API reference -->
-    <section id="api" class="py-10 pb-20">
-      <div class="max-w-2xl">
-        <h2 class="text-3xl md:text-4xl font-bold tracking-tight text-zinc-50 leading-tight">API reference</h2>
-        <p class="mt-4 text-base text-zinc-400 leading-relaxed">
-          The useful surface, in one table. Everything lives in
-          <code class="font-mono text-zinc-500">net.vibmc.*</code> &#8212; the jar is your javadoc.
-        </p>
       </div>
 
-      <div class="card rounded-2xl overflow-x-auto mt-8 reveal">
-        <table class="w-full text-left font-mono text-[13px]">
+      <!-- API ----------------------------------------------------------- -->
+      <h2 id="api">
+        <span class="mcw-editsection">[<a class="mcw-ext" href="https://github.com/vib-studios/vib-MC/tree/main/src" target="_blank" rel="noopener">edit</a>]</span>
+        API reference
+      </h2>
+
+      <h3 id="api-entry">Entry points</h3>
+
+      <div class="mcw-scroll">
+        <table class="mcw-table mcw-table--wide">
           <thead>
-            <tr class="border-b border-zinc-800 bg-void-800/60 text-[12px] uppercase tracking-[0.12em] text-zinc-500">
-              <th class="px-5 py-3 font-bold">you get</th>
-              <th class="px-5 py-3 font-bold">from</th>
+            <tr>
+              <th scope="col">To do this</th>
+              <th scope="col">Call</th>
             </tr>
           </thead>
-          <tbody class="divide-y divide-zinc-800/80">
+          <tbody>
             <tr>
-              <td class="px-5 py-3.5 text-zinc-100">register commands</td>
-              <td class="px-5 py-3.5 text-zinc-400">getCommandManager().register(new Command(...))</td>
+              <th scope="row">Register a command</th>
+              <td><code>getCommandManager().register(command)</code></td>
             </tr>
             <tr>
-              <td class="px-5 py-3.5 text-zinc-100">register listeners</td>
-              <td class="px-5 py-3.5 text-zinc-400">getPluginManager().registerEvents(listener, this)</td>
+              <th scope="row">Register listeners</th>
+              <td><code>getPluginManager().registerEvents(listener, this)</code></td>
             </tr>
             <tr>
-              <td class="px-5 py-3.5 text-zinc-100">log lines</td>
-              <td class="px-5 py-3.5 text-zinc-400">getLogger().info("...")</td>
+              <th scope="row">Log lines</th>
+              <td><code>getLogger().info("...")</code></td>
             </tr>
             <tr>
-              <td class="px-5 py-3.5 text-zinc-100">players</td>
-              <td class="px-5 py-3.5 text-zinc-400">VibMC.getInstance().getPlayerManager()</td>
+              <th scope="row">Reach players</th>
+              <td><code>VibMC.getInstance().getPlayerManager()</code></td>
             </tr>
             <tr>
-              <td class="px-5 py-3.5 text-zinc-100">worlds &amp; blocks</td>
-              <td class="px-5 py-3.5 text-zinc-400">VibMC.getInstance().getWorldManager()</td>
+              <th scope="row">Reach worlds and blocks</th>
+              <td><code>VibMC.getInstance().getWorldManager()</code></td>
             </tr>
             <tr>
-              <td class="px-5 py-3.5 text-zinc-100">permissions</td>
-              <td class="px-5 py-3.5 text-zinc-400">getPluginManager().getPermissionManager()</td>
+              <th scope="row">Check permissions</th>
+              <td><code>getPluginManager().getPermissionManager()</code></td>
             </tr>
             <tr>
-              <td class="px-5 py-3.5 text-zinc-100">send messages / packets</td>
-              <td class="px-5 py-3.5 text-zinc-400">player.sendMessage(json), player.getUser().sendPacket(packet)</td>
+              <th scope="row">Send messages or packets</th>
+              <td><code>player.sendMessage(json)</code>, <code>player.getUser().sendPacket(packet)</code></td>
             </tr>
           </tbody>
         </table>
       </div>
 
-      <div class="card rounded-2xl overflow-x-auto mt-6 reveal">
-        <table class="w-full text-left font-mono text-[13px]">
-          <thead>
-            <tr class="border-b border-zinc-800 bg-void-800/60 text-[12px] uppercase tracking-[0.12em] text-zinc-500">
-              <th class="px-5 py-3 font-bold">event</th>
-              <th class="px-5 py-3 font-bold">when</th>
-            </tr>
-          </thead>
-          <tbody class="divide-y divide-zinc-800/80">
-            <tr>
-              <td class="px-5 py-3.5 text-zinc-100">PlayerJoinEvent</td>
-              <td class="px-5 py-3.5 text-zinc-400">a player finishes logging in</td>
-            </tr>
-            <tr>
-              <td class="px-5 py-3.5 text-zinc-100">PlayerQuitEvent</td>
-              <td class="px-5 py-3.5 text-zinc-400">a player disconnects</td>
-            </tr>
-            <tr>
-              <td class="px-5 py-3.5 text-zinc-100">ChatEvent</td>
-              <td class="px-5 py-3.5 text-zinc-400">a player chats (cancellable)</td>
-            </tr>
-            <tr>
-              <td class="px-5 py-3.5 text-zinc-100">TickEvent.Start / TickEvent.End</td>
-              <td class="px-5 py-3.5 text-zinc-400">every server tick, before/after</td>
-            </tr>
-          </tbody>
-        </table>
+      <h3 id="api-events">Events</h3>
+
+      <table class="mcw-table mcw-table--wide">
+        <thead>
+          <tr>
+            <th scope="col">Event</th>
+            <th scope="col">Fires when</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><th scope="row"><code>PlayerJoinEvent</code></th><td>A player finishes logging in.</td></tr>
+          <tr><th scope="row"><code>PlayerQuitEvent</code></th><td>A player disconnects.</td></tr>
+          <tr><th scope="row"><code>ChatEvent</code></th><td>A player chats. Cancellable.</td></tr>
+          <tr><th scope="row"><code>TickEvent.Start</code> / <code>TickEvent.End</code></th><td>Every server tick, before and after.</td></tr>
+        </tbody>
+      </table>
+
+      <!-- Gotchas ------------------------------------------------------- -->
+      <h2 id="gotchas">
+        <span class="mcw-editsection">[<a class="mcw-ext" href="https://github.com/vib-studios/vib-MC/issues" target="_blank" rel="noopener">edit</a>]</span>
+        Notes and gotchas
+      </h2>
+
+      <div class="mcw-msgbox" role="note">
+        <span class="mcw-msgbox__icon" aria-hidden="true"></span>
+        <p>
+          Building a plugin by hand needs <code>vib-mc.jar</code> in the working directory
+          or on the classpath. Without it the compile fails. Grab it from the
+          <a class="mcw-ext" href="https://github.com/vib-studios/vib-MC/releases/latest" target="_blank" rel="noopener">releases page</a> first.
+        </p>
       </div>
 
-      <div class="card rounded-2xl p-6 mt-6 reveal">
-        <h3 class="text-lg font-semibold tracking-tight text-zinc-50">Notes &amp; gotchas</h3>
-        <ul class="mt-3 space-y-2 text-sm text-zinc-400 leading-relaxed list-disc list-inside">
-          <li>Messages are raw JSON chat components &#8212; <code class="font-mono text-zinc-500">{"text":"hello"}</code>. &#167; codes work.</li>
-          <li><code class="font-mono text-zinc-500">Command</code> takes a permission string; <code class="font-mono text-zinc-500">null</code> means anyone.</li>
-          <li>Plugins load at startup, in no particular order. <code class="font-mono text-zinc-500">depends</code> is parsed but not enforced yet.</li>
-          <li>Compile against <code class="font-mono text-zinc-500">--release 8</code> if your JDK is picky &#8212; the server runs Java 8 bytecode.</li>
-          <li class="text-amber-500">&#9888; Building a plugin by hand? You need <code class="font-mono text-zinc-500">vib-mc.jar</code> in the directory (or on the classpath) or the compile fails &#8212; grab it from the releases page first.</li>
-          <li>Restart the server to load or unload plugins.</li>
+      <ul>
+        <li>Messages are raw JSON chat components, for example <code>{"text":"hello"}</code>.
+          Section-sign colour codes work.</li>
+        <li><code>Command</code> takes a permission string. <code>null</code> means anyone can run it.</li>
+        <li>Plugins load at startup in no particular order. <code>depends</code> is parsed
+          but not enforced yet.</li>
+        <li>Compile against <code>--release 8</code> if your JDK is picky. The server runs
+          Java 8 bytecode.</li>
+        <li>Restart the server to load or unload a plugin.</li>
+      </ul>
+
+      <div class="mcw-catlinks">
+        <b>Categories:</b>
+        <ul>
+          <li>Documentation</li>
+          <li>Plugin development</li>
+          <li>Java Edition</li>
         </ul>
       </div>
-    </section>
-  </main>
 
-  <footer class="border-t border-zinc-800/80">
-    <div class="max-w-[1100px] mx-auto px-4 md:px-8 py-10 flex flex-col gap-6">
-      <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
-        <div class="flex items-center gap-2.5">
-          <span class="h-5 w-5 rounded-[4px] bg-ember-400 shadow-[inset_0_0_0_2px_oklch(0.13_0.02_40)]" aria-hidden="true"></span>
-          <span class="font-pixel text-[11px] text-zinc-100">vib-MC</span>
-        </div>
-        <nav class="flex flex-wrap items-center gap-6 font-mono text-[12.5px] text-zinc-500">
-          <a href="index.html" class="hover:text-zinc-100 transition-colors">back to vib-MC</a>
-          <a href="https://github.com/vib-studios/vib-MC" target="_blank" rel="noopener" class="hover:text-zinc-100 transition-colors">github</a>
-          <a href="https://github.com/vib-studios/vib-MC/releases" target="_blank" rel="noopener" class="hover:text-zinc-100 transition-colors">releases &#8599;</a>
-          <a href="#top" class="hover:text-zinc-100 transition-colors">back to top &#8593;</a>
-        </nav>
-      </div>
-      <div class="pt-6 border-t border-zinc-800/80 flex flex-wrap items-center justify-between gap-3 font-mono text-[12px] text-zinc-600">
-        <p>Licensed <a href="https://github.com/vib-studios/vib-MC/blob/main/LICENSE" target="_blank" rel="noopener" class="hover:text-zinc-100 underline underline-offset-4">GPL-3.0-or-later</a>.</p>
-        <nav class="flex flex-wrap items-center gap-6">
-          <a href="privacy.html" class="hover:text-zinc-100 transition-colors">privacy</a>
-          <a href="terms.html" class="hover:text-zinc-100 transition-colors">terms</a>
-        </nav>
-      </div>
-    </div>
-  </footer>
+    </article>
 
-  <script src="website.js"></script>
-  <script src="blueprint-codegen.js"></script>
-  <script src="blueprint.js"></script>
+    <footer class="mcw-footer">
+      <p>Content on this page is taken from the vib-MC repository and its example plugins.</p>
+      <p>vib-MC is licensed <a href="https://github.com/vib-studios/vib-MC/blob/main/LICENSE" target="_blank" rel="noopener">GPL-3.0-or-later</a>. Not an official Minecraft product. Not approved by or associated with Mojang or Microsoft.</p>
+      <ul>
+        <li><a href="index.html">Main article</a></li>
+        <li><a href="docs.html">Documentation</a></li>
+        <li><a href="index.html#bugs">Report a bug</a></li>
+        <li><a href="privacy.html">Privacy</a></li>
+        <li><a href="terms.html">Terms</a></li>
+        <li><a href="#top">Back to top</a></li>
+        <li><a href="classic/index.html" data-skin-switch="classic">Classic layout</a></li>
+      </ul>
+    </footer>
+
+  </div>
+</div>
+
+<script src="wiki.js"></script>
+<script src="website.js"></script>
+<script src="blueprint-codegen.js"></script>
+<script src="blueprint.js"></script>
 </body>
 </html>

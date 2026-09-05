@@ -1,0 +1,1439 @@
+/* ==========================================================================
+   vib-MC wiki skin (prototype)
+
+   Hand-written CSS. No Tailwind and no build step, so nothing here can
+   silently vanish the way an uncompiled utility class would.
+
+   Layout and colour conventions follow the classic MediaWiki Vector skin the
+   way the Minecraft Wiki dresses it: dark tiled page, a left rail of beveled
+   panels, folder tabs, and a pale content sheet with serif section rules.
+   ========================================================================== */
+
+@font-face {
+  font-family: "Press Start 2P";
+  src: url("files/press-start-2p-latin-400-normal.woff2") format("woff2");
+  font-weight: 400;
+  font-display: swap;
+}
+
+:root {
+  /* page furniture */
+  --page-bg:        #303030;
+  --grass:          #5d9b34;
+  --grass-dark:     #46752a;
+  --grass-light:    #74b344;
+  --dirt:           #79553a;
+  --dirt-dark:      #64452e;
+
+  /* content sheet */
+  --sheet:          #e9eef2;
+  --sheet-soft:     #f8f9fa;
+  --rule:           #a2a9b1;
+  --rule-soft:      #c8ccd1;
+  --ink:            #202122;
+  --ink-strong:     #101418;
+  --ink-mute:       #54595d;
+
+  /* links */
+  --link:           #0b4a8f;
+  --link-hover:     #1a6ac4;
+  --link-seen:      #0a3a6d;
+  --link-new:       #b32424;
+
+  /* the vib-MC accent, used only on dark surfaces where it has contrast */
+  --ember:          #f97316;
+  --ember-soft:     #fbbf24;
+  --void:           #0f0f11;
+
+  /* rail */
+  --rail-bg:        #232324;
+  --rail-head:      #313233;
+  --rail-bevel-lt:  #5a5b5c;
+  --rail-bevel-dk:  #464747;
+  --rail-bevel-cn:  #6a6b6c;
+  --rail-text:      #bfbfbf;
+
+  /* folder tabs */
+  --tab-bg:         #c6d2da;
+  --tab-hover:      #d7e0e7;
+  --tab-border:     #7f8c94;
+  --tab-muted-bg:   #b3bfc7;
+  --tab-muted-fg:   #5c666d;
+
+  /* sheet edges */
+  --sheet-edge-top:  #b4bec3;
+  --sheet-edge-dark: #171717;
+
+  /* boxes, tables and fields on the sheet */
+  --th-bg:          #eaecf0;
+  --code-border:    #dadde3;
+  --box-bg:         #fbf4ea;
+  --box-border:     #d3c2ab;
+  --info-art:       #dee5ec;
+  --info-th:        #eef1f4;
+  --info-row:       #dfe3e7;
+  --input-bg:       #ffffff;
+  --input-border:   #9aa3ab;
+
+  /* status words and code tokens */
+  --yes:            #14663a;
+  --no:             #b32424;
+  --partial:        #8a5000;
+  --prompt:         #7a7f85;
+  --com:            #5f7285;
+
+  /* buttons */
+  --btn-fg:         #ffffff;
+  --btn-border:     #093a70;
+
+  /* page footer, which sits on the dark background in both themes */
+  --footer-fg:      #9a9a9a;
+  --footer-link:    #c9c9c9;
+}
+
+/* --------------------------------------------------------------------------
+   Dark theme.
+
+   Three states, the way a wiki skin has to handle them: an explicit choice
+   stamps data-theme on <html>, and the unset default follows the operating
+   system. Only the tokens move; no rule below this point knows which theme
+   it is in.
+   -------------------------------------------------------------------------- */
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --page-bg:        #15171a;
+
+    --grass:          #4a7d2a;
+    --grass-dark:     #37601f;
+    --grass-light:    #5d9b34;
+    --dirt:           #5f4229;
+    --dirt-dark:      #4b331f;
+
+    --sheet:          #1d2126;
+    --sheet-soft:     #23282e;
+    --rule:           #454c53;
+    --rule-soft:      #343a40;
+    --ink:            #d3d7db;
+    --ink-strong:     #eff2f4;
+    --ink-mute:       #98a1a9;
+
+    --link:           #6fa8dc;
+    --link-hover:     #9cc6ea;
+    --link-seen:      #5589b6;
+    --link-new:       #e07a72;
+
+    --tab-bg:         #2c3238;
+    --tab-hover:      #363d44;
+    --tab-border:     #4b535a;
+    --tab-muted-bg:   #23282d;
+    --tab-muted-fg:   #767f87;
+
+    --sheet-edge-top:  #454c53;
+    --sheet-edge-dark: #0a0b0c;
+
+    --th-bg:          #2a3037;
+    --code-border:    #3a4148;
+    --box-bg:         #2b2318;
+    --box-border:     #4c3d26;
+    --info-art:       #262c32;
+    --info-th:        #272d33;
+    --info-row:       #333940;
+    --input-bg:       #14171a;
+    --input-border:   #4b535a;
+
+    --yes:            #6cc08b;
+    --no:             #e07a72;
+    --partial:        #d3a24a;
+    --prompt:         #6f767d;
+    --com:            #7b8b9c;
+
+    --btn-fg:         #10141a;
+    --btn-border:     #8fbde4;
+  }
+}
+
+:root[data-theme="dark"] {
+  --page-bg:        #15171a;
+
+  --grass:          #4a7d2a;
+  --grass-dark:     #37601f;
+  --grass-light:    #5d9b34;
+  --dirt:           #5f4229;
+  --dirt-dark:      #4b331f;
+
+  --sheet:          #1d2126;
+  --sheet-soft:     #23282e;
+  --rule:           #454c53;
+  --rule-soft:      #343a40;
+  --ink:            #d3d7db;
+  --ink-strong:     #eff2f4;
+  --ink-mute:       #98a1a9;
+
+  --link:           #6fa8dc;
+  --link-hover:     #9cc6ea;
+  --link-seen:      #5589b6;
+  --link-new:       #e07a72;
+
+  --tab-bg:         #2c3238;
+  --tab-hover:      #363d44;
+  --tab-border:     #4b535a;
+  --tab-muted-bg:   #23282d;
+  --tab-muted-fg:   #767f87;
+
+  --sheet-edge-top:  #454c53;
+  --sheet-edge-dark: #0a0b0c;
+
+  --th-bg:          #2a3037;
+  --code-border:    #3a4148;
+  --box-bg:         #2b2318;
+  --box-border:     #4c3d26;
+  --info-art:       #262c32;
+  --info-th:        #272d33;
+  --info-row:       #333940;
+  --input-bg:       #14171a;
+  --input-border:   #4b535a;
+
+  --yes:            #6cc08b;
+  --no:             #e07a72;
+  --partial:        #d3a24a;
+  --prompt:         #6f767d;
+  --com:            #7b8b9c;
+
+  --btn-fg:         #10141a;
+  --btn-border:     #8fbde4;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: "Liberation Sans", Arial, Helvetica, sans-serif;
+  font-size: 16px;
+  line-height: 1.6;
+  color: var(--ink);
+  background-color: var(--page-bg);
+  /* A faint 32px block grid instead of a photographic texture. */
+  background-image:
+    linear-gradient(rgba(255, 255, 255, .020) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, .020) 1px, transparent 1px),
+    linear-gradient(rgba(0, 0, 0, .26) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 0, 0, .26) 1px, transparent 1px);
+  background-size: 32px 32px;
+  background-position: 0 0, 0 0, 31px 31px, 31px 31px;
+}
+
+/* --------------------------------------------------------------------------
+   Grass band across the top of the page.
+   Stacked hard-stop gradients, so the boundary stays pixel-crisp at any zoom
+   instead of shipping a texture image.
+   -------------------------------------------------------------------------- */
+
+.mcw-band {
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 92px;
+  z-index: 0;
+  background-color: var(--dirt);
+  /* Every layer tiles horizontally. The plants are 4px and 8px bars inside a
+     384px period, so a tuft turns up roughly every screen width. */
+  background-image:
+    /* two blades of grass and a flower, growing out of the turf */
+    repeating-linear-gradient(90deg, var(--grass-dark) 0 4px, transparent 4px 384px),
+    repeating-linear-gradient(90deg, var(--grass-dark) 0 4px, transparent 4px 384px),
+    repeating-linear-gradient(90deg, var(--ember) 0 8px, transparent 8px 384px),
+    repeating-linear-gradient(90deg, var(--grass-dark) 0 4px, transparent 4px 384px),
+    /* the strip of open air the plants stand in */
+    linear-gradient(var(--page-bg) 0 0),
+    /* jagged turf edge, two periods so it does not read as a sawtooth */
+    repeating-linear-gradient(90deg, var(--grass) 0 8px, transparent 8px 24px),
+    repeating-linear-gradient(90deg, var(--grass) 0 16px, transparent 16px 40px),
+    /* solid turf */
+    linear-gradient(var(--grass-light) 0 4px, var(--grass) 4px 100%),
+    /* dirt speckle */
+    repeating-linear-gradient(90deg, var(--dirt-dark) 0 4px, transparent 4px 32px),
+    repeating-linear-gradient(90deg, var(--dirt-dark) 0 4px, transparent 4px 32px);
+  background-repeat: repeat-x;
+  background-size:
+    384px 10px, 384px 6px, 384px 6px, 384px 12px,
+    100% 16px,
+    384px 8px, 384px 8px,
+    100% 26px,
+    32px 8px, 32px 6px;
+  background-position:
+    56px 6px, 64px 10px, 208px 4px, 210px 4px,
+    0 0,
+    0 42px, 8px 42px,
+    0 16px,
+    0 58px, 16px 74px;
+}
+
+.mcw-band::after {
+  /* a shadow line where the band meets the page */
+  content: "";
+  position: absolute;
+  inset: auto 0 0 0;
+  height: 3px;
+  background: rgba(0, 0, 0, .35);
+}
+
+/* --------------------------------------------------------------------------
+   Layout
+   -------------------------------------------------------------------------- */
+
+.mcw-layout {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 0 14px 40px;
+}
+
+.mcw-rail {
+  flex: 0 0 190px;
+  width: 190px;
+  padding-top: 8px;
+}
+
+.mcw-body {
+  flex: 1 1 auto;
+  min-width: 0;
+  padding-top: 8px;
+}
+
+/* --------------------------------------------------------------------------
+   Wordmark
+   -------------------------------------------------------------------------- */
+
+.mcw-logo {
+  display: block;
+  padding: 8px 6px 16px;
+  text-align: center;
+  text-decoration: none;
+}
+
+.mcw-logo__mark {
+  display: inline-grid;
+  grid-template-columns: repeat(3, 17px);
+  grid-template-rows: repeat(3, 17px);
+  border: 3px solid var(--void);
+  box-shadow: 0 3px 0 rgba(0, 0, 0, .45);
+}
+
+.mcw-logo__mark i { display: block; background: var(--ember); }
+
+.mcw-logo__mark i:nth-child(2),
+.mcw-logo__mark i:nth-child(4),
+.mcw-logo__mark i:nth-child(6),
+.mcw-logo__mark i:nth-child(8) { background: #d9600c; }
+
+.mcw-logo__mark i:nth-child(5) { background: var(--void); }
+
+.mcw-logo__word {
+  display: block;
+  margin-top: 12px;
+  font-family: "Press Start 2P", "Courier New", monospace;
+  font-size: 15px;
+  line-height: 1.4;
+  color: #fff;
+  text-shadow: 3px 3px 0 rgba(0, 0, 0, .6);
+}
+
+.mcw-logo__sub {
+  display: block;
+  margin-top: 8px;
+  font-family: "Press Start 2P", "Courier New", monospace;
+  font-size: 7px;
+  line-height: 1.7;
+  letter-spacing: .04em;
+  color: var(--ember-soft);
+  text-shadow: 2px 2px 0 rgba(0, 0, 0, .6);
+}
+
+/* --------------------------------------------------------------------------
+   Rail panels, beveled like a Minecraft GUI box
+   -------------------------------------------------------------------------- */
+
+.mcw-portal {
+  margin-bottom: 10px;
+  background: var(--rail-bg);
+  border: 2px solid #000;
+}
+
+.mcw-portal > h3 {
+  margin: 0;
+  padding: 8px;
+  font-size: 12px;
+  font-weight: 400;
+  color: #fff;
+  background-color: var(--rail-head);
+  background-image:
+    conic-gradient(from 180deg at 2px calc(100% - 2px), var(--rail-bevel-cn) 90deg, transparent 0deg),
+    conic-gradient(at calc(100% - 2px) 2px, var(--rail-bevel-cn) 90deg, transparent 0deg),
+    linear-gradient(to top, var(--rail-bevel-dk) 2px, transparent 0),
+    linear-gradient(var(--rail-bevel-lt) 2px, transparent 0),
+    linear-gradient(to left, var(--rail-bevel-dk) 2px, transparent 0),
+    linear-gradient(to right, var(--rail-bevel-lt) 2px, transparent 0);
+}
+
+.mcw-portal ul {
+  margin: 0;
+  padding: 4px 0 6px;
+  list-style: none;
+}
+
+.mcw-portal li a {
+  display: block;
+  padding: 5px 8px;
+  font-size: 12px;
+  line-height: 1.4;
+  color: var(--rail-text);
+  text-decoration: none;
+}
+
+.mcw-portal li a:hover {
+  color: #fff;
+  background: rgba(249, 115, 22, .16);
+  text-decoration: underline;
+}
+
+.mcw-portal li a.is-current {
+  color: #fff;
+  font-weight: 700;
+  box-shadow: inset 3px 0 0 var(--ember);
+}
+
+.mcw-portal__note {
+  margin: 0;
+  padding: 7px 9px 9px;
+  font-size: 11px;
+  line-height: 1.6;
+  color: #8b8b8b;
+}
+
+.mcw-portal__note b { color: var(--rail-text); }
+.mcw-portal__note + .mcw-portal__note { padding-top: 0; }
+
+/* Rail call to action: a square Minecraft button, never a pill. */
+.mcw-railbtn {
+  display: block;
+  margin: 8px;
+  padding: 9px 8px;
+  font-size: 12px;
+  font-weight: 700;
+  text-align: center;
+  text-decoration: none;
+  color: var(--void);
+  background: var(--ember);
+  border: 2px solid #000;
+  box-shadow:
+    inset 2px 2px 0 rgba(255, 255, 255, .45),
+    inset -2px -2px 0 rgba(0, 0, 0, .30),
+    0 3px 0 rgba(0, 0, 0, .45);
+}
+
+.mcw-railbtn:hover { background: var(--ember-soft); }
+
+.mcw-railbtn:active {
+  transform: translateY(2px);
+  box-shadow:
+    inset 2px 2px 0 rgba(255, 255, 255, .45),
+    inset -2px -2px 0 rgba(0, 0, 0, .30),
+    0 1px 0 rgba(0, 0, 0, .45);
+}
+
+/* --------------------------------------------------------------------------
+   Top bar: folder tabs on the left, search on the right
+   -------------------------------------------------------------------------- */
+
+.mcw-topbar {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 16px;
+  min-height: 56px;
+  padding-top: 24px;
+}
+
+.mcw-tabs {
+  display: flex;
+  align-items: flex-end;
+  margin: 0;
+  padding: 0 0 0 6px;
+  list-style: none;
+}
+
+.mcw-tabs li { display: block; }
+
+.mcw-tab {
+  position: relative;
+  display: block;
+  margin-right: 14px;
+  padding: 7px 10px 6px 12px;
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--link);
+  text-decoration: none;
+  background-color: var(--tab-bg);
+  border: 1px solid var(--tab-border);
+  border-right: none;
+  border-bottom: none;
+}
+
+/* the slanted right edge of a Vector folder tab */
+.mcw-tab::after {
+  content: "";
+  position: absolute;
+  top: -1px;
+  right: -12px;
+  bottom: 0;
+  width: 13px;
+  background-color: inherit;
+  border: 1px solid var(--tab-border);
+  border-left: none;
+  border-bottom: none;
+  transform: skewX(16deg);
+  transform-origin: bottom left;
+}
+
+.mcw-tab:hover { background-color: var(--tab-hover); }
+
+.mcw-tab.is-active {
+  z-index: 3;
+  margin-bottom: -1px;
+  padding-bottom: 7px;
+  font-weight: 700;
+  color: var(--ink);
+  background-color: var(--sheet);
+}
+
+.mcw-tab.is-active:hover { background-color: var(--sheet); }
+
+.mcw-tab--muted {
+  color: var(--tab-muted-fg);
+  background-color: var(--tab-muted-bg);
+  cursor: default;
+}
+
+.mcw-tab--muted:hover { background-color: var(--tab-muted-bg); }
+
+.mcw-search { padding-bottom: 4px; }
+
+.mcw-search__row { display: flex; align-items: center; gap: 6px; }
+
+.mcw-search input {
+  width: 236px;
+  padding: 6px 8px;
+  font: inherit;
+  font-size: 13px;
+  color: #fff;
+  background: rgba(0, 0, 0, .42);
+  border: 2px solid #000;
+  border-radius: 0;
+  box-shadow: inset 2px 2px 0 rgba(0, 0, 0, .35);
+}
+
+.mcw-search input::placeholder { color: #8b8b8b; }
+
+.mcw-search input:focus { outline: none; border-color: var(--ember); }
+
+.mcw-search button {
+  padding: 7px 12px;
+  font: inherit;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--ink-strong);
+  background: var(--tab-bg);
+  border: 2px solid #000;
+  border-radius: 0;
+  cursor: pointer;
+  box-shadow: inset 2px 2px 0 rgba(255, 255, 255, .5), inset -2px -2px 0 rgba(0, 0, 0, .22);
+}
+
+.mcw-search button:hover { background: var(--ember); }
+
+.mcw-search__msg {
+  min-height: 18px;
+  padding: 3px 2px 0;
+  font-size: 12px;
+  text-align: right;
+  color: var(--ember-soft);
+}
+
+/* --------------------------------------------------------------------------
+   Content sheet
+   -------------------------------------------------------------------------- */
+
+.mcw-sheet {
+  padding: 16px 22px 26px;
+  background: var(--sheet);
+  border-top: 6px solid var(--sheet-edge-top);
+  border-left: 6px solid var(--sheet-edge-dark);
+  border-right: 1px solid var(--sheet-edge-dark);
+  border-bottom: 1px solid var(--sheet-edge-dark);
+}
+
+.mcw-sheet > *:first-child { margin-top: 0; }
+
+/* Headings ---------------------------------------------------------------- */
+
+.mcw-title {
+  margin: 0 0 .18em;
+  padding-bottom: .18em;
+  font-family: "Linux Libertine", Georgia, Times, serif;
+  font-size: 30px;
+  font-weight: 400;
+  line-height: 1.25;
+  color: var(--ink-strong);
+  border-bottom: 1px solid var(--rule);
+}
+
+.mcw-subtitle {
+  margin: 0 0 14px;
+  font-size: 13px;
+  font-style: italic;
+  color: var(--ink-mute);
+}
+
+.mcw-sheet h2 {
+  margin: 1.4em 0 .5em;
+  padding-bottom: .2em;
+  font-family: "Linux Libertine", Georgia, Times, serif;
+  font-size: 23px;
+  font-weight: 400;
+  line-height: 1.3;
+  color: var(--ink-strong);
+  border-bottom: 1px solid var(--rule);
+}
+
+.mcw-sheet h3 {
+  margin: 1.2em 0 .4em;
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--ink-strong);
+}
+
+.mcw-sheet h4 {
+  margin: 1em 0 .3em;
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--ink-strong);
+}
+
+.mcw-editsection {
+  float: right;
+  margin-left: 12px;
+  font-family: "Liberation Sans", Arial, sans-serif;
+  font-size: 12px;
+  font-weight: 400;
+  color: var(--ink-mute);
+}
+
+/* Body text --------------------------------------------------------------- */
+
+.mcw-sheet p { margin: .5em 0 .9em; }
+
+/* The sheet itself stays fluid, the way a wiki page does, but running prose
+   stops before the line gets unreadable on a wide monitor. Tables, code and
+   forms are deliberately left to fill the width. */
+.mcw-sheet > p,
+.mcw-sheet > ul,
+.mcw-sheet > ol,
+.mcw-sheet > dl { max-width: 100ch; }
+
+.mcw-sheet a { color: var(--link); text-decoration: none; }
+.mcw-sheet a:hover { text-decoration: underline; }
+.mcw-sheet a:visited { color: var(--link-seen); }
+
+/* the small external-link arrow MediaWiki appends, masked from an inline SVG
+   so it takes the colour of the link it follows */
+.mcw-sheet a.mcw-ext::after {
+  content: "";
+  display: inline-block;
+  width: .72em;
+  height: .72em;
+  margin-left: .25em;
+  vertical-align: -.02em;
+  opacity: .75;
+  background-color: currentColor;
+  -webkit-mask: var(--ext-icon) no-repeat center / contain;
+  mask: var(--ext-icon) no-repeat center / contain;
+}
+
+:root {
+  --ext-icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Cpath d='M2 3h4v1.5H3.5v5H8.5V7H10v4H2z'/%3E%3Cpath d='M7 2h3v3L8.8 3.8 6 6.6 5.4 6 8.2 3.2z'/%3E%3C/svg%3E");
+}
+
+/* A red link marks something that genuinely is not written yet. */
+.mcw-sheet a.mcw-new,
+.mcw-sheet a.mcw-new:visited { color: var(--link-new); }
+
+.mcw-sheet ul, .mcw-sheet ol { margin: .4em 0 1em; padding-left: 26px; }
+.mcw-sheet li { margin: .25em 0; }
+
+.mcw-sheet dl { margin: .4em 0 1em; }
+.mcw-sheet dt { font-weight: 700; color: var(--ink-strong); }
+.mcw-sheet dd { margin: 0 0 .7em 22px; }
+
+.mcw-sheet code, .mcw-sheet kbd, .mcw-sheet samp {
+  padding: 1px 4px;
+  font-family: "DejaVu Sans Mono", "Liberation Mono", Consolas, monospace;
+  font-size: 14px;
+  color: var(--ink-strong);
+  background: var(--sheet-soft);
+  border: 1px solid var(--code-border);
+  border-radius: 2px;
+}
+
+.mcw-sheet pre {
+  margin: .6em 0 1em;
+  padding: 12px 14px;
+  overflow-x: auto;
+  font-family: "DejaVu Sans Mono", "Liberation Mono", Consolas, monospace;
+  font-size: 13.5px;
+  line-height: 1.7;
+  color: var(--ink-strong);
+  background: var(--sheet-soft);
+  border: 1px solid var(--code-border);
+  border-radius: 2px;
+}
+
+.mcw-sheet pre code {
+  padding: 0;
+  font-size: inherit;
+  background: none;
+  border: 0;
+}
+
+.mcw-prompt { color: var(--prompt); user-select: none; }
+.mcw-com { color: var(--com); }
+.mcw-kw { color: var(--link); }
+.mcw-str { color: var(--yes); }
+
+/* Hatnote ----------------------------------------------------------------- */
+
+.mcw-hatnote {
+  margin: 0 0 .8em 26px;
+  font-size: 14px;
+  font-style: italic;
+  color: var(--ink-mute);
+}
+
+/* Message box ------------------------------------------------------------- */
+
+.mcw-msgbox {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  margin: 14px 0 18px;
+  padding: 10px 14px;
+  font-size: 14px;
+  line-height: 1.55;
+  background: var(--box-bg);
+  border: 1px solid var(--box-border);
+  border-left: 8px solid var(--ember);
+}
+
+.mcw-msgbox p { margin: 0; }
+
+/* a warning block, drawn rather than set as an emoji */
+.mcw-msgbox__icon {
+  position: relative;
+  flex: none;
+  width: 22px;
+  height: 22px;
+  margin-top: 3px;
+  background: var(--ember);
+  border: 2px solid var(--void);
+}
+
+.mcw-msgbox__icon::before,
+.mcw-msgbox__icon::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  width: 4px;
+  margin-left: -2px;
+  background: var(--void);
+}
+
+.mcw-msgbox__icon::before { top: 3px; height: 8px; }
+.mcw-msgbox__icon::after { top: 13px; height: 3px; }
+
+/* Infobox ----------------------------------------------------------------- */
+
+.mcw-infobox {
+  float: right;
+  clear: right;
+  width: 304px;
+  margin: 4px 0 16px 22px;
+  font-size: 13.5px;
+  line-height: 1.5;
+  background: var(--sheet-soft);
+  border: 1px solid var(--rule);
+}
+
+.mcw-infobox__title {
+  padding: 8px 10px;
+  font-family: "Press Start 2P", "Courier New", monospace;
+  font-size: 11px;
+  line-height: 1.5;
+  text-align: center;
+  color: var(--void);
+  background: var(--ember);
+  border-bottom: 1px solid var(--rule);
+}
+
+.mcw-infobox__art {
+  padding: 16px 10px 13px;
+  text-align: center;
+  background: var(--info-art);
+  border-bottom: 1px solid var(--rule);
+}
+
+.mcw-infobox__caption {
+  display: block;
+  margin-top: 10px;
+  font-size: 12px;
+  color: var(--ink-mute);
+}
+
+.mcw-infobox table { width: 100%; border-collapse: collapse; }
+
+.mcw-infobox th,
+.mcw-infobox td {
+  padding: 6px 10px;
+  text-align: left;
+  vertical-align: top;
+  border-bottom: 1px solid var(--info-row);
+}
+
+.mcw-infobox th {
+  width: 42%;
+  font-weight: 700;
+  color: var(--ink-strong);
+  background: var(--info-th);
+}
+
+.mcw-infobox__foot { padding: 11px 10px; }
+
+/* the jar, drawn as a block rather than photographed */
+.mcw-jar {
+  display: inline-block;
+  width: 76px;
+  height: 76px;
+  background:
+    linear-gradient(135deg, transparent 0 34%, rgba(0, 0, 0, .20) 34% 40%, transparent 40%),
+    linear-gradient(var(--ember) 0 0);
+  border: 3px solid var(--void);
+  box-shadow:
+    inset 5px 5px 0 rgba(255, 255, 255, .32),
+    inset -5px -5px 0 rgba(0, 0, 0, .24);
+}
+
+/* Table of contents ------------------------------------------------------- */
+
+.mcw-toc {
+  display: table;
+  margin: 16px 0 18px;
+  padding: 9px 16px 11px;
+  font-size: 14px;
+  background: var(--sheet-soft);
+  border: 1px solid var(--rule);
+}
+
+.mcw-toc__head {
+  margin-bottom: 5px;
+  text-align: center;
+  font-weight: 700;
+}
+
+.mcw-toc__toggle {
+  margin-left: 6px;
+  padding: 0;
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 400;
+  color: var(--link);
+  background: none;
+  border: 0;
+  cursor: pointer;
+}
+
+.mcw-toc__toggle:hover { text-decoration: underline; }
+
+.mcw-toc ol { margin: 0; padding-left: 22px; }
+.mcw-toc ol ol { padding-left: 24px; margin: 2px 0; }
+.mcw-toc li { margin: 2px 0; }
+.mcw-toc[data-collapsed="true"] > ol { display: none; }
+
+/* Tables ------------------------------------------------------------------ */
+
+.mcw-table {
+  margin: .6em 0 1.2em;
+  border-collapse: collapse;
+  font-size: 14px;
+  background: var(--sheet-soft);
+  border: 1px solid var(--rule);
+}
+
+.mcw-table caption {
+  padding-bottom: 6px;
+  font-size: 13px;
+  font-style: italic;
+  color: var(--ink-mute);
+  text-align: left;
+}
+
+.mcw-table th,
+.mcw-table td {
+  padding: 7px 11px;
+  text-align: left;
+  vertical-align: top;
+  border: 1px solid var(--rule);
+}
+
+.mcw-table th { background: var(--th-bg); color: var(--ink-strong); }
+.mcw-table tbody th { font-weight: 700; }
+.mcw-table--wide { width: 100%; }
+
+.mcw-yes { color: var(--yes); font-weight: 700; }
+.mcw-no  { color: var(--no); font-weight: 700; }
+.mcw-partial { color: var(--partial); font-weight: 700; }
+.mcw-note { color: var(--ink-mute); font-weight: 400; }
+
+.mcw-scroll { overflow-x: auto; }
+
+/* Command chips: square, copy on click ------------------------------------ */
+
+.mcw-cmds {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+  margin: .6em 0 1.2em;
+  padding: 0;
+  list-style: none;
+}
+
+.mcw-cmds li { margin: 0; }
+
+.copy-cmd {
+  display: block;
+  min-width: 96px;
+  padding: 6px 11px;
+  font-family: "DejaVu Sans Mono", "Liberation Mono", Consolas, monospace;
+  font-size: 13px;
+  text-align: left;
+  color: var(--ink-strong);
+  background: var(--sheet-soft);
+  border: 1px solid var(--input-border);
+  border-radius: 2px;
+  cursor: pointer;
+}
+
+.copy-cmd:hover { color: var(--link); background: var(--input-bg); border-color: var(--link); }
+
+/* Code box with a header strip, mirroring a wiki template ------------------ */
+
+.mcw-codebox {
+  margin: .6em 0 1.2em;
+  background: var(--sheet-soft);
+  border: 1px solid var(--rule);
+}
+
+.mcw-codebox__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 6px 12px;
+  font-size: 12.5px;
+  font-weight: 700;
+  color: var(--ink-strong);
+  background: var(--th-bg);
+  border-bottom: 1px solid var(--rule);
+}
+
+.mcw-codebox pre { margin: 0; border: 0; border-radius: 0; }
+
+.mcw-codebox__copy {
+  padding: 3px 9px;
+  font: inherit;
+  font-size: 12px;
+  color: var(--link);
+  background: var(--input-bg);
+  border: 1px solid var(--input-border);
+  border-radius: 2px;
+  cursor: pointer;
+}
+
+.mcw-codebox__copy:hover { color: var(--btn-fg); background: var(--link); border-color: var(--link); }
+
+/* Form -------------------------------------------------------------------- */
+
+.mcw-form {
+  margin: .6em 0 1.2em;
+  padding: 16px 18px;
+  background: var(--sheet-soft);
+  border: 1px solid var(--rule);
+}
+
+.mcw-field { margin-bottom: 14px; }
+
+.mcw-field label {
+  display: block;
+  margin-bottom: 5px;
+  font-size: 13.5px;
+  font-weight: 700;
+  color: var(--ink-strong);
+}
+
+.mcw-field__hint {
+  display: block;
+  font-size: 12.5px;
+  font-weight: 400;
+  color: var(--ink-mute);
+}
+
+.mcw-field input,
+.mcw-field textarea {
+  width: 100%;
+  padding: 7px 9px;
+  font-family: "DejaVu Sans Mono", "Liberation Mono", Consolas, monospace;
+  font-size: 13.5px;
+  color: var(--ink-strong);
+  background: var(--input-bg);
+  border: 1px solid var(--input-border);
+  border-radius: 2px;
+}
+
+.mcw-field input:focus,
+.mcw-field textarea:focus { outline: 2px solid var(--link); outline-offset: -1px; }
+
+.mcw-field textarea { resize: vertical; }
+
+.mcw-grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+
+.mcw-btn {
+  display: inline-block;
+  padding: 8px 16px;
+  font: inherit;
+  font-size: 13.5px;
+  font-weight: 700;
+  color: var(--btn-fg);
+  background: var(--link);
+  border: 1px solid var(--btn-border);
+  border-radius: 2px;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.mcw-btn:hover { background: var(--link-hover); }
+.mcw-sheet a.mcw-btn, .mcw-sheet a.mcw-btn:visited { color: var(--btn-fg); }
+
+/* Contributors ------------------------------------------------------------ */
+
+.contrib-inline__label {
+  display: block;
+  margin-bottom: 6px;
+  font-size: 13px;
+  color: var(--ink-mute);
+}
+
+.contrib-inline__list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: .4em 0 1em;
+  padding: 0;
+  list-style: none;
+}
+
+.contrib-inline__list li { margin: 0; }
+
+.contrib-link {
+  position: relative;
+  display: block;
+  line-height: 0;
+  background: var(--input-bg);
+  border: 2px solid var(--void);
+}
+
+.contrib-link:hover { border-color: var(--ember); }
+
+.contrib-link__img { display: block; width: 40px; height: 40px; }
+
+.contrib-link__tip {
+  position: absolute;
+  bottom: calc(100% + 6px);
+  left: 50%;
+  z-index: 5;
+  transform: translateX(-50%);
+  padding: 4px 8px;
+  font-size: 12px;
+  line-height: 1.4;
+  white-space: nowrap;
+  color: #fff;
+  background: var(--void);
+  border: 1px solid #000;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.contrib-link:hover .contrib-link__tip,
+.contrib-link:focus-visible .contrib-link__tip { opacity: 1; }
+
+/* The old fixed rail has no place in this layout. */
+.contrib-rail { display: none; }
+
+/* Category strip and page footer ------------------------------------------ */
+
+.mcw-catlinks {
+  margin-top: 22px;
+  padding: 8px 12px;
+  font-size: 13px;
+  background: var(--sheet-soft);
+  border: 1px solid var(--rule);
+}
+
+.mcw-catlinks b { margin-right: 6px; }
+
+.mcw-catlinks ul { display: inline; margin: 0; padding: 0; list-style: none; }
+
+.mcw-catlinks li {
+  display: inline;
+  margin: 0;
+  padding: 0 8px;
+  border-left: 1px solid var(--rule-soft);
+}
+
+.mcw-catlinks li:first-child { padding-left: 0; border-left: 0; }
+
+.mcw-footer {
+  margin-top: 16px;
+  padding: 4px 2px 0;
+  font-size: 12.5px;
+  line-height: 1.7;
+  color: var(--footer-fg);
+}
+
+.mcw-footer p { margin: 0 0 2px; }
+.mcw-footer a { color: var(--footer-link); }
+.mcw-footer a:hover { color: var(--ember-soft); }
+
+.mcw-footer ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin: 8px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* Focus visibility on the dark furniture ---------------------------------- */
+
+.mcw-rail a:focus-visible,
+.mcw-footer a:focus-visible,
+.mcw-tab:focus-visible { outline: 2px solid var(--ember); outline-offset: 2px; }
+
+/* --------------------------------------------------------------------------
+   Narrow screens: the rail moves below the article, the tabs stay put.
+   -------------------------------------------------------------------------- */
+
+@media (max-width: 980px) {
+  .mcw-layout { flex-direction: column; padding-bottom: 28px; }
+  .mcw-rail { order: 2; flex: 1 1 auto; width: 100%; padding-top: 18px; }
+  .mcw-body { order: 1; width: 100%; }
+  .mcw-logo { padding: 2px 2px 14px; text-align: left; }
+  .mcw-infobox { float: none; width: auto; margin: 0 0 16px; }
+  .mcw-topbar { flex-wrap: wrap; gap: 8px; padding-top: 12px; }
+  .mcw-search { width: 100%; }
+  .mcw-search input { flex: 1 1 auto; width: auto; }
+  .mcw-search__msg { text-align: left; }
+  .mcw-grid2 { grid-template-columns: 1fr; }
+  .mcw-sheet { padding: 14px 14px 22px; }
+  .mcw-band { height: 68px; }
+}
+
+@media (max-width: 600px) {
+  .mcw-tab { margin-right: 10px; padding: 6px 7px 5px 9px; font-size: 12px; }
+  .mcw-tab::after { right: -9px; width: 10px; }
+  .mcw-title { font-size: 25px; }
+  .mcw-sheet h2 { font-size: 20px; }
+  .mcw-hatnote { margin-left: 12px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * { transition: none !important; animation: none !important; }
+}
+
+
+/* ==========================================================================
+   Topbar tools: theme toggle and layout switch
+   ========================================================================== */
+
+.mcw-topbar__right {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 6px;
+  padding-bottom: 4px;
+}
+
+.mcw-tools {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.mcw-tool {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 9px;
+  font: inherit;
+  font-size: 12px;
+  line-height: 1.5;
+  color: var(--rail-text);
+  text-decoration: none;
+  background: rgba(0, 0, 0, .42);
+  border: 2px solid #000;
+  border-radius: 0;
+  cursor: pointer;
+}
+
+.mcw-tool:hover { color: #fff; background: rgba(249, 115, 22, .22); }
+
+.mcw-tool:focus-visible { outline: 2px solid var(--ember); outline-offset: 2px; }
+
+/* Half-filled disc, the usual mark for a light and dark switch. Drawn here so
+   the control needs no icon font and no emoji. */
+.mcw-tool__icon {
+  width: 12px;
+  height: 12px;
+  border: 2px solid currentColor;
+  border-radius: 50%;
+  background: linear-gradient(90deg, currentColor 0 50%, transparent 50% 100%);
+}
+
+.mcw-tool--skin { color: var(--ember-soft); }
+
+/* ==========================================================================
+   Plugin blueprint
+   The class names come from blueprint.js, which is shared with the classic
+   layout, so they are kept exactly as that script writes them.
+   ========================================================================== */
+
+.sb-board {
+  margin: .6em 0 1.2em;
+  padding: 16px 18px;
+  background: var(--sheet-soft);
+  border: 1px solid var(--rule);
+}
+
+.sb-board + .sb-board { margin-top: -.4em; }
+
+.sb-fields {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px 16px;
+}
+
+.sb-palette {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px 26px;
+}
+
+.sb-stack-label {
+  margin-bottom: 6px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+}
+
+.sb-pieces {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* A piece in the palette and a block in a script share one look: square,
+   beveled, and coloured by what it does. */
+.sb-piece,
+.sb-block {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 5px;
+  padding: 6px 10px;
+  font-family: "DejaVu Sans Mono", "Liberation Mono", Consolas, monospace;
+  font-size: 12.5px;
+  line-height: 1.5;
+  color: #fff;
+  border: 2px solid var(--void);
+  border-radius: 2px;
+  box-shadow:
+    inset 2px 2px 0 rgba(255, 255, 255, .20),
+    inset -2px -2px 0 rgba(0, 0, 0, .28);
+}
+
+.sb-piece { cursor: pointer; }
+.sb-piece:hover { filter: brightness(1.12); }
+
+.sb-cmd    { background: #37639f; }
+.sb-lsn    { background: #b9781c; color: #14100a; }
+.sb-act    { background: #2c7466; }
+.sb-cancel { background: #a3352a; }
+
+.sb-piece.sb-disabled { opacity: .4; pointer-events: none; }
+
+.sb-hat { font-weight: 700; }
+
+.sb-grid {
+  margin-top: 18px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px;
+}
+
+.sb-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  min-height: 152px;
+  padding: 12px;
+  background: var(--input-bg);
+  border: 1px dashed var(--input-border);
+}
+
+.sb-unit {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  cursor: pointer;
+}
+
+.sb-unit.sb-active { outline: 2px solid var(--ember); outline-offset: 3px; }
+
+.sb-unit-blocks {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  min-width: 0;
+}
+
+/* The inputs sitting inside a coloured block keep a fixed light field, because
+   the block behind them is the same colour in either theme. */
+.sb-oval {
+  min-width: 46px;
+  max-width: 210px;
+  padding: 2px 6px;
+  font: inherit;
+  color: #18181b;
+  background: #fff;
+  border: 1px solid var(--void);
+  border-radius: 2px;
+}
+
+.sb-oval:focus { outline: 2px solid var(--ember); outline-offset: 0; }
+
+.sb-prefix { opacity: .8; }
+
+.sb-row { display: flex; align-items: center; gap: 6px; }
+
+.sb-row-tools {
+  display: flex;
+  gap: 3px;
+  opacity: .45;
+}
+
+.sb-row:hover .sb-row-tools,
+.sb-row:focus-within .sb-row-tools { opacity: 1; }
+
+.sb-mini,
+.sb-remove {
+  flex: none;
+  font: inherit;
+  color: var(--ink);
+  background: var(--input-bg);
+  border: 1px solid var(--input-border);
+  border-radius: 2px;
+  cursor: pointer;
+  line-height: 1;
+}
+
+.sb-mini { width: 22px; height: 22px; font-size: 11px; }
+.sb-remove { width: 24px; height: 24px; margin-top: 3px; font-size: 13px; }
+
+.sb-mini:hover:not(:disabled) { color: var(--ink-strong); border-color: var(--link); }
+.sb-mini:disabled { opacity: .3; cursor: default; }
+.sb-remove:hover { color: var(--no); border-color: var(--no); }
+
+.sb-stale { opacity: .45; text-decoration: line-through; }
+
+.sb-empty {
+  margin: 0;
+  font-size: 13px;
+  font-style: italic;
+  color: var(--ink-mute);
+}
+
+.sb-warnings {
+  margin: 16px 0 0;
+  padding: 10px 14px;
+  list-style: none;
+  font-size: 13.5px;
+  background: var(--box-bg);
+  border: 1px solid var(--box-border);
+  border-left: 8px solid var(--ember);
+}
+
+.sb-warnings li { margin: .15em 0; }
+
+.sb-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+}
+
+.mcw-btn--ghost {
+  color: var(--link);
+  background: var(--input-bg);
+  border-color: var(--input-border);
+}
+
+.mcw-btn--ghost:hover { color: var(--btn-fg); background: var(--link); border-color: var(--link); }
+
+.sb-hint {
+  margin: 0;
+  max-width: 78ch;
+  font-size: 13px;
+  color: var(--ink-mute);
+}
+
+.sb-hint--block { margin-top: 12px; }
+
+@media (max-width: 700px) {
+  .sb-fields,
+  .sb-grid { grid-template-columns: 1fr; }
+  .sb-board { padding: 12px 12px 14px; }
+  .sb-oval { max-width: 150px; }
+}
+
+@media (max-width: 980px) {
+  .mcw-topbar__right { align-items: stretch; width: 100%; }
+  .mcw-tools { justify-content: flex-start; }
+}

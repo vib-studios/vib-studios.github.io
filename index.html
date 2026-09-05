@@ -1,507 +1,617 @@
-﻿<!doctype html>
-<html lang="en">
+<!doctype html>
+<html lang="en" data-skin="wiki">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>vib-MC - A Minecraft server, vibed into existence</title>
-  <meta name="description" content="vib-MC is a Minecraft server written entirely by AI, one prompt at a time. Minecraft 1.8 through 26.1.2 (excluding 1.16, 1.16.1 and 1.19.3), with a real survival loop. Download the latest .jar release.">
+  <title>vib-MC - vib-MC Wiki</title>
+  <meta name="description" content="vib-MC is a Minecraft server written entirely by AI, one prompt at a time. Minecraft 1.8 through 26.1.2, excluding 1.16, 1.16.1 and 1.19.3, with a real survival loop. Download the latest .jar release.">
   <meta property="og:title" content="vib-MC">
-  <meta property="og:description" content="A Minecraft server written entirely by AI, one prompt at a time. Minecraft 1.8 through 26.1.2, survival included. java 8+.">
+  <meta property="og:description" content="A Minecraft server written entirely by AI, one prompt at a time. Minecraft 1.8 through 26.1.2, survival included. Java 8+.">
   <meta property="og:type" content="website">
-  <meta property="og:url" content="index.html">
   <meta property="og:image" content="files/og-vibmc.png">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="theme-color" content="#f97316">
-  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' fill='%23f97316'/%3E%3Crect x='3' y='3' width='4' height='4' fill='%2309090f'/%3E%3Crect x='9' y='9' width='4' height='4' fill='%2309090f'/%3E%3C/svg%3E">
-  <link rel="stylesheet" href="styles.css">
-  <link rel="stylesheet" href="extras.css">
+  <meta name="theme-color" content="#303030">
+  <link rel="icon" href="favicon.ico" sizes="any">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 3 3' shape-rendering='crispEdges'%3E%3Cpath fill='%23f97316' d='M0 0h3v3H0z'/%3E%3Cpath fill='%23d9600c' d='M1 0h1v1H1zM0 1h1v1H0zM2 1h1v1H2zM1 2h1v1H1z'/%3E%3Cpath fill='%230f0f11' d='M1 1h1v1H1z'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="wiki.css">
+  <script>
+    /* Applied before paint so a chosen theme never flashes the other one. */
+    try {
+      var t = localStorage.getItem("vibmc-wiki-theme");
+      if (t === "dark" || t === "light") document.documentElement.setAttribute("data-theme", t);
+    } catch (e) {}
+  </script>
+  <script src="skin.js"></script>
 </head>
-<body class="min-h-[100dvh] font-sans antialiased bg-void-950 text-zinc-200 overflow-x-hidden selection:bg-ember-400 selection:text-void-950">
+<body>
 
-  <!-- Warning banner: early dev notice -->
-  <div class="bg-ember-500/10 border-b border-ember-500/20">
-    <div class="max-w-[1100px] mx-auto px-4 md:px-8 py-2.5 flex flex-wrap items-center justify-center gap-2 font-mono text-[12.5px] text-zinc-400">
-      <i class="ph ph-warning text-ember-400 shrink-0" aria-hidden="true"></i>
-      <span>vib-MC is in early development and bugs can happen. If you find any, report them on our</span>
-      <a href="https://github.com/vib-studios/vib-MC/issues" target="_blank" rel="noopener" class="text-ember-400 font-bold underline underline-offset-4 hover:text-ember-300">GitHub</a>.
-    </div>
-  </div>
+<div class="mcw-band" aria-hidden="true"></div>
 
-  <!-- Header: wordmark, nav, docs -->
-  <header class="max-w-[1100px] mx-auto px-4 md:px-8 h-16 flex items-center justify-between border-b border-zinc-800/80">
-    <a href="#top" class="flex items-center gap-2.5">
-      <span class="h-5 w-5 rounded-[4px] bg-ember-400 shadow-[inset_0_0_0_2px_oklch(0.13_0.02_40)]" aria-hidden="true"></span>
-      <span class="font-pixel text-[11px] text-zinc-100">vib-MC</span>
+<div class="mcw-layout" id="top">
+
+  <!-- ====================================================================
+       Left rail
+       ==================================================================== -->
+  <div class="mcw-rail">
+
+    <a class="mcw-logo" href="index.html">
+      <span class="mcw-logo__mark" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span>
+      <span class="mcw-logo__word">vib-MC</span>
+      <span class="mcw-logo__sub">wiki</span>
     </a>
-    <nav class="hidden md:flex items-center gap-7 font-mono text-[13px] text-zinc-400">
-      <a href="#features" class="hover:text-zinc-100 transition-colors">features</a>
-      <a href="#checklist" class="hover:text-zinc-100 transition-colors">checklist</a>
-      <a href="#quickstart" class="hover:text-zinc-100 transition-colors">quickstart</a>
-      <a href="#commands" class="hover:text-zinc-100 transition-colors">commands</a>
-      <a href="#releases" class="hover:text-zinc-100 transition-colors">releases</a>
+
+    <nav class="mcw-portal" aria-labelledby="p-nav">
+      <h3 id="p-nav">Navigation</h3>
+      <ul>
+        <li><a href="index.html" class="is-current">Main article</a></li>
+        <li><a href="docs.html">Documentation</a></li>
+        <li><a href="#installation">Installation</a></li>
+        <li><a href="#commands">Command list</a></li>
+        <li><a href="#history">Version history</a></li>
+        <li><a href="#bugs">Report a bug</a></li>
+        <li><a href="privacy.html">Privacy policy</a></li>
+        <li><a href="terms.html">Terms</a></li>
+      </ul>
     </nav>
-    <a href="docs.html" class="btn px-4 py-1.5 text-[13px]">docs</a>
-  </header>
 
-  <main class="max-w-[1100px] mx-auto px-4 md:px-8">
+    <nav class="mcw-portal" aria-labelledby="p-dl">
+      <h3 id="p-dl">Download</h3>
+      <a class="mcw-railbtn" id="download-btn" href="#"
+         data-fallback-url="https://github.com/vib-studios/vib-MC/releases/download/v0.0.7/vib-mc.jar">
+        <span id="download-label">Download .jar</span>
+      </a>
+      <p class="mcw-portal__note">Latest stable: <b id="version-stable">v0.0.7</b></p>
+      <p class="mcw-portal__note">Runs on Java 8 or newer. No installer, no launcher.</p>
+    </nav>
 
-    <!-- Hero: badge + headline left, stats card right -->
-    <section id="top" class="min-h-[calc(100dvh-4rem)] grid lg:grid-cols-[1.05fr_0.95fr] gap-12 lg:gap-14 items-center pt-14 lg:pt-4 pb-16">
+    <nav class="mcw-portal" aria-labelledby="p-src">
+      <h3 id="p-src">Source</h3>
+      <ul>
+        <li><a href="https://github.com/vib-studios/vib-MC" target="_blank" rel="noopener">Repository</a></li>
+        <li><a href="https://github.com/vib-studios/vib-MC/releases" target="_blank" rel="noopener">All releases</a></li>
+        <li><a href="https://github.com/vib-studios/vib-MC/issues" target="_blank" rel="noopener">Issue tracker</a></li>
+        <li><a href="https://github.com/vib-studios/vib-MC/blob/main/LICENSE" target="_blank" rel="noopener">Licence</a></li>
+      </ul>
+    </nav>
 
-      <div>
-        <span class="inline-flex items-center gap-1.5 rounded-full bg-ember-500/10 border border-ember-500/30 px-3 py-1 font-mono text-[11.5px] uppercase tracking-[0.14em] text-ember-400">
-          vibed into existence
-        </span>
+    <nav class="mcw-portal" aria-labelledby="p-ver">
+      <h3 id="p-ver">Supported clients</h3>
+      <p class="mcw-portal__note"><b>Java Edition</b><br>1.8 through 26.1.2</p>
+      <p class="mcw-portal__note">Not supported: 1.16, 1.16.1, 1.19.3</p>
+    </nav>
 
-        <h1 class="mt-5 text-[clamp(2.5rem,6.5vw,4rem)] font-bold tracking-[-0.03em] leading-[1.05] text-zinc-50">
-          A Minecraft server written <span class="text-ember-400">entirely by AI</span>
-        </h1>
-
-        <p class="mt-5 text-lg md:text-xl text-zinc-400 leading-relaxed max-w-[60ch]">
-          One prompt at a time. It connects, generates terrain, takes clients from Minecraft 1.8 through 26.1.2
-          (excluding 1.16, 1.16.1 and 1.19.3), and now has a real survival loop.
-        </p>
-
-        <div class="mt-8 flex flex-wrap items-center gap-4">
-          <a href="#" id="download-btn" data-fallback-url="https://github.com/vib-studios/vib-MC/releases/download/v0.0.7/vib-mc.jar"
-             class="btn btn-primary px-7 py-3.5">
-            <i class="ph ph-download" aria-hidden="true"></i>
-            <span id="download-label">Download .jar</span>
-          </a>
-          <a href="https://github.com/vib-studios/vib-MC" target="_blank" rel="noopener"
-             class="btn px-7 py-3.5">
-            view source
-            <i class="ph ph-arrow-up-right" aria-hidden="true"></i>
-          </a>
-        </div>
-      </div>
-
-      <!-- Hero stats card: real data from the GitHub API -->
-      <aside class="card rounded-2xl p-7 reveal is-visible">
-        <div class="flex items-center gap-3">
-          <span class="h-8 w-8 rounded-lg bg-ember-400 shadow-[inset_0_0_0_3px_oklch(0.13_0.02_40)]" aria-hidden="true"></span>
-          <div>
-            <p class="font-mono text-[12px] text-zinc-500">current release</p>
-            <p id="release-tag" class="font-mono text-lg font-bold text-zinc-100">v0.0.7</p>
-          </div>
-        </div>
-        <dl class="mt-6 grid grid-cols-3 gap-4">
-          <div>
-            <dt class="font-mono text-[11px] uppercase tracking-[0.12em] text-zinc-500">startup</dt>
-            <dd class="mt-1 font-mono text-xl font-bold text-zinc-100">~4s</dd>
-          </div>
-          <div>
-            <dt class="font-mono text-[11px] uppercase tracking-[0.12em] text-zinc-500">jar size</dt>
-            <dd id="release-size" class="mt-1 font-mono text-xl font-bold text-zinc-100">fetching...</dd>
-          </div>
-          <div>
-            <dt class="font-mono text-[11px] uppercase tracking-[0.12em] text-zinc-500">versions</dt>
-            <dd class="mt-1 font-mono text-xl font-bold text-zinc-100">1.8&ndash;26.1.2</dd>
-          </div>
-        </dl>
-        <p class="mt-6 pt-5 border-t border-zinc-800 text-[13px] leading-6 text-zinc-400 max-w-[50ch]" id="release-notes">
-          Fetching the latest release notes...
-        </p>
-      </aside>
-    </section>
-  </main>
-
-  <!-- Marquee (the only one on the page) -->
-  <div class="border-y border-zinc-800 bg-ember-400 overflow-hidden py-3" aria-hidden="true">
-    <div class="flex w-max motion-safe:animate-marquee gap-12 whitespace-nowrap font-mono text-[13px] uppercase tracking-[0.18em] text-void-950"
-         data-marquee>
-      <span>protocol 340</span><span class="text-void-950/50">/</span>
-      <span>minecraft 1.8 &rarr; 26.1.2</span><span class="text-void-950/50">/</span>
-      <span>java 8</span><span class="text-void-950/50">/</span>
-      <span>vibecoded</span><span class="text-void-950/50">/</span>
-      <span>no humans involved</span><span class="text-void-950/50">/</span>
-      <span>gpl-3.0</span><span class="text-void-950/50">/</span>
-      <span>protocol 340</span><span class="text-void-950/50">/</span>
-      <span>minecraft 1.8 &rarr; 26.1.2</span><span class="text-void-950/50">/</span>
-      <span>java 8</span><span class="text-void-950/50">/</span>
-      <span>vibecoded</span><span class="text-void-950/50">/</span>
-      <span>no humans involved</span><span class="text-void-950/50">/</span>
-      <span>gpl-3.0</span><span class="text-void-950/50">/</span>
-    </div>
   </div>
 
-  <main class="max-w-[1100px] mx-auto px-4 md:px-8">
+  <!-- ====================================================================
+       Article
+       ==================================================================== -->
+  <div class="mcw-body">
 
-    <!-- What actually works: honest status cards -->
-    <section id="features" class="pt-24 md:pt-28 pb-16">
-      <div class="max-w-2xl">
-        <h2 class="text-3xl md:text-4xl font-bold tracking-tight text-zinc-50 leading-tight">What actually works</h2>
-        <p class="mt-4 text-base text-zinc-400 leading-relaxed">
-          Pulled straight from the README, no marketing layer.
-          Ember means it works, hollow means it's being fought.
+    <div class="mcw-topbar">
+      <ul class="mcw-tabs">
+        <li><a class="mcw-tab is-active" href="index.html">Article</a></li>
+        <li><a class="mcw-tab" href="docs.html">Documentation</a></li>
+        <li><a class="mcw-tab" href="privacy.html">Privacy</a></li>
+        <li><a class="mcw-tab" href="terms.html">Terms</a></li>
+      </ul>
+
+      <div class="mcw-topbar__right">
+        <div class="mcw-tools">
+          <button type="button" class="mcw-tool" id="theme-toggle" aria-pressed="false">
+            <span class="mcw-tool__icon" aria-hidden="true"></span>
+            <span class="mcw-tool__label">Dark</span>
+          </button>
+          <a class="mcw-tool mcw-tool--skin" href="classic/index.html"
+             data-skin-switch="classic" title="Go back to the original vib-MC layout">Classic layout</a>
+        </div>
+
+        <form class="mcw-search" id="page-search" role="search">
+          <div class="mcw-search__row">
+            <label for="search-input" hidden>Search this page</label>
+            <input id="search-input" type="search" autocomplete="off" placeholder="Search this page">
+            <button type="submit">Go</button>
+          </div>
+          <p class="mcw-search__msg" id="search-msg" role="status"></p>
+        </form>
+      </div>
+    </div>
+
+    <article class="mcw-sheet">
+
+      <h1 class="mcw-title">vib-MC</h1>
+      <p class="mcw-subtitle">From the vib-MC Wiki, the documentation for a server nobody wrote by hand.</p>
+
+      <p class="mcw-hatnote">
+        This article covers the server software. For writing plugins against it,
+        see <a href="docs.html">vib-MC/Documentation</a>.
+      </p>
+
+      <div class="mcw-msgbox" role="note">
+        <span class="mcw-msgbox__icon" aria-hidden="true"></span>
+        <p>
+          <b>vib-MC is in early development and bugs can happen.</b>
+          If you find one, report it on the
+          <a class="mcw-ext" href="https://github.com/vib-studios/vib-MC/issues" target="_blank" rel="noopener">issue tracker</a>,
+          or use the <a href="#bugs">form near the bottom of this page</a>.
         </p>
       </div>
 
-      <div class="mt-10 grid md:grid-cols-2 lg:grid-cols-3 gap-5">
-        <div class="card rounded-2xl p-6 reveal">
-          <span class="inline-flex h-9 w-9 items-center justify-center rounded-xl bg-ember-400 text-void-950"><i class="ph ph-power text-lg" aria-hidden="true"></i></span>
-          <h3 class="mt-4 text-lg font-semibold tracking-tight text-zinc-50">Actually starts</h3>
-          <p class="mt-2 text-sm text-zinc-400 leading-relaxed">Runs every time.</p>
+      <!-- Infobox ------------------------------------------------------- -->
+      <aside class="mcw-infobox" aria-label="vib-MC at a glance">
+        <div class="mcw-infobox__title">vib-MC</div>
+        <div class="mcw-infobox__art">
+          <span class="mcw-jar" aria-hidden="true"></span>
+          <span class="mcw-infobox__caption">A single jar. That is the whole distribution.</span>
         </div>
-
-        <div class="card rounded-2xl p-6 reveal" style="--reveal-delay:60ms">
-          <span class="inline-flex h-9 w-9 items-center justify-center rounded-xl bg-ember-400 text-void-950"><i class="ph ph-users-three text-lg" aria-hidden="true"></i></span>
-          <h3 class="mt-4 text-lg font-semibold tracking-tight text-zinc-50">People can join</h3>
-          <p class="mt-2 text-sm text-zinc-400 leading-relaxed">Handshake, login, spawn &mdash; from Minecraft 1.8 to 26.1.2, minus 1.16, 1.16.1 and 1.19.3.</p>
+        <table>
+          <tbody>
+            <tr>
+              <th scope="row">Latest release</th>
+              <td id="release-tag">v0.0.7</td>
+            </tr>
+            <tr>
+              <th scope="row">Released</th>
+              <td id="release-date">fetching</td>
+            </tr>
+            <tr>
+              <th scope="row">Jar size</th>
+              <td id="release-size">fetching</td>
+            </tr>
+            <tr>
+              <th scope="row">Clients</th>
+              <td>Java Edition 1.8 to 26.1.2</td>
+            </tr>
+            <tr>
+              <th scope="row">Requires</th>
+              <td>Java 8 or newer</td>
+            </tr>
+            <tr>
+              <th scope="row">Default port</th>
+              <td>25565</td>
+            </tr>
+            <tr>
+              <th scope="row">Licence</th>
+              <td><a class="mcw-ext" href="https://github.com/vib-studios/vib-MC/blob/main/LICENSE" target="_blank" rel="noopener">GPL-3.0-or-later</a></td>
+            </tr>
+            <tr>
+              <th scope="row">Written by</th>
+              <td>Prompts, one at a time</td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="mcw-infobox__foot">
+          <b>Release notes</b>
+          <p id="release-notes" style="margin:.35em 0 0">Fetching the latest release notes.</p>
         </div>
+      </aside>
 
-        <div class="card rounded-2xl p-6 reveal" style="--reveal-delay:120ms">
-          <span class="inline-flex h-9 w-9 items-center justify-center rounded-xl bg-ember-400 text-void-950"><i class="ph ph-mountains text-lg" aria-hidden="true"></i></span>
-          <h3 class="mt-4 text-lg font-semibold tracking-tight text-zinc-50">Terrain generates</h3>
-          <p class="mt-2 text-sm text-zinc-400 leading-relaxed">Procedural, seeded, deterministic. Biomes, caves, ores, trees, a village at spawn.</p>
+      <!-- Lead ---------------------------------------------------------- -->
+      <p>
+        <b>vib-MC</b> is a Minecraft server written entirely by AI, one prompt at a time.
+        It connects, generates terrain, accepts clients from Minecraft 1.8 through 26.1.2
+        (excluding 1.16, 1.16.1 and 1.19.3), and has a working survival loop.
+        No human wrote a line of it.
+      </p>
+      <p>
+        The whole thing ships as one jar. Drop it in a folder, run it with Java 8 or newer,
+        and point a client at port 25565. There is no launcher, no installer and no
+        control panel. Everything below is taken from the repository README, without a
+        marketing layer on top: where something does not work yet, this page says so.
+      </p>
+
+      <!-- TOC ----------------------------------------------------------- -->
+      <nav class="mcw-toc" id="toc" data-collapsed="false" aria-labelledby="toc-head">
+        <div class="mcw-toc__head" id="toc-head">
+          Contents
+          <button type="button" class="mcw-toc__toggle" id="toc-toggle" aria-expanded="true" aria-controls="toc-list">[hide]</button>
         </div>
+        <ol id="toc-list">
+          <li><a href="#overview">Overview</a>
+            <ol>
+              <li><a href="#works">What works</a></li>
+              <li><a href="#missing">What does not</a></li>
+            </ol>
+          </li>
+          <li><a href="#comparison">Comparison with the vanilla server</a></li>
+          <li><a href="#installation">Installation</a>
+            <ol>
+              <li><a href="#requirements">Requirements</a></li>
+              <li><a href="#building">Building from source</a></li>
+              <li><a href="#first-run">First run</a></li>
+            </ol>
+          </li>
+          <li><a href="#commands">Commands</a></li>
+          <li><a href="#structure">Internal structure</a></li>
+          <li><a href="#history">Version history</a></li>
+          <li><a href="#bugs">Reporting bugs</a></li>
+          <li><a href="#contributors">Contributors</a></li>
+          <li><a href="#external">External links</a></li>
+        </ol>
+      </nav>
 
-        <div class="card rounded-2xl p-6 reveal" style="--reveal-delay:100ms">
-          <span class="inline-flex h-9 w-9 items-center justify-center rounded-xl bg-ember-400 text-void-950"><i class="ph ph-brackets-curly text-lg" aria-hidden="true"></i></span>
-          <h3 class="mt-4 text-lg font-semibold tracking-tight text-zinc-50">Plugin API</h3>
-          <p class="mt-2 text-sm text-zinc-400 leading-relaxed">The interface exists. Plugins are a separate problem.</p>
-        </div>
+      <!-- Overview ------------------------------------------------------ -->
+      <h2 id="overview">
+        <span class="mcw-editsection">[<a class="mcw-ext" href="https://github.com/vib-studios/vib-MC#readme" target="_blank" rel="noopener">edit</a>]</span>
+        Overview
+      </h2>
 
-        <div class="card rounded-2xl p-6 reveal" style="--reveal-delay:160ms">
-          <span class="inline-flex h-9 w-9 items-center justify-center rounded-xl border border-zinc-700 text-zinc-400"><i class="ph ph-cat text-lg" aria-hidden="true"></i></span>
-          <h3 class="mt-4 text-lg font-semibold tracking-tight text-zinc-50">Mobs</h3>
-          <p class="mt-2 text-sm text-zinc-400 leading-relaxed">None yet. Players are the only thing the server sends.</p>
-        </div>
+      <p>
+        vib-MC implements the Minecraft server protocol directly rather than patching the
+        vanilla jar. Networking runs through PacketEvents, which is what makes the wide
+        client range possible: a 1.8 client and a 26.1.2 client both get a version of the
+        world they understand.
+      </p>
 
-        <div class="card rounded-2xl p-6 reveal" style="--reveal-delay:220ms">
-          <span class="inline-flex h-9 w-9 items-center justify-center rounded-xl bg-ember-400 text-void-950"><i class="ph ph-flame text-lg" aria-hidden="true"></i></span>
-          <h3 class="mt-4 text-lg font-semibold tracking-tight text-zinc-50">Nether &amp; End</h3>
-          <p class="mt-2 text-sm text-zinc-400 leading-relaxed">Both real, both reachable. Build the portal yourself.</p>
-        </div>
-      </div>
-    </section>
+      <h3 id="works">What works</h3>
 
-    <!-- Checklist: vib-MC vs vanilla -->
-    <section id="checklist" class="pt-10 pb-16">
-      <div class="max-w-2xl">
-        <h2 class="text-3xl md:text-4xl font-bold tracking-tight text-zinc-50 leading-tight">Feature checklist</h2>
-        <p class="mt-4 text-base text-zinc-400 leading-relaxed">
-          Straight from the README, without a filter. Side by side with the vanilla server, because comparison is fair.
-        </p>
-      </div>
+      <dl>
+        <dt>It starts</dt>
+        <dd>Every time, in roughly four seconds on ordinary hardware.</dd>
 
-      <div class="card rounded-2xl overflow-x-auto mt-10 reveal">
-        <table class="w-full text-left font-mono text-[13.5px]">
+        <dt>People can join</dt>
+        <dd>Handshake, login and spawn, from Minecraft 1.8 to 26.1.2, minus 1.16, 1.16.1 and 1.19.3.</dd>
+
+        <dt>Terrain generates</dt>
+        <dd>Procedural, seeded and deterministic: biomes, caves, ores, trees and a village at spawn.</dd>
+
+        <dt>Survival</dt>
+        <dd>Blocks break with drops, tools and physics. Crafting, smelting, hunger, drowning,
+          storage and combat are all in.</dd>
+
+        <dt>The Nether and the End</dt>
+        <dd>Both dimensions are real and both are reachable. You build the portal yourself.</dd>
+
+        <dt>Plugin API</dt>
+        <dd>The interface exists and events fire. See <a href="docs.html">the documentation</a>.</dd>
+      </dl>
+
+      <h3 id="missing">What does not</h3>
+
+      <ul>
+        <li><b>Mobs.</b> None yet. Players are the only entities the server sends.</li>
+        <li><b>The dragon fight.</b> The End towers are scenery. Nothing spawns on them.</li>
+        <li><b>Three client versions.</b> 1.16, 1.16.1 and 1.19.3 are not supported and are
+          unlikely to be soon.</li>
+      </ul>
+
+      <!-- Comparison ---------------------------------------------------- -->
+      <h2 id="comparison">
+        <span class="mcw-editsection">[<a class="mcw-ext" href="https://github.com/vib-studios/vib-MC#readme" target="_blank" rel="noopener">edit</a>]</span>
+        Comparison with the vanilla server
+      </h2>
+
+      <p>
+        Side by side with Mojang's server jar, because the comparison is the honest way to
+        describe what state this is in.
+      </p>
+
+      <div class="mcw-scroll">
+        <table class="mcw-table mcw-table--wide">
+          <caption>Feature support as of v0.0.7.</caption>
           <thead>
-            <tr class="border-b border-zinc-800 bg-void-800/60 text-[12px] uppercase tracking-[0.12em] text-zinc-500">
-              <th class="px-5 py-3 font-bold">feature</th>
-              <th class="px-5 py-3 font-bold text-ember-400">vib-MC</th>
-              <th class="px-5 py-3 font-bold">vanilla</th>
+            <tr>
+              <th scope="col">Feature</th>
+              <th scope="col">vib-MC</th>
+              <th scope="col">Vanilla</th>
             </tr>
           </thead>
-          <tbody class="divide-y divide-zinc-800/80">
+          <tbody>
             <tr>
-              <td class="px-5 py-3.5 font-semibold text-zinc-100">Actually starts</td>
-              <td class="px-5 py-3.5 text-ember-400"><i class="ph ph-check text-base" aria-hidden="true"></i></td>
-              <td class="px-5 py-3.5 text-zinc-400"><i class="ph ph-check text-base" aria-hidden="true"></i></td>
+              <th scope="row">Server starts</th>
+              <td class="mcw-yes">Yes</td>
+              <td class="mcw-yes">Yes</td>
             </tr>
             <tr>
-              <td class="px-5 py-3.5 font-semibold text-zinc-100">People can join</td>
-              <td class="px-5 py-3.5 text-ember-400"><i class="ph ph-check text-base" aria-hidden="true"></i></td>
-              <td class="px-5 py-3.5 text-zinc-400"><i class="ph ph-check text-base" aria-hidden="true"></i></td>
+              <th scope="row">Players can join</th>
+              <td class="mcw-yes">Yes</td>
+              <td class="mcw-yes">Yes</td>
             </tr>
             <tr>
-              <td class="px-5 py-3.5 font-semibold text-zinc-100">Terrain renders</td>
-              <td class="px-5 py-3.5 text-ember-400"><i class="ph ph-check text-base" aria-hidden="true"></i></td>
-              <td class="px-5 py-3.5 text-zinc-400"><i class="ph ph-check text-base" aria-hidden="true"></i></td>
+              <th scope="row">Terrain renders</th>
+              <td class="mcw-yes">Yes</td>
+              <td class="mcw-yes">Yes</td>
             </tr>
             <tr>
-              <td class="px-5 py-3.5 font-semibold text-zinc-100">Camera moves</td>
-              <td class="px-5 py-3.5 text-ember-400"><i class="ph ph-check text-base" aria-hidden="true"></i></td>
-              <td class="px-5 py-3.5 text-zinc-400"><i class="ph ph-check text-base" aria-hidden="true"></i></td>
+              <th scope="row">Movement and camera</th>
+              <td class="mcw-yes">Yes</td>
+              <td class="mcw-yes">Yes</td>
             </tr>
             <tr>
-              <td class="px-5 py-3.5 font-semibold text-zinc-100">Nether &amp; End</td>
-              <td class="px-5 py-3.5 text-ember-400"><i class="ph ph-check text-base" aria-hidden="true"></i></td>
-              <td class="px-5 py-3.5 text-zinc-400"><i class="ph ph-check text-base" aria-hidden="true"></i></td>
+              <th scope="row">Lighting</th>
+              <td class="mcw-yes">Yes</td>
+              <td class="mcw-yes">Yes</td>
             </tr>
             <tr>
-              <td class="px-5 py-3.5 font-semibold text-zinc-100">Portals</td>
-              <td class="px-5 py-3.5"><span class="text-ember-400"><i class="ph ph-check text-base" aria-hidden="true"></i></span> <span class="text-zinc-500 ml-1">you build them</span></td>
-              <td class="px-5 py-3.5 text-zinc-400"><i class="ph ph-check text-base" aria-hidden="true"></i></td>
+              <th scope="row">Breaking blocks</th>
+              <td class="mcw-yes">Yes <span class="mcw-note">with drops, tools and physics</span></td>
+              <td class="mcw-yes">Yes</td>
             </tr>
             <tr>
-              <td class="px-5 py-3.5 font-semibold text-zinc-100">Lighting</td>
-              <td class="px-5 py-3.5 text-ember-400"><i class="ph ph-check text-base" aria-hidden="true"></i></td>
-              <td class="px-5 py-3.5 text-zinc-400"><i class="ph ph-check text-base" aria-hidden="true"></i></td>
+              <th scope="row">Nether and End</th>
+              <td class="mcw-yes">Yes</td>
+              <td class="mcw-yes">Yes</td>
             </tr>
             <tr>
-              <td class="px-5 py-3.5 font-semibold text-zinc-100">Breaking blocks</td>
-              <td class="px-5 py-3.5"><span class="text-ember-400"><i class="ph ph-check text-base" aria-hidden="true"></i></span> <span class="text-zinc-500 ml-1">with drops, tools and physics</span></td>
-              <td class="px-5 py-3.5 text-zinc-400"><i class="ph ph-check text-base" aria-hidden="true"></i></td>
+              <th scope="row">Portals</th>
+              <td class="mcw-partial">Partial <span class="mcw-note">you build them, nothing generates one</span></td>
+              <td class="mcw-yes">Yes</td>
             </tr>
             <tr>
-              <td class="px-5 py-3.5 font-semibold text-zinc-100">Dragon fight</td>
-              <td class="px-5 py-3.5"><span class="text-zinc-600"><i class="ph ph-x text-base" aria-hidden="true"></i></span> <span class="text-zinc-500 ml-1">towers are scenery</span></td>
-              <td class="px-5 py-3.5 text-zinc-400"><i class="ph ph-check text-base" aria-hidden="true"></i></td>
+              <th scope="row">Mobs</th>
+              <td class="mcw-no">No</td>
+              <td class="mcw-yes">Yes</td>
             </tr>
             <tr>
-              <td class="px-5 py-3.5 font-semibold text-zinc-100">Written by humans</td>
-              <td class="px-5 py-3.5"><span class="text-zinc-600"><i class="ph ph-x text-base" aria-hidden="true"></i></span> <span class="text-zinc-500 ml-1">one prompt at a time</span></td>
-              <td class="px-5 py-3.5 text-zinc-400"><i class="ph ph-check text-base" aria-hidden="true"></i></td>
+              <th scope="row">Dragon fight</th>
+              <td class="mcw-no">No <span class="mcw-note">the towers are scenery</span></td>
+              <td class="mcw-yes">Yes</td>
             </tr>
             <tr>
-              <td class="px-5 py-3.5 font-semibold text-zinc-100">Working game</td>
-              <td class="px-5 py-3.5"><span class="text-zinc-600"><i class="ph ph-x text-base" aria-hidden="true"></i></span> <span class="text-zinc-500 ml-1">survival yes, mobs no</span></td>
-              <td class="px-5 py-3.5 text-zinc-400"><i class="ph ph-check text-base" aria-hidden="true"></i></td>
+              <th scope="row">Client version range</th>
+              <td class="mcw-yes">1.8 to 26.1.2 <span class="mcw-note">minus three versions</span></td>
+              <td class="mcw-note">One version per jar</td>
+            </tr>
+            <tr>
+              <th scope="row">Written by humans</th>
+              <td class="mcw-no">No</td>
+              <td class="mcw-yes">Yes</td>
             </tr>
           </tbody>
         </table>
       </div>
-    </section>
 
-    <!-- Quickstart -->
-    <section id="quickstart" class="py-10">
-      <div class="max-w-2xl">
-        <h2 class="text-3xl md:text-4xl font-bold tracking-tight text-zinc-50 leading-tight">Up and running in two commands</h2>
-        <p class="mt-4 text-base text-zinc-400 leading-relaxed">
-          Build with Gradle, drop the jar in a folder, run it. Server starts on port
-          25565 by default. Edit server.properties after the first run.
-        </p>
-      </div>
+      <!-- Installation -------------------------------------------------- -->
+      <h2 id="installation">
+        <span class="mcw-editsection">[<a class="mcw-ext" href="https://github.com/vib-studios/vib-MC#readme" target="_blank" rel="noopener">edit</a>]</span>
+        Installation
+      </h2>
 
-      <div class="card rounded-2xl overflow-hidden mt-10 reveal">
-        <div class="px-6 py-3 border-b border-zinc-800 bg-void-800/60 font-mono text-[12px] uppercase tracking-[0.12em] text-zinc-500">
-          quickstart
+      <h3 id="requirements">Requirements</h3>
+
+      <ul>
+        <li><b>Java 8 or newer.</b> Check with <code>java -version</code>. Releases before
+          v0.0.6 needed Java 21.</li>
+        <li><b>The vib-MC jar</b>, from the <a class="mcw-ext" href="https://github.com/vib-studios/vib-MC/releases" target="_blank" rel="noopener">releases page</a>,
+          or built yourself.</li>
+        <li><b>A Minecraft client</b> on any supported version.</li>
+        <li><b>A JDK</b>, only if you intend to build the server or write plugins.</li>
+      </ul>
+
+      <h3 id="building">Building from source</h3>
+
+      <p>Two commands. The jar lands in <code>build/libs/</code>.</p>
+
+      <div class="mcw-codebox">
+        <div class="mcw-codebox__head">
+          <span>Terminal</span>
+          <button type="button" class="mcw-codebox__copy" id="copy-btn"><span id="copy-label">copy commands</span></button>
         </div>
-        <pre class="p-6 font-mono text-[13.5px] leading-7 text-zinc-300 overflow-x-auto"><code><span class="text-zinc-600">$</span> ./gradlew build
-<span class="text-zinc-600">$</span> java -jar build/libs/vib-mc.jar</code></pre>
-        <button id="copy-btn" class="w-full border-t border-zinc-800 px-6 py-3 font-mono text-[12px] uppercase tracking-[0.12em] text-zinc-500 hover:text-ember-400 hover:bg-ember-500/10 transition-colors flex items-center justify-center gap-2">
-          <span id="copy-label">copy commands</span>
-        </button>
-      </div>
-    </section>
-
-    <!-- Commands -->
-    <section id="commands" class="py-10">
-      <div class="max-w-2xl">
-        <h2 class="text-3xl md:text-4xl font-bold tracking-tight text-zinc-50 leading-tight">Slash commands</h2>
-        <p class="mt-4 text-base text-zinc-400 leading-relaxed">
-          The full command surface, short and honest. Click one to copy it.
-        </p>
-      </div>
-      <div class="mt-8 flex flex-wrap gap-3 font-mono text-[13px]">
-        <button class="copy-cmd reveal btn px-4 py-2 rounded-full">/help</button>
-        <button class="copy-cmd reveal btn px-4 py-2 rounded-full" style="--reveal-delay:40ms">/tp</button>
-        <button class="copy-cmd reveal btn px-4 py-2 rounded-full" style="--reveal-delay:80ms">/gamemode</button>
-        <button class="copy-cmd reveal btn px-4 py-2 rounded-full" style="--reveal-delay:120ms">/time</button>
-        <button class="copy-cmd reveal btn px-4 py-2 rounded-full" style="--reveal-delay:160ms">/weather</button>
-        <button class="copy-cmd reveal btn px-4 py-2 rounded-full" style="--reveal-delay:200ms">/give</button>
-        <button class="copy-cmd reveal btn px-4 py-2 rounded-full" style="--reveal-delay:240ms">/kill</button>
-        <button class="copy-cmd reveal btn px-4 py-2 rounded-full" style="--reveal-delay:280ms">/say</button>
-        <button class="copy-cmd reveal btn px-4 py-2 rounded-full" style="--reveal-delay:320ms">/seed</button>
-        <button class="copy-cmd reveal btn px-4 py-2 rounded-full" style="--reveal-delay:360ms">/save-all</button>
-        <button class="copy-cmd reveal btn px-4 py-2 rounded-full" style="--reveal-delay:400ms">/save-on</button>
-        <button class="copy-cmd reveal btn px-4 py-2 rounded-full" style="--reveal-delay:440ms">/save-off</button>
-        <button class="copy-cmd reveal btn px-4 py-2 rounded-full" style="--reveal-delay:480ms">/stop</button>
-        <button class="copy-cmd reveal btn px-4 py-2 rounded-full" style="--reveal-delay:520ms">/list</button>
-        <button class="copy-cmd reveal btn px-4 py-2 rounded-full" style="--reveal-delay:560ms">/op</button>
-        <button class="copy-cmd reveal btn px-4 py-2 rounded-full" style="--reveal-delay:600ms">/deop</button>
-        <button class="copy-cmd reveal btn px-4 py-2 rounded-full" style="--reveal-delay:640ms">/kick</button>
-        <button class="copy-cmd reveal btn px-4 py-2 rounded-full" style="--reveal-delay:680ms">/dimension</button>
-      </div>
-    </section>
-
-    <!-- Architecture -->
-    <section class="py-10">
-      <div class="grid lg:grid-cols-2 gap-10 items-start">
-        <div class="reveal">
-          <h2 class="text-3xl md:text-4xl font-bold tracking-tight text-zinc-50 leading-tight">Internal structure</h2>
-          <p class="mt-4 text-base text-zinc-400 leading-relaxed max-w-[65ch]">
-            Fourteen packages, zero humans. The whole thing was coaxed into existence
-            with prompts, then patched with more prompts.
-          </p>
-          <p class="mt-5 font-mono text-[13px] text-zinc-500">
-            requires <span class="text-zinc-200 font-bold">java 8</span> or newer
-          </p>
-        </div>
-        <div class="card rounded-2xl p-6 font-mono text-[13px] leading-8 text-zinc-400 overflow-x-auto reveal" style="--reveal-delay:100ms">
-<pre>net.vibmc
-├─ server          makes it go
-├─ network         talks to minecraft
-├─ world           blocks and stuff
-├─ world.gen       makes the ground
-├─ world.storage   saves the ground
-├─ world.structure villages and trees
-├─ entity          things that move
-├─ player          the people
-├─ inventory       slots and windows
-├─ crafting        recipes and smelting
-├─ registry        minecraft data
-├─ plugin          mod support
-├─ command         slash commands
-└─ permission      who can do what</pre>
-        </div>
-      </div>
-    </section>
-
-    <!-- Releases -->
-    <section id="releases" class="py-10 pb-20">
-      <div class="max-w-2xl">
-        <h2 class="text-3xl md:text-4xl font-bold tracking-tight text-zinc-50 leading-tight">Releases</h2>
-        <p class="mt-4 text-base text-zinc-400 leading-relaxed">
-          First experimental server, then multi-version networking, then survival. Every jar, in the order it was vibed.
-        </p>
-      </div>
-      <div class="mt-10 grid lg:grid-cols-3 gap-5">
-
-        <div class="card rounded-2xl p-6 flex flex-col reveal" style="--reveal-delay:100ms">
-          <div class="flex items-center gap-2 font-mono text-[11.5px] uppercase tracking-[0.12em] text-zinc-500">
-            <span>v0.0.1</span><span class="text-zinc-700">/</span><span>oldest</span>
-          </div>
-          <p class="mt-3 text-sm text-zinc-400 leading-relaxed">First breath. One client version, terrain generates, nobody knows where.</p>
-          <p class="mt-4 font-mono text-[12px] text-zinc-600">requires java 21+</p>
-          <a href="https://github.com/vib-studios/vib-MC/releases/tag/Alpha" target="_blank" rel="noopener"
-             class="mt-auto pt-5 font-mono text-[12.5px] font-bold text-zinc-400 hover:text-ember-400 transition-colors inline-flex items-center gap-1.5">releases <i class="ph ph-arrow-up-right text-sm" aria-hidden="true"></i></a>
-        </div>
-
-        <div class="rounded-2xl p-6 flex flex-col bg-ember-400 text-void-950 reveal" style="--reveal-delay:100ms">
-          <div class="flex items-center gap-2 font-mono text-[11.5px] uppercase tracking-[0.12em] text-void-950/70">
-            <span id="version-stable">v0.0.7</span><span class="text-void-950/40">/</span><span>latest stable</span>
-          </div>
-          <p class="mt-3 text-sm text-void-950/80 leading-relaxed">The one you want. Blocks drop, physics react, and you can craft, smelt, starve, drown, store items and fight &mdash; on Minecraft 1.8 through 26.1.2, minus 1.16, 1.16.1 and 1.19.3.</p>
-          <p class="mt-4 font-mono text-[12px] text-void-950/70">requires java 8+</p>
-          <a href="https://github.com/vib-studios/vib-MC/releases/tag/v0.0.7" target="_blank" rel="noopener"
-             class="mt-auto pt-5 font-mono text-[12.5px] font-bold text-void-950 underline underline-offset-4 inline-flex items-center gap-1.5">releases <i class="ph ph-arrow-up-right text-sm" aria-hidden="true"></i></a>
-        </div>
-
-        <div class="card rounded-2xl p-6 flex flex-col reveal" style="--reveal-delay:100ms">
-          <div class="flex items-center gap-2 font-mono text-[11.5px] uppercase tracking-[0.12em] text-zinc-500">
-            <span>v0.0.6-hotfix.1</span><span class="text-zinc-700">/</span><span>previous</span>
-          </div>
-          <p class="mt-3 text-sm text-zinc-400 leading-relaxed">The multi-version milestone. PacketEvents networking opened the doors to 1.8 through 26.1.2, with spawns and villages kept out of the water.</p>
-          <p class="mt-4 font-mono text-[12px] text-zinc-600">requires java 8+</p>
-          <a href="https://github.com/vib-studios/vib-MC/releases/tag/v0.0.6-hotfix.1" target="_blank" rel="noopener"
-             class="mt-auto pt-5 font-mono text-[12.5px] font-bold text-zinc-400 hover:text-ember-400 transition-colors inline-flex items-center gap-1.5">releases <i class="ph ph-arrow-up-right text-sm" aria-hidden="true"></i></a>
-        </div>
-
-      </div>
-    </section>
-
-    <!-- Bug report -->
-    <section id="bug-report" class="py-10 pb-20">
-      <div class="max-w-2xl">
-        <h2 class="text-3xl md:text-4xl font-bold tracking-tight text-zinc-50 leading-tight">Report a bug</h2>
-        <p class="mt-4 text-base text-zinc-400 leading-relaxed">
-          Fill this in and it opens a GitHub issue with everything we need.
-          Keep it short, we are also an AI.
-        </p>
+<pre><code><span class="mcw-prompt">$ </span>./gradlew build
+<span class="mcw-prompt">$ </span>java -jar build/libs/vib-mc.jar</code></pre>
       </div>
 
-      <form id="bug-form" class="card rounded-2xl mt-10 p-6 md:p-8 reveal space-y-6">
-        <div>
-          <label for="bug-title" class="block font-mono text-[12px] uppercase tracking-[0.12em] text-zinc-400 mb-2">1. the issue in one short sentence</label>
+      <h3 id="first-run">First run</h3>
+
+      <p>
+        The server binds to port <code>25565</code> and writes a <code>server.properties</code>
+        next to the jar on first start. Stop it, edit that file, start it again: values are
+        read at boot only. World data is written to <code>world/</code>,
+        <code>world_nether/</code> and <code>world_the_end/</code>.
+      </p>
+
+      <!-- Commands ------------------------------------------------------ -->
+      <h2 id="commands">
+        <span class="mcw-editsection">[<a class="mcw-ext" href="https://github.com/vib-studios/vib-MC#readme" target="_blank" rel="noopener">edit</a>]</span>
+        Commands
+      </h2>
+
+      <p>
+        The full command surface. Operators are listed in <code>ops.json</code>.
+        Select any command below to copy it.
+      </p>
+
+      <ul class="mcw-cmds">
+        <li><button type="button" class="copy-cmd">/help</button></li>
+        <li><button type="button" class="copy-cmd">/tp</button></li>
+        <li><button type="button" class="copy-cmd">/gamemode</button></li>
+        <li><button type="button" class="copy-cmd">/time</button></li>
+        <li><button type="button" class="copy-cmd">/weather</button></li>
+        <li><button type="button" class="copy-cmd">/give</button></li>
+        <li><button type="button" class="copy-cmd">/kill</button></li>
+        <li><button type="button" class="copy-cmd">/say</button></li>
+        <li><button type="button" class="copy-cmd">/seed</button></li>
+        <li><button type="button" class="copy-cmd">/save-all</button></li>
+        <li><button type="button" class="copy-cmd">/save-on</button></li>
+        <li><button type="button" class="copy-cmd">/save-off</button></li>
+        <li><button type="button" class="copy-cmd">/stop</button></li>
+        <li><button type="button" class="copy-cmd">/list</button></li>
+        <li><button type="button" class="copy-cmd">/op</button></li>
+        <li><button type="button" class="copy-cmd">/deop</button></li>
+        <li><button type="button" class="copy-cmd">/kick</button></li>
+        <li><button type="button" class="copy-cmd">/dimension</button></li>
+      </ul>
+
+      <!-- Structure ----------------------------------------------------- -->
+      <h2 id="structure">
+        <span class="mcw-editsection">[<a class="mcw-ext" href="https://github.com/vib-studios/vib-MC/tree/main/src" target="_blank" rel="noopener">edit</a>]</span>
+        Internal structure
+      </h2>
+
+      <p>
+        Fourteen packages under <code>net.vibmc</code>, coaxed into existence with prompts and
+        then patched with more prompts.
+      </p>
+
+<pre><code>net.vibmc
+├─ server          <span class="mcw-com">makes it go</span>
+├─ network         <span class="mcw-com">talks to minecraft</span>
+├─ world           <span class="mcw-com">blocks and stuff</span>
+├─ world.gen       <span class="mcw-com">makes the ground</span>
+├─ world.storage   <span class="mcw-com">saves the ground</span>
+├─ world.structure <span class="mcw-com">villages and trees</span>
+├─ entity          <span class="mcw-com">things that move</span>
+├─ player          <span class="mcw-com">the people</span>
+├─ inventory       <span class="mcw-com">slots and windows</span>
+├─ crafting        <span class="mcw-com">recipes and smelting</span>
+├─ registry        <span class="mcw-com">minecraft data</span>
+├─ plugin          <span class="mcw-com">mod support</span>
+├─ command         <span class="mcw-com">slash commands</span>
+└─ permission      <span class="mcw-com">who can do what</span></code></pre>
+
+      <!-- History ------------------------------------------------------- -->
+      <h2 id="history">
+        <span class="mcw-editsection">[<a class="mcw-ext" href="https://github.com/vib-studios/vib-MC/releases" target="_blank" rel="noopener">edit</a>]</span>
+        Version history
+      </h2>
+
+      <div class="mcw-scroll">
+        <table class="mcw-table mcw-table--wide">
+          <caption>Every published jar, oldest at the bottom.</caption>
+          <thead>
+            <tr>
+              <th scope="col">Version</th>
+              <th scope="col">Java</th>
+              <th scope="col">Notes</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th scope="row"><a class="mcw-ext" href="https://github.com/vib-studios/vib-MC/releases/tag/v0.0.7" target="_blank" rel="noopener">v0.0.7</a>
+                <span class="mcw-note">current</span></th>
+              <td>8+</td>
+              <td>Survival. Blocks drop, physics react, and you can craft, smelt, starve,
+                drown, store items and fight.</td>
+            </tr>
+            <tr>
+              <th scope="row"><a class="mcw-ext" href="https://github.com/vib-studios/vib-MC/releases/tag/v0.0.6-hotfix.1" target="_blank" rel="noopener">v0.0.6-hotfix.1</a></th>
+              <td>8+</td>
+              <td>The multi-version milestone. PacketEvents networking opened the door to
+                1.8 through 26.1.2, with spawns and villages kept out of the water.</td>
+            </tr>
+            <tr>
+              <th scope="row"><a class="mcw-ext" href="https://github.com/vib-studios/vib-MC/releases/tag/Alpha" target="_blank" rel="noopener">v0.0.1</a>
+                <span class="mcw-note">oldest</span></th>
+              <td>21+</td>
+              <td>First breath. One client version, terrain generates, nobody knows where.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Bugs ---------------------------------------------------------- -->
+      <h2 id="bugs">
+        <span class="mcw-editsection">[<a class="mcw-ext" href="https://github.com/vib-studios/vib-MC/issues" target="_blank" rel="noopener">edit</a>]</span>
+        Reporting bugs
+      </h2>
+
+      <p>
+        Filling this in opens a pre-written GitHub issue with everything we need.
+        Keep it short: we are also an AI.
+      </p>
+
+      <form class="mcw-form" id="bug-form">
+        <div class="mcw-field">
+          <label for="bug-title">1. The issue in one sentence
+            <span class="mcw-field__hint">This becomes the issue title.</span>
+          </label>
           <input id="bug-title" name="title" type="text" required maxlength="90"
-                 class="w-full rounded-lg border border-zinc-700 bg-void-950 px-4 py-3 font-mono text-sm text-zinc-100 placeholder-zinc-600 focus:outline-none focus:border-ember-400 transition-colors"
-                 placeholder="e.g. server crashes when i use /give">
+                 placeholder="server crashes when i use /give">
         </div>
 
-        <div>
-          <label for="bug-what" class="block font-mono text-[12px] uppercase tracking-[0.12em] text-zinc-400 mb-2">2. what's the issue?</label>
+        <div class="mcw-field">
+          <label for="bug-what">2. What is the issue?
+            <span class="mcw-field__hint">What you saw, and what you expected instead.</span>
+          </label>
           <textarea id="bug-what" name="what" rows="3" required
-                    class="w-full rounded-lg border border-zinc-700 bg-void-950 px-4 py-3 font-mono text-sm text-zinc-100 placeholder-zinc-600 focus:outline-none focus:border-ember-400 transition-colors resize-y"
                     placeholder="what you saw, what you expected"></textarea>
         </div>
 
-        <div>
-          <label for="bug-steps" class="block font-mono text-[12px] uppercase tracking-[0.12em] text-zinc-400 mb-2">3. how did it occur?</label>
+        <div class="mcw-field">
+          <label for="bug-steps">3. How did it happen?
+            <span class="mcw-field__hint">Steps precise enough for us to reproduce it.</span>
+          </label>
           <textarea id="bug-steps" name="steps" rows="3" required
-                    class="w-full rounded-lg border border-zinc-700 bg-void-950 px-4 py-3 font-mono text-sm text-zinc-100 placeholder-zinc-600 focus:outline-none focus:border-ember-400 transition-colors resize-y"
                     placeholder="steps so we can replicate it"></textarea>
         </div>
 
-        <div class="grid md:grid-cols-2 gap-6">
-          <div>
-            <label for="bug-version" class="block font-mono text-[12px] uppercase tracking-[0.12em] text-zinc-400 mb-2">release version</label>
-            <input id="bug-version" name="version" type="text" value="v0.0.7"
-                   class="w-full rounded-lg border border-zinc-700 bg-void-950 px-4 py-3 font-mono text-sm text-zinc-100 placeholder-zinc-600 focus:outline-none focus:border-ember-400 transition-colors">
+        <div class="mcw-grid2">
+          <div class="mcw-field">
+            <label for="bug-version">Release version</label>
+            <input id="bug-version" name="version" type="text" value="v0.0.7">
           </div>
-          <div>
-            <label for="bug-log" class="block font-mono text-[12px] uppercase tracking-[0.12em] text-zinc-400 mb-2">server log output</label>
+          <div class="mcw-field">
+            <label for="bug-log">Server log output</label>
             <textarea id="bug-log" name="log" rows="4"
-                      class="w-full rounded-lg border border-zinc-700 bg-void-950 px-4 py-3 font-mono text-[12.5px] leading-relaxed text-zinc-100 placeholder-zinc-600 focus:outline-none focus:border-ember-400 transition-colors resize-y"
                       placeholder="paste the raw log output from the server console"></textarea>
           </div>
         </div>
 
-        <div>
-          <button type="submit" class="btn btn-primary px-6 py-3">
-            <i class="ph ph-bug" aria-hidden="true"></i>
-            open github issue
-          </button>
-        </div>
+        <button type="submit" class="mcw-btn">Open GitHub issue</button>
       </form>
-    </section>
 
-    <!-- CTA -->
-    <section class="pb-20">
-      <div class="rounded-2xl bg-ember-400 px-8 md:px-12 py-12 md:py-14 text-center reveal">
-        <h2 class="text-3xl md:text-4xl font-bold tracking-tight text-void-950 leading-tight">Ready to vibe?</h2>
-        <p class="mt-4 text-base md:text-lg text-void-950/75 leading-relaxed max-w-[55ch] mx-auto">
-          Download vib-MC, point almost any Minecraft client from 1.8 to 26.1.2 at it, and play survival
-          on a server written entirely by AI. No humans were involved in this decision.
-        </p>
-        <div class="mt-8 flex items-center justify-center">
-          <a href="#" id="download-btn-cta" data-fallback-url="https://github.com/vib-studios/vib-MC/releases/download/v0.0.7/vib-mc.jar"
-             class="btn px-8 py-3.5 bg-void-950 border-void-950 text-ember-400 hover:bg-void-900 hover:border-void-950 hover:text-ember-300">
-            <i class="ph ph-download" aria-hidden="true"></i>
-            <span>Download .jar</span>
-          </a>
-        </div>
-      </div>
-    </section>
-  </main>
+      <!-- Contributors -------------------------------------------------- -->
+      <h2 id="contributors">
+        <span class="mcw-editsection">[<a class="mcw-ext" href="https://github.com/vib-studios/vib-MC/graphs/contributors" target="_blank" rel="noopener">edit</a>]</span>
+        Contributors
+      </h2>
 
-  <footer class="border-t border-zinc-800/80">
-    <div class="max-w-[1100px] mx-auto px-4 md:px-8 py-10 flex flex-col gap-6">
-      <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
-        <div class="flex items-center gap-2.5">
-          <span class="h-5 w-5 rounded-[4px] bg-ember-400 shadow-[inset_0_0_0_2px_oklch(0.13_0.02_40)]" aria-hidden="true"></span>
-          <span class="font-pixel text-[11px] text-zinc-100">vib-MC</span>
-        </div>
-        <nav class="flex flex-wrap items-center gap-6 font-mono text-[12.5px] text-zinc-500">
-          <a href="https://github.com/vib-studios/vib-MC" target="_blank" rel="noopener" class="hover:text-zinc-100 transition-colors">github</a>
-          <a href="https://github.com/vib-studios/vib-MC/releases" target="_blank" rel="noopener" class="hover:text-zinc-100 transition-colors">releases ↗</a>
-          <a href="#bug-report" class="hover:text-zinc-100 transition-colors">report a bug</a>
-          <a href="#top" class="hover:text-zinc-100 transition-colors">back to top ↑</a>
-        </nav>
-      </div>
-      <div class="contrib-inline pt-6 border-t border-zinc-800/80" hidden>
-        <span class="contrib-inline__label">contributors</span>
+      <p>
+        The people who pointed the prompts somewhere useful. Pulled live from the
+        GitHub contributors endpoint.
+      </p>
+
+      <div class="contrib-inline" hidden>
+        <span class="contrib-inline__label">Commit authors on the default branch:</span>
         <ul class="contrib-inline__list" data-contributors></ul>
       </div>
-      <div class="pt-6 border-t border-zinc-800/80 flex flex-wrap items-center justify-between gap-3 font-mono text-[12px] text-zinc-600">
-        <p>Licensed <a href="https://github.com/vib-studios/vib-MC/blob/main/LICENSE" target="_blank" rel="noopener" class="hover:text-zinc-100 underline underline-offset-4">GPL-3.0-or-later</a>.</p>
-        <nav class="flex flex-wrap items-center gap-6">
-          <a href="privacy.html" class="hover:text-zinc-100 transition-colors">privacy</a>
-          <a href="terms.html" class="hover:text-zinc-100 transition-colors">terms</a>
-        </nav>
+
+      <!-- External ------------------------------------------------------ -->
+      <h2 id="external">
+        <span class="mcw-editsection">[<a class="mcw-ext" href="https://github.com/vib-studios/vib-MC" target="_blank" rel="noopener">edit</a>]</span>
+        External links
+      </h2>
+
+      <ul>
+        <li><a class="mcw-ext" href="https://github.com/vib-studios/vib-MC" target="_blank" rel="noopener">vib-MC on GitHub</a></li>
+        <li><a class="mcw-ext" href="https://github.com/vib-studios/vib-MC/releases" target="_blank" rel="noopener">Release archive</a></li>
+        <li><a class="mcw-ext" href="https://github.com/vib-studios/vib-MC/issues" target="_blank" rel="noopener">Issue tracker</a></li>
+        <li><a href="docs.html">Plugin documentation</a></li>
+        <li><a class="mcw-new" href="#">Protocol notes</a> <span class="mcw-note">(not written yet)</span></li>
+      </ul>
+
+      <div class="mcw-catlinks">
+        <b>Categories:</b>
+        <ul>
+          <li>Server software</li>
+          <li>Java Edition</li>
+          <li>GPL-3.0</li>
+          <li>Early development</li>
+        </ul>
       </div>
-    </div>
-  </footer>
 
+    </article>
 
-  <!-- Contributors: fixed rail on wide screens, footer list everywhere else.
-       Both mounts are filled by contributors.js. -->
-  <aside class="contrib-rail" aria-label="Contributors" hidden>
-    <div class="contrib-rail__panel" id="contrib-rail-panel">
-      <ul class="contrib-rail__list" data-contributors></ul>
-    </div>
-    <button type="button" class="contrib-rail__toggle" aria-expanded="true"
-            aria-controls="contrib-rail-panel" aria-label="Hide contributors">
-      <i class="ph ph-caret-right contrib-rail__caret" aria-hidden="true"></i>
-      <span class="contrib-rail__label">contributors</span>
-    </button>
-  </aside>
+    <footer class="mcw-footer">
+      <p>Content on this page is generated from the vib-MC repository README and the GitHub releases API.</p>
+      <p>vib-MC is licensed <a href="https://github.com/vib-studios/vib-MC/blob/main/LICENSE" target="_blank" rel="noopener">GPL-3.0-or-later</a>. Not an official Minecraft product. Not approved by or associated with Mojang or Microsoft.</p>
+      <ul>
+        <li><a href="index.html">Main article</a></li>
+        <li><a href="docs.html">Documentation</a></li>
+        <li><a href="#bugs">Report a bug</a></li>
+        <li><a href="privacy.html">Privacy</a></li>
+        <li><a href="terms.html">Terms</a></li>
+        <li><a href="#top">Back to top</a></li>
+        <li><a href="classic/index.html" data-skin-switch="classic">Classic layout</a></li>
+      </ul>
+    </footer>
 
-  <script src="website.js"></script>
-  <script src="contributors.js"></script>
+  </div>
+</div>
+
+<script src="wiki.js"></script>
+<script src="website.js"></script>
+<script src="contributors.js"></script>
 </body>
 </html>

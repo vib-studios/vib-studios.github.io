@@ -1,0 +1,510 @@
+﻿<!doctype html>
+<html lang="en" data-skin="classic">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>vib-MC - A Minecraft server, vibed into existence</title>
+  <meta name="description" content="vib-MC is a Minecraft server written entirely by AI, one prompt at a time. Minecraft 1.8 through 26.1.2 (excluding 1.16, 1.16.1 and 1.19.3), with a real survival loop. Download the latest .jar release.">
+  <meta property="og:title" content="vib-MC">
+  <meta property="og:description" content="A Minecraft server written entirely by AI, one prompt at a time. Minecraft 1.8 through 26.1.2, survival included. java 8+.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="index.html">
+  <meta property="og:image" content="../files/og-vibmc.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="theme-color" content="#f97316">
+  <link rel="icon" href="../favicon.ico" sizes="any">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 3 3' shape-rendering='crispEdges'%3E%3Cpath fill='%23f97316' d='M0 0h3v3H0z'/%3E%3Cpath fill='%23d9600c' d='M1 0h1v1H1zM0 1h1v1H0zM2 1h1v1H2zM1 2h1v1H1z'/%3E%3Cpath fill='%230f0f11' d='M1 1h1v1H1z'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="../styles.css">
+  <script src="../skin.js"></script>
+  <link rel="stylesheet" href="../extras.css">
+</head>
+<body class="min-h-[100dvh] font-sans antialiased bg-void-950 text-zinc-200 overflow-x-hidden selection:bg-ember-400 selection:text-void-950">
+
+  <!-- Warning banner: early dev notice -->
+  <div class="bg-ember-500/10 border-b border-ember-500/20">
+    <div class="max-w-[1100px] mx-auto px-4 md:px-8 py-2.5 flex flex-wrap items-center justify-center gap-2 font-mono text-[12.5px] text-zinc-400">
+      <i class="ph ph-warning text-ember-400 shrink-0" aria-hidden="true"></i>
+      <span>vib-MC is in early development and bugs can happen. If you find any, report them on our</span>
+      <a href="https://github.com/vib-studios/vib-MC/issues" target="_blank" rel="noopener" class="text-ember-400 font-bold underline underline-offset-4 hover:text-ember-300">GitHub</a>.
+    </div>
+  </div>
+
+  <!-- Header: wordmark, nav, docs -->
+  <header class="max-w-[1100px] mx-auto px-4 md:px-8 h-16 flex items-center justify-between border-b border-zinc-800/80">
+    <a href="#top" class="flex items-center gap-2.5">
+      <span class="h-5 w-5 rounded-[4px] bg-ember-400 shadow-[inset_0_0_0_2px_oklch(0.13_0.02_40)]" aria-hidden="true"></span>
+      <span class="font-pixel text-[11px] text-zinc-100">vib-MC</span>
+    </a>
+    <nav class="hidden md:flex items-center gap-7 font-mono text-[13px] text-zinc-400">
+      <a href="#features" class="hover:text-zinc-100 transition-colors">features</a>
+      <a href="#checklist" class="hover:text-zinc-100 transition-colors">checklist</a>
+      <a href="#quickstart" class="hover:text-zinc-100 transition-colors">quickstart</a>
+      <a href="#commands" class="hover:text-zinc-100 transition-colors">commands</a>
+      <a href="#releases" class="hover:text-zinc-100 transition-colors">releases</a>
+    </nav>
+    <a href="docs.html" class="btn px-4 py-1.5 text-[13px]">docs</a>
+  </header>
+
+  <main class="max-w-[1100px] mx-auto px-4 md:px-8">
+
+    <!-- Hero: badge + headline left, stats card right -->
+    <section id="top" class="min-h-[calc(100dvh-4rem)] grid lg:grid-cols-[1.05fr_0.95fr] gap-12 lg:gap-14 items-center pt-14 lg:pt-4 pb-16">
+
+      <div>
+        <span class="inline-flex items-center gap-1.5 rounded-full bg-ember-500/10 border border-ember-500/30 px-3 py-1 font-mono text-[11.5px] uppercase tracking-[0.14em] text-ember-400">
+          vibed into existence
+        </span>
+
+        <h1 class="mt-5 text-[clamp(2.5rem,6.5vw,4rem)] font-bold tracking-[-0.03em] leading-[1.05] text-zinc-50">
+          A Minecraft server written <span class="text-ember-400">entirely by AI</span>
+        </h1>
+
+        <p class="mt-5 text-lg md:text-xl text-zinc-400 leading-relaxed max-w-[60ch]">
+          One prompt at a time. It connects, generates terrain, takes clients from Minecraft 1.8 through 26.1.2
+          (excluding 1.16, 1.16.1 and 1.19.3), and now has a real survival loop.
+        </p>
+
+        <div class="mt-8 flex flex-wrap items-center gap-4">
+          <a href="#" id="download-btn" data-fallback-url="https://github.com/vib-studios/vib-MC/releases/download/v0.0.7/vib-mc.jar"
+             class="btn btn-primary px-7 py-3.5">
+            <i class="ph ph-download" aria-hidden="true"></i>
+            <span id="download-label">Download .jar</span>
+          </a>
+          <a href="https://github.com/vib-studios/vib-MC" target="_blank" rel="noopener"
+             class="btn px-7 py-3.5">
+            view source
+            <i class="ph ph-arrow-up-right" aria-hidden="true"></i>
+          </a>
+        </div>
+      </div>
+
+      <!-- Hero stats card: real data from the GitHub API -->
+      <aside class="card rounded-2xl p-7 reveal is-visible">
+        <div class="flex items-center gap-3">
+          <span class="h-8 w-8 rounded-lg bg-ember-400 shadow-[inset_0_0_0_3px_oklch(0.13_0.02_40)]" aria-hidden="true"></span>
+          <div>
+            <p class="font-mono text-[12px] text-zinc-500">current release</p>
+            <p id="release-tag" class="font-mono text-lg font-bold text-zinc-100">v0.0.7</p>
+          </div>
+        </div>
+        <dl class="mt-6 grid grid-cols-3 gap-4">
+          <div>
+            <dt class="font-mono text-[11px] uppercase tracking-[0.12em] text-zinc-500">startup</dt>
+            <dd class="mt-1 font-mono text-xl font-bold text-zinc-100">~4s</dd>
+          </div>
+          <div>
+            <dt class="font-mono text-[11px] uppercase tracking-[0.12em] text-zinc-500">jar size</dt>
+            <dd id="release-size" class="mt-1 font-mono text-xl font-bold text-zinc-100">fetching...</dd>
+          </div>
+          <div>
+            <dt class="font-mono text-[11px] uppercase tracking-[0.12em] text-zinc-500">versions</dt>
+            <dd class="mt-1 font-mono text-xl font-bold text-zinc-100">1.8&ndash;26.1.2</dd>
+          </div>
+        </dl>
+        <p class="mt-6 pt-5 border-t border-zinc-800 text-[13px] leading-6 text-zinc-400 max-w-[50ch]" id="release-notes">
+          Fetching the latest release notes...
+        </p>
+      </aside>
+    </section>
+  </main>
+
+  <!-- Marquee (the only one on the page) -->
+  <div class="border-y border-zinc-800 bg-ember-400 overflow-hidden py-3" aria-hidden="true">
+    <div class="flex w-max motion-safe:animate-marquee gap-12 whitespace-nowrap font-mono text-[13px] uppercase tracking-[0.18em] text-void-950"
+         data-marquee>
+      <span>protocol 340</span><span class="text-void-950/50">/</span>
+      <span>minecraft 1.8 &rarr; 26.1.2</span><span class="text-void-950/50">/</span>
+      <span>java 8</span><span class="text-void-950/50">/</span>
+      <span>vibecoded</span><span class="text-void-950/50">/</span>
+      <span>no humans involved</span><span class="text-void-950/50">/</span>
+      <span>gpl-3.0</span><span class="text-void-950/50">/</span>
+      <span>protocol 340</span><span class="text-void-950/50">/</span>
+      <span>minecraft 1.8 &rarr; 26.1.2</span><span class="text-void-950/50">/</span>
+      <span>java 8</span><span class="text-void-950/50">/</span>
+      <span>vibecoded</span><span class="text-void-950/50">/</span>
+      <span>no humans involved</span><span class="text-void-950/50">/</span>
+      <span>gpl-3.0</span><span class="text-void-950/50">/</span>
+    </div>
+  </div>
+
+  <main class="max-w-[1100px] mx-auto px-4 md:px-8">
+
+    <!-- What actually works: honest status cards -->
+    <section id="features" class="pt-24 md:pt-28 pb-16">
+      <div class="max-w-2xl">
+        <h2 class="text-3xl md:text-4xl font-bold tracking-tight text-zinc-50 leading-tight">What actually works</h2>
+        <p class="mt-4 text-base text-zinc-400 leading-relaxed">
+          Pulled straight from the README, no marketing layer.
+          Ember means it works, hollow means it's being fought.
+        </p>
+      </div>
+
+      <div class="mt-10 grid md:grid-cols-2 lg:grid-cols-3 gap-5">
+        <div class="card rounded-2xl p-6 reveal">
+          <span class="inline-flex h-9 w-9 items-center justify-center rounded-xl bg-ember-400 text-void-950"><i class="ph ph-power text-lg" aria-hidden="true"></i></span>
+          <h3 class="mt-4 text-lg font-semibold tracking-tight text-zinc-50">Actually starts</h3>
+          <p class="mt-2 text-sm text-zinc-400 leading-relaxed">Runs every time.</p>
+        </div>
+
+        <div class="card rounded-2xl p-6 reveal" style="--reveal-delay:60ms">
+          <span class="inline-flex h-9 w-9 items-center justify-center rounded-xl bg-ember-400 text-void-950"><i class="ph ph-users-three text-lg" aria-hidden="true"></i></span>
+          <h3 class="mt-4 text-lg font-semibold tracking-tight text-zinc-50">People can join</h3>
+          <p class="mt-2 text-sm text-zinc-400 leading-relaxed">Handshake, login, spawn &mdash; from Minecraft 1.8 to 26.1.2, minus 1.16, 1.16.1 and 1.19.3.</p>
+        </div>
+
+        <div class="card rounded-2xl p-6 reveal" style="--reveal-delay:120ms">
+          <span class="inline-flex h-9 w-9 items-center justify-center rounded-xl bg-ember-400 text-void-950"><i class="ph ph-mountains text-lg" aria-hidden="true"></i></span>
+          <h3 class="mt-4 text-lg font-semibold tracking-tight text-zinc-50">Terrain generates</h3>
+          <p class="mt-2 text-sm text-zinc-400 leading-relaxed">Procedural, seeded, deterministic. Biomes, caves, ores, trees, a village at spawn.</p>
+        </div>
+
+        <div class="card rounded-2xl p-6 reveal" style="--reveal-delay:100ms">
+          <span class="inline-flex h-9 w-9 items-center justify-center rounded-xl bg-ember-400 text-void-950"><i class="ph ph-brackets-curly text-lg" aria-hidden="true"></i></span>
+          <h3 class="mt-4 text-lg font-semibold tracking-tight text-zinc-50">Plugin API</h3>
+          <p class="mt-2 text-sm text-zinc-400 leading-relaxed">The interface exists. Plugins are a separate problem.</p>
+        </div>
+
+        <div class="card rounded-2xl p-6 reveal" style="--reveal-delay:160ms">
+          <span class="inline-flex h-9 w-9 items-center justify-center rounded-xl border border-zinc-700 text-zinc-400"><i class="ph ph-cat text-lg" aria-hidden="true"></i></span>
+          <h3 class="mt-4 text-lg font-semibold tracking-tight text-zinc-50">Mobs</h3>
+          <p class="mt-2 text-sm text-zinc-400 leading-relaxed">None yet. Players are the only thing the server sends.</p>
+        </div>
+
+        <div class="card rounded-2xl p-6 reveal" style="--reveal-delay:220ms">
+          <span class="inline-flex h-9 w-9 items-center justify-center rounded-xl bg-ember-400 text-void-950"><i class="ph ph-flame text-lg" aria-hidden="true"></i></span>
+          <h3 class="mt-4 text-lg font-semibold tracking-tight text-zinc-50">Nether &amp; End</h3>
+          <p class="mt-2 text-sm text-zinc-400 leading-relaxed">Both real, both reachable. Build the portal yourself.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Checklist: vib-MC vs vanilla -->
+    <section id="checklist" class="pt-10 pb-16">
+      <div class="max-w-2xl">
+        <h2 class="text-3xl md:text-4xl font-bold tracking-tight text-zinc-50 leading-tight">Feature checklist</h2>
+        <p class="mt-4 text-base text-zinc-400 leading-relaxed">
+          Straight from the README, without a filter. Side by side with the vanilla server, because comparison is fair.
+        </p>
+      </div>
+
+      <div class="card rounded-2xl overflow-x-auto mt-10 reveal">
+        <table class="w-full text-left font-mono text-[13.5px]">
+          <thead>
+            <tr class="border-b border-zinc-800 bg-void-800/60 text-[12px] uppercase tracking-[0.12em] text-zinc-500">
+              <th class="px-5 py-3 font-bold">feature</th>
+              <th class="px-5 py-3 font-bold text-ember-400">vib-MC</th>
+              <th class="px-5 py-3 font-bold">vanilla</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-zinc-800/80">
+            <tr>
+              <td class="px-5 py-3.5 font-semibold text-zinc-100">Actually starts</td>
+              <td class="px-5 py-3.5 text-ember-400"><i class="ph ph-check text-base" aria-hidden="true"></i></td>
+              <td class="px-5 py-3.5 text-zinc-400"><i class="ph ph-check text-base" aria-hidden="true"></i></td>
+            </tr>
+            <tr>
+              <td class="px-5 py-3.5 font-semibold text-zinc-100">People can join</td>
+              <td class="px-5 py-3.5 text-ember-400"><i class="ph ph-check text-base" aria-hidden="true"></i></td>
+              <td class="px-5 py-3.5 text-zinc-400"><i class="ph ph-check text-base" aria-hidden="true"></i></td>
+            </tr>
+            <tr>
+              <td class="px-5 py-3.5 font-semibold text-zinc-100">Terrain renders</td>
+              <td class="px-5 py-3.5 text-ember-400"><i class="ph ph-check text-base" aria-hidden="true"></i></td>
+              <td class="px-5 py-3.5 text-zinc-400"><i class="ph ph-check text-base" aria-hidden="true"></i></td>
+            </tr>
+            <tr>
+              <td class="px-5 py-3.5 font-semibold text-zinc-100">Camera moves</td>
+              <td class="px-5 py-3.5 text-ember-400"><i class="ph ph-check text-base" aria-hidden="true"></i></td>
+              <td class="px-5 py-3.5 text-zinc-400"><i class="ph ph-check text-base" aria-hidden="true"></i></td>
+            </tr>
+            <tr>
+              <td class="px-5 py-3.5 font-semibold text-zinc-100">Nether &amp; End</td>
+              <td class="px-5 py-3.5 text-ember-400"><i class="ph ph-check text-base" aria-hidden="true"></i></td>
+              <td class="px-5 py-3.5 text-zinc-400"><i class="ph ph-check text-base" aria-hidden="true"></i></td>
+            </tr>
+            <tr>
+              <td class="px-5 py-3.5 font-semibold text-zinc-100">Portals</td>
+              <td class="px-5 py-3.5"><span class="text-ember-400"><i class="ph ph-check text-base" aria-hidden="true"></i></span> <span class="text-zinc-500 ml-1">you build them</span></td>
+              <td class="px-5 py-3.5 text-zinc-400"><i class="ph ph-check text-base" aria-hidden="true"></i></td>
+            </tr>
+            <tr>
+              <td class="px-5 py-3.5 font-semibold text-zinc-100">Lighting</td>
+              <td class="px-5 py-3.5 text-ember-400"><i class="ph ph-check text-base" aria-hidden="true"></i></td>
+              <td class="px-5 py-3.5 text-zinc-400"><i class="ph ph-check text-base" aria-hidden="true"></i></td>
+            </tr>
+            <tr>
+              <td class="px-5 py-3.5 font-semibold text-zinc-100">Breaking blocks</td>
+              <td class="px-5 py-3.5"><span class="text-ember-400"><i class="ph ph-check text-base" aria-hidden="true"></i></span> <span class="text-zinc-500 ml-1">with drops, tools and physics</span></td>
+              <td class="px-5 py-3.5 text-zinc-400"><i class="ph ph-check text-base" aria-hidden="true"></i></td>
+            </tr>
+            <tr>
+              <td class="px-5 py-3.5 font-semibold text-zinc-100">Dragon fight</td>
+              <td class="px-5 py-3.5"><span class="text-zinc-600"><i class="ph ph-x text-base" aria-hidden="true"></i></span> <span class="text-zinc-500 ml-1">towers are scenery</span></td>
+              <td class="px-5 py-3.5 text-zinc-400"><i class="ph ph-check text-base" aria-hidden="true"></i></td>
+            </tr>
+            <tr>
+              <td class="px-5 py-3.5 font-semibold text-zinc-100">Written by humans</td>
+              <td class="px-5 py-3.5"><span class="text-zinc-600"><i class="ph ph-x text-base" aria-hidden="true"></i></span> <span class="text-zinc-500 ml-1">one prompt at a time</span></td>
+              <td class="px-5 py-3.5 text-zinc-400"><i class="ph ph-check text-base" aria-hidden="true"></i></td>
+            </tr>
+            <tr>
+              <td class="px-5 py-3.5 font-semibold text-zinc-100">Working game</td>
+              <td class="px-5 py-3.5"><span class="text-zinc-600"><i class="ph ph-x text-base" aria-hidden="true"></i></span> <span class="text-zinc-500 ml-1">survival yes, mobs no</span></td>
+              <td class="px-5 py-3.5 text-zinc-400"><i class="ph ph-check text-base" aria-hidden="true"></i></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- Quickstart -->
+    <section id="quickstart" class="py-10">
+      <div class="max-w-2xl">
+        <h2 class="text-3xl md:text-4xl font-bold tracking-tight text-zinc-50 leading-tight">Up and running in two commands</h2>
+        <p class="mt-4 text-base text-zinc-400 leading-relaxed">
+          Build with Gradle, drop the jar in a folder, run it. Server starts on port
+          25565 by default. Edit server.properties after the first run.
+        </p>
+      </div>
+
+      <div class="card rounded-2xl overflow-hidden mt-10 reveal">
+        <div class="px-6 py-3 border-b border-zinc-800 bg-void-800/60 font-mono text-[12px] uppercase tracking-[0.12em] text-zinc-500">
+          quickstart
+        </div>
+        <pre class="p-6 font-mono text-[13.5px] leading-7 text-zinc-300 overflow-x-auto"><code><span class="text-zinc-600">$</span> ./gradlew build
+<span class="text-zinc-600">$</span> java -jar build/libs/vib-mc.jar</code></pre>
+        <button id="copy-btn" class="w-full border-t border-zinc-800 px-6 py-3 font-mono text-[12px] uppercase tracking-[0.12em] text-zinc-500 hover:text-ember-400 hover:bg-ember-500/10 transition-colors flex items-center justify-center gap-2">
+          <span id="copy-label">copy commands</span>
+        </button>
+      </div>
+    </section>
+
+    <!-- Commands -->
+    <section id="commands" class="py-10">
+      <div class="max-w-2xl">
+        <h2 class="text-3xl md:text-4xl font-bold tracking-tight text-zinc-50 leading-tight">Slash commands</h2>
+        <p class="mt-4 text-base text-zinc-400 leading-relaxed">
+          The full command surface, short and honest. Click one to copy it.
+        </p>
+      </div>
+      <div class="mt-8 flex flex-wrap gap-3 font-mono text-[13px]">
+        <button class="copy-cmd reveal btn px-4 py-2 rounded-full">/help</button>
+        <button class="copy-cmd reveal btn px-4 py-2 rounded-full" style="--reveal-delay:40ms">/tp</button>
+        <button class="copy-cmd reveal btn px-4 py-2 rounded-full" style="--reveal-delay:80ms">/gamemode</button>
+        <button class="copy-cmd reveal btn px-4 py-2 rounded-full" style="--reveal-delay:120ms">/time</button>
+        <button class="copy-cmd reveal btn px-4 py-2 rounded-full" style="--reveal-delay:160ms">/weather</button>
+        <button class="copy-cmd reveal btn px-4 py-2 rounded-full" style="--reveal-delay:200ms">/give</button>
+        <button class="copy-cmd reveal btn px-4 py-2 rounded-full" style="--reveal-delay:240ms">/kill</button>
+        <button class="copy-cmd reveal btn px-4 py-2 rounded-full" style="--reveal-delay:280ms">/say</button>
+        <button class="copy-cmd reveal btn px-4 py-2 rounded-full" style="--reveal-delay:320ms">/seed</button>
+        <button class="copy-cmd reveal btn px-4 py-2 rounded-full" style="--reveal-delay:360ms">/save-all</button>
+        <button class="copy-cmd reveal btn px-4 py-2 rounded-full" style="--reveal-delay:400ms">/save-on</button>
+        <button class="copy-cmd reveal btn px-4 py-2 rounded-full" style="--reveal-delay:440ms">/save-off</button>
+        <button class="copy-cmd reveal btn px-4 py-2 rounded-full" style="--reveal-delay:480ms">/stop</button>
+        <button class="copy-cmd reveal btn px-4 py-2 rounded-full" style="--reveal-delay:520ms">/list</button>
+        <button class="copy-cmd reveal btn px-4 py-2 rounded-full" style="--reveal-delay:560ms">/op</button>
+        <button class="copy-cmd reveal btn px-4 py-2 rounded-full" style="--reveal-delay:600ms">/deop</button>
+        <button class="copy-cmd reveal btn px-4 py-2 rounded-full" style="--reveal-delay:640ms">/kick</button>
+        <button class="copy-cmd reveal btn px-4 py-2 rounded-full" style="--reveal-delay:680ms">/dimension</button>
+      </div>
+    </section>
+
+    <!-- Architecture -->
+    <section class="py-10">
+      <div class="grid lg:grid-cols-2 gap-10 items-start">
+        <div class="reveal">
+          <h2 class="text-3xl md:text-4xl font-bold tracking-tight text-zinc-50 leading-tight">Internal structure</h2>
+          <p class="mt-4 text-base text-zinc-400 leading-relaxed max-w-[65ch]">
+            Fourteen packages, zero humans. The whole thing was coaxed into existence
+            with prompts, then patched with more prompts.
+          </p>
+          <p class="mt-5 font-mono text-[13px] text-zinc-500">
+            requires <span class="text-zinc-200 font-bold">java 8</span> or newer
+          </p>
+        </div>
+        <div class="card rounded-2xl p-6 font-mono text-[13px] leading-8 text-zinc-400 overflow-x-auto reveal" style="--reveal-delay:100ms">
+<pre>net.vibmc
+├─ server          makes it go
+├─ network         talks to minecraft
+├─ world           blocks and stuff
+├─ world.gen       makes the ground
+├─ world.storage   saves the ground
+├─ world.structure villages and trees
+├─ entity          things that move
+├─ player          the people
+├─ inventory       slots and windows
+├─ crafting        recipes and smelting
+├─ registry        minecraft data
+├─ plugin          mod support
+├─ command         slash commands
+└─ permission      who can do what</pre>
+        </div>
+      </div>
+    </section>
+
+    <!-- Releases -->
+    <section id="releases" class="py-10 pb-20">
+      <div class="max-w-2xl">
+        <h2 class="text-3xl md:text-4xl font-bold tracking-tight text-zinc-50 leading-tight">Releases</h2>
+        <p class="mt-4 text-base text-zinc-400 leading-relaxed">
+          First experimental server, then multi-version networking, then survival. Every jar, in the order it was vibed.
+        </p>
+      </div>
+      <div class="mt-10 grid lg:grid-cols-3 gap-5">
+
+        <div class="card rounded-2xl p-6 flex flex-col reveal" style="--reveal-delay:100ms">
+          <div class="flex items-center gap-2 font-mono text-[11.5px] uppercase tracking-[0.12em] text-zinc-500">
+            <span>v0.0.1</span><span class="text-zinc-700">/</span><span>oldest</span>
+          </div>
+          <p class="mt-3 text-sm text-zinc-400 leading-relaxed">First breath. One client version, terrain generates, nobody knows where.</p>
+          <p class="mt-4 font-mono text-[12px] text-zinc-600">requires java 21+</p>
+          <a href="https://github.com/vib-studios/vib-MC/releases/tag/Alpha" target="_blank" rel="noopener"
+             class="mt-auto pt-5 font-mono text-[12.5px] font-bold text-zinc-400 hover:text-ember-400 transition-colors inline-flex items-center gap-1.5">releases <i class="ph ph-arrow-up-right text-sm" aria-hidden="true"></i></a>
+        </div>
+
+        <div class="rounded-2xl p-6 flex flex-col bg-ember-400 text-void-950 reveal" style="--reveal-delay:100ms">
+          <div class="flex items-center gap-2 font-mono text-[11.5px] uppercase tracking-[0.12em] text-void-950/70">
+            <span id="version-stable">v0.0.7</span><span class="text-void-950/40">/</span><span>latest stable</span>
+          </div>
+          <p class="mt-3 text-sm text-void-950/80 leading-relaxed">The one you want. Blocks drop, physics react, and you can craft, smelt, starve, drown, store items and fight &mdash; on Minecraft 1.8 through 26.1.2, minus 1.16, 1.16.1 and 1.19.3.</p>
+          <p class="mt-4 font-mono text-[12px] text-void-950/70">requires java 8+</p>
+          <a href="https://github.com/vib-studios/vib-MC/releases/tag/v0.0.7" target="_blank" rel="noopener"
+             class="mt-auto pt-5 font-mono text-[12.5px] font-bold text-void-950 underline underline-offset-4 inline-flex items-center gap-1.5">releases <i class="ph ph-arrow-up-right text-sm" aria-hidden="true"></i></a>
+        </div>
+
+        <div class="card rounded-2xl p-6 flex flex-col reveal" style="--reveal-delay:100ms">
+          <div class="flex items-center gap-2 font-mono text-[11.5px] uppercase tracking-[0.12em] text-zinc-500">
+            <span>v0.0.6-hotfix.1</span><span class="text-zinc-700">/</span><span>previous</span>
+          </div>
+          <p class="mt-3 text-sm text-zinc-400 leading-relaxed">The multi-version milestone. PacketEvents networking opened the doors to 1.8 through 26.1.2, with spawns and villages kept out of the water.</p>
+          <p class="mt-4 font-mono text-[12px] text-zinc-600">requires java 8+</p>
+          <a href="https://github.com/vib-studios/vib-MC/releases/tag/v0.0.6-hotfix.1" target="_blank" rel="noopener"
+             class="mt-auto pt-5 font-mono text-[12.5px] font-bold text-zinc-400 hover:text-ember-400 transition-colors inline-flex items-center gap-1.5">releases <i class="ph ph-arrow-up-right text-sm" aria-hidden="true"></i></a>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Bug report -->
+    <section id="bug-report" class="py-10 pb-20">
+      <div class="max-w-2xl">
+        <h2 class="text-3xl md:text-4xl font-bold tracking-tight text-zinc-50 leading-tight">Report a bug</h2>
+        <p class="mt-4 text-base text-zinc-400 leading-relaxed">
+          Fill this in and it opens a GitHub issue with everything we need.
+          Keep it short, we are also an AI.
+        </p>
+      </div>
+
+      <form id="bug-form" class="card rounded-2xl mt-10 p-6 md:p-8 reveal space-y-6">
+        <div>
+          <label for="bug-title" class="block font-mono text-[12px] uppercase tracking-[0.12em] text-zinc-400 mb-2">1. the issue in one short sentence</label>
+          <input id="bug-title" name="title" type="text" required maxlength="90"
+                 class="w-full rounded-lg border border-zinc-700 bg-void-950 px-4 py-3 font-mono text-sm text-zinc-100 placeholder-zinc-600 focus:outline-none focus:border-ember-400 transition-colors"
+                 placeholder="e.g. server crashes when i use /give">
+        </div>
+
+        <div>
+          <label for="bug-what" class="block font-mono text-[12px] uppercase tracking-[0.12em] text-zinc-400 mb-2">2. what's the issue?</label>
+          <textarea id="bug-what" name="what" rows="3" required
+                    class="w-full rounded-lg border border-zinc-700 bg-void-950 px-4 py-3 font-mono text-sm text-zinc-100 placeholder-zinc-600 focus:outline-none focus:border-ember-400 transition-colors resize-y"
+                    placeholder="what you saw, what you expected"></textarea>
+        </div>
+
+        <div>
+          <label for="bug-steps" class="block font-mono text-[12px] uppercase tracking-[0.12em] text-zinc-400 mb-2">3. how did it occur?</label>
+          <textarea id="bug-steps" name="steps" rows="3" required
+                    class="w-full rounded-lg border border-zinc-700 bg-void-950 px-4 py-3 font-mono text-sm text-zinc-100 placeholder-zinc-600 focus:outline-none focus:border-ember-400 transition-colors resize-y"
+                    placeholder="steps so we can replicate it"></textarea>
+        </div>
+
+        <div class="grid md:grid-cols-2 gap-6">
+          <div>
+            <label for="bug-version" class="block font-mono text-[12px] uppercase tracking-[0.12em] text-zinc-400 mb-2">release version</label>
+            <input id="bug-version" name="version" type="text" value="v0.0.7"
+                   class="w-full rounded-lg border border-zinc-700 bg-void-950 px-4 py-3 font-mono text-sm text-zinc-100 placeholder-zinc-600 focus:outline-none focus:border-ember-400 transition-colors">
+          </div>
+          <div>
+            <label for="bug-log" class="block font-mono text-[12px] uppercase tracking-[0.12em] text-zinc-400 mb-2">server log output</label>
+            <textarea id="bug-log" name="log" rows="4"
+                      class="w-full rounded-lg border border-zinc-700 bg-void-950 px-4 py-3 font-mono text-[12.5px] leading-relaxed text-zinc-100 placeholder-zinc-600 focus:outline-none focus:border-ember-400 transition-colors resize-y"
+                      placeholder="paste the raw log output from the server console"></textarea>
+          </div>
+        </div>
+
+        <div>
+          <button type="submit" class="btn btn-primary px-6 py-3">
+            <i class="ph ph-bug" aria-hidden="true"></i>
+            open github issue
+          </button>
+        </div>
+      </form>
+    </section>
+
+    <!-- CTA -->
+    <section class="pb-20">
+      <div class="rounded-2xl bg-ember-400 px-8 md:px-12 py-12 md:py-14 text-center reveal">
+        <h2 class="text-3xl md:text-4xl font-bold tracking-tight text-void-950 leading-tight">Ready to vibe?</h2>
+        <p class="mt-4 text-base md:text-lg text-void-950/75 leading-relaxed max-w-[55ch] mx-auto">
+          Download vib-MC, point almost any Minecraft client from 1.8 to 26.1.2 at it, and play survival
+          on a server written entirely by AI. No humans were involved in this decision.
+        </p>
+        <div class="mt-8 flex items-center justify-center">
+          <a href="#" id="download-btn-cta" data-fallback-url="https://github.com/vib-studios/vib-MC/releases/download/v0.0.7/vib-mc.jar"
+             class="btn px-8 py-3.5 bg-void-950 border-void-950 text-ember-400 hover:bg-void-900 hover:border-void-950 hover:text-ember-300">
+            <i class="ph ph-download" aria-hidden="true"></i>
+            <span>Download .jar</span>
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="border-t border-zinc-800/80">
+    <div class="max-w-[1100px] mx-auto px-4 md:px-8 py-10 flex flex-col gap-6">
+      <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+        <div class="flex items-center gap-2.5">
+          <span class="h-5 w-5 rounded-[4px] bg-ember-400 shadow-[inset_0_0_0_2px_oklch(0.13_0.02_40)]" aria-hidden="true"></span>
+          <span class="font-pixel text-[11px] text-zinc-100">vib-MC</span>
+        </div>
+        <nav class="flex flex-wrap items-center gap-6 font-mono text-[12.5px] text-zinc-500">
+          <a href="https://github.com/vib-studios/vib-MC" target="_blank" rel="noopener" class="hover:text-zinc-100 transition-colors">github</a>
+          <a href="https://github.com/vib-studios/vib-MC/releases" target="_blank" rel="noopener" class="hover:text-zinc-100 transition-colors">releases ↗</a>
+          <a href="#bug-report" class="hover:text-zinc-100 transition-colors">report a bug</a>
+          <a href="#top" class="hover:text-zinc-100 transition-colors">back to top ↑</a>
+          <a href="../index.html" data-skin-switch="wiki" class="text-ember-400 hover:text-ember-300 transition-colors">wiki layout</a>
+        </nav>
+      </div>
+      <div class="contrib-inline pt-6 border-t border-zinc-800/80" hidden>
+        <span class="contrib-inline__label">contributors</span>
+        <ul class="contrib-inline__list" data-contributors></ul>
+      </div>
+      <div class="pt-6 border-t border-zinc-800/80 flex flex-wrap items-center justify-between gap-3 font-mono text-[12px] text-zinc-600">
+        <p>Licensed <a href="https://github.com/vib-studios/vib-MC/blob/main/LICENSE" target="_blank" rel="noopener" class="hover:text-zinc-100 underline underline-offset-4">GPL-3.0-or-later</a>.</p>
+        <nav class="flex flex-wrap items-center gap-6">
+          <a href="privacy.html" class="hover:text-zinc-100 transition-colors">privacy</a>
+          <a href="terms.html" class="hover:text-zinc-100 transition-colors">terms</a>
+        </nav>
+      </div>
+    </div>
+  </footer>
+
+
+  <!-- Contributors: fixed rail on wide screens, footer list everywhere else.
+       Both mounts are filled by contributors.js. -->
+  <aside class="contrib-rail" aria-label="Contributors" hidden>
+    <div class="contrib-rail__panel" id="contrib-rail-panel">
+      <ul class="contrib-rail__list" data-contributors></ul>
+    </div>
+    <button type="button" class="contrib-rail__toggle" aria-expanded="true"
+            aria-controls="contrib-rail-panel" aria-label="Hide contributors">
+      <i class="ph ph-caret-right contrib-rail__caret" aria-hidden="true"></i>
+      <span class="contrib-rail__label">contributors</span>
+    </button>
+  </aside>
+
+  <script src="../website.js"></script>
+  <script src="../contributors.js"></script>
+</body>
+</html>
