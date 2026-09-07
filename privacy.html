@@ -29,7 +29,7 @@
        ==================================================================== -->
   <div class="mcw-rail">
 
-    <a class="mcw-logo" href="index.html">
+    <a class="mcw-logo" href="vibmc.html">
       <span class="mcw-logo__mark" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span>
       <span class="mcw-logo__word">vib-MC</span>
       <span class="mcw-logo__sub">wiki</span>
@@ -38,7 +38,7 @@
     <nav class="mcw-portal" aria-labelledby="p-nav">
       <h3 id="p-nav">Navigation</h3>
       <ul>
-        <li><a href="index.html">Main article</a></li>
+        <li><a href="vibmc.html">Main article</a></li>
         <li><a href="docs.html">Documentation</a></li>
         <li><a href="privacy.html" class="is-current">Privacy policy</a></li>
         <li><a href="terms.html">Terms</a></li>
@@ -73,8 +73,9 @@
 
     <div class="mcw-topbar">
       <ul class="mcw-tabs">
-        <li><a class="mcw-tab" href="index.html">Article</a></li>
+        <li><a class="mcw-tab" href="vibmc.html">Article</a></li>
         <li><a class="mcw-tab" href="docs.html">Documentation</a></li>
+        <li><a class="mcw-tab" href="viblauncher.html">Vib-launcher</a></li>
         <li><a class="mcw-tab is-active" href="privacy.html">Privacy</a></li>
         <li><a class="mcw-tab" href="terms.html">Terms</a></li>
       </ul>
@@ -85,6 +86,7 @@
             <span class="mcw-tool__icon" aria-hidden="true"></span>
             <span class="mcw-tool__label">Dark</span>
           </button>
+          <a class="mcw-tool" href="index.html" title="Back to the project picker">All projects</a>
           <a class="mcw-tool mcw-tool--skin" href="classic/privacy.html"
              data-skin-switch="classic" title="Go back to the original vib-MC layout">Classic layout</a>
         </div>
@@ -140,7 +142,7 @@
               <li><a href="#hosting">Hosting</a></li>
               <li><a href="#api">Live data from the GitHub API</a></li>
               <li><a href="#downloads">Downloads</a></li>
-              <li><a href="#bugform">The bug report form</a></li>
+              <li><a href="#bugform">The bug report forms</a></li>
             </ol>
           </li>
           <li><a href="#device">What stays on your device</a></li>
@@ -195,8 +197,8 @@
       <h3 id="api">Live data from the GitHub API</h3>
 
       <p>
-        Two small scripts, served from this domain, call the public GitHub API from your
-        browser so you see current information rather than stale numbers.
+        A few small scripts, served from this domain, call the public GitHub API from your
+        browser so you see current release numbers rather than stale ones.
       </p>
 
       <div class="mcw-scroll">
@@ -210,6 +212,10 @@
           </thead>
           <tbody>
             <tr>
+              <th scope="row">Project picker</th>
+              <td>The latest release of each project from <code>api.github.com</code>.</td>
+            </tr>
+            <tr>
               <th scope="row">Main article</th>
               <td>Current release details from <code>api.github.com</code>, the contributor
                 list from the same API, and each contributor avatar from
@@ -217,6 +223,10 @@
             </tr>
             <tr>
               <th scope="row">Documentation</th>
+              <td>Current release details from <code>api.github.com</code>.</td>
+            </tr>
+            <tr>
+              <th scope="row">Vib-launcher article</th>
               <td>Current release details from <code>api.github.com</code>.</td>
             </tr>
             <tr>
@@ -238,15 +248,15 @@
 
       <p>
         The download buttons point at release assets hosted by GitHub. Downloading the
-        server jar is a request to GitHub, on GitHub's terms.
+        server jar or the launcher zip is a request to GitHub, on GitHub's terms.
       </p>
 
-      <h3 id="bugform">The bug report form</h3>
+      <h3 id="bugform">The bug report forms</h3>
 
       <p>
-        The bug report form on the main article does not send anything to us and does not
-        submit to any server. It takes what you typed, builds a GitHub issue link with the
-        text prefilled, and opens that link in a new tab. Nothing is published until you
+        The bug report forms, one on the vib-MC article and one on the Vib-launcher article, send
+        nothing to us and submit to no server. Each takes what you typed, builds a GitHub issue
+        link with the text prefilled, and opens that link in a new tab. Nothing is published until you
         review it and submit the issue yourself on GitHub, where it becomes public. Do not
         put passwords, server IP addresses or other private details into a bug report.
       </p>
@@ -281,6 +291,12 @@
               <td>Every page</td>
               <td>Whether you chose the wiki layout or the classic one, so you keep getting
                 the layout you picked.</td>
+            </tr>
+            <tr>
+              <th scope="row"><code>vib-studios-side</code></th>
+              <td>Project picker</td>
+              <td>Which project you opened last, so the picker can say so on your next
+                visit. It decides nothing: you are never redirected.</td>
             </tr>
             <tr>
               <th scope="row"><code>vibmc-blueprint-v2</code></th>
@@ -383,10 +399,12 @@
     <footer class="mcw-footer">
       <p>vib-MC is licensed <a href="https://github.com/vib-studios/vib-MC/blob/main/LICENSE" target="_blank" rel="noopener">GPL-3.0-or-later</a>. Not an official Minecraft product. Not approved by or associated with Mojang or Microsoft.</p>
       <ul>
-        <li><a href="index.html">Main article</a></li>
+        <li><a href="vibmc.html">Main article</a></li>
         <li><a href="docs.html">Documentation</a></li>
         <li><a href="privacy.html">Privacy</a></li>
         <li><a href="terms.html">Terms</a></li>
+        <li><a href="viblauncher.html">Vib-launcher</a></li>
+        <li><a href="index.html">All projects</a></li>
         <li><a href="#top">Back to top</a></li>
         <li><a href="classic/privacy.html" data-skin-switch="classic">Classic layout</a></li>
       </ul>

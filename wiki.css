@@ -1448,3 +1448,70 @@ body {
   .mcw-topbar__right { align-items: stretch; width: 100%; }
   .mcw-tools { justify-content: flex-start; }
 }
+
+/* --------------------------------------------------------------------------
+   Vib-launcher infobox art
+
+   The launcher is a window, so the picture at the top of its infobox is one:
+   title bar, a left rail, and a list of instances. Drawn in CSS for the same
+   reason the jar above it is, and in the launcher's own Classic palette rather
+   than the wiki's, because that is what the application looks like.
+   -------------------------------------------------------------------------- */
+
+.mcw-window {
+  display: inline-block;
+  width: 132px;
+  background: #0e0503;
+  border: 3px solid var(--void);
+  box-shadow: 0 3px 0 rgba(0, 0, 0, .35);
+  text-align: left;
+}
+
+.mcw-window__bar {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  height: 14px;
+  padding: 0 5px;
+  background: #231814;
+  border-bottom: 2px solid #281c18;
+}
+
+.mcw-window__bar span {
+  width: 6px;
+  height: 6px;
+  background: var(--ember);
+}
+
+.mcw-window__bar span:nth-child(2),
+.mcw-window__bar span:nth-child(3) { background: #4a3a33; }
+
+.mcw-window__body {
+  display: grid;
+  grid-template-columns: 34px 1fr;
+  gap: 5px;
+  padding: 6px;
+}
+
+.mcw-window__rail {
+  display: grid;
+  grid-template-rows: repeat(4, 8px);
+  gap: 4px;
+}
+
+.mcw-window__rail i { display: block; background: #281c18; }
+.mcw-window__rail i:first-child { background: var(--ember); }
+
+.mcw-window__list {
+  display: grid;
+  grid-template-rows: repeat(3, 14px);
+  gap: 4px;
+}
+
+.mcw-window__list i {
+  display: block;
+  background: #170c09;
+  border-left: 3px solid #281c18;
+}
+
+.mcw-window__list i:first-child { border-left-color: var(--ember); }

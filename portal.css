@@ -1,0 +1,302 @@
+/* ==========================================================================
+   Vib Studios portal
+
+   The page at the site root, where a visitor picks which project they came
+   for. It loads wiki.css first for the page furniture, the palette and the
+   Press Start 2P face, and only adds what the two cards need.
+
+   Everything here is drawn from the rail palette, which the dark theme leaves
+   alone, so the portal looks the same in both themes the way the rail and the
+   footer already do.
+   ========================================================================== */
+
+.vs-page {
+  position: relative;
+  z-index: 1;
+  max-width: 980px;
+  margin: 0 auto;
+  padding: 118px 20px 56px;
+}
+
+/* --------------------------------------------------------------------------
+   Masthead
+   -------------------------------------------------------------------------- */
+
+.vs-head {
+  text-align: center;
+  padding-bottom: 34px;
+}
+
+.vs-mark {
+  display: inline-grid;
+  grid-template-columns: repeat(3, 17px);
+  grid-template-rows: repeat(3, 17px);
+  border: 3px solid var(--void);
+  box-shadow: 0 3px 0 rgba(0, 0, 0, .45);
+}
+
+.vs-mark i { display: block; background: var(--ember); }
+
+.vs-mark i:nth-child(2),
+.vs-mark i:nth-child(4),
+.vs-mark i:nth-child(6),
+.vs-mark i:nth-child(8) { background: #d9600c; }
+
+.vs-mark i:nth-child(5) { background: var(--void); }
+
+.vs-head__word {
+  display: block;
+  margin-top: 14px;
+  font-family: "Press Start 2P", "Courier New", monospace;
+  font-size: 20px;
+  line-height: 1.4;
+  color: #fff;
+  text-shadow: 3px 3px 0 rgba(0, 0, 0, .6);
+}
+
+.vs-head__line {
+  max-width: 42em;
+  margin: 16px auto 0;
+  font-family: "Liberation Sans", Arial, Helvetica, sans-serif;
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--rail-text);
+}
+
+/* --------------------------------------------------------------------------
+   The two cards
+
+   Beveled the way the rail panels are: a light edge top and left, a dark edge
+   bottom and right, over a flat dark fill.
+   -------------------------------------------------------------------------- */
+
+.vs-choice {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 22px;
+  align-items: stretch;
+}
+
+.vs-card {
+  display: flex;
+  flex-direction: column;
+  padding: 20px 20px 18px;
+  background: var(--rail-bg);
+  border: 3px solid;
+  border-color: var(--rail-bevel-lt) var(--rail-bevel-dk) var(--rail-bevel-dk) var(--rail-bevel-lt);
+  box-shadow: 0 4px 0 rgba(0, 0, 0, .45);
+  color: var(--rail-text);
+  text-decoration: none;
+}
+
+.vs-card:hover,
+.vs-card:focus-visible {
+  background: var(--rail-head);
+  border-color: var(--rail-bevel-cn) var(--rail-bevel-dk) var(--rail-bevel-dk) var(--rail-bevel-cn);
+}
+
+.vs-card:focus-visible {
+  outline: 3px solid var(--ember);
+  outline-offset: 2px;
+}
+
+.vs-card__art {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 104px;
+  margin-bottom: 16px;
+  background: #1b1b1c;
+  border: 2px solid #131314;
+}
+
+.vs-card__name {
+  font-family: "Press Start 2P", "Courier New", monospace;
+  font-size: 14px;
+  line-height: 1.4;
+  color: #fff;
+  text-shadow: 2px 2px 0 rgba(0, 0, 0, .6);
+}
+
+.vs-card__kind {
+  margin-top: 9px;
+  font-family: "Press Start 2P", "Courier New", monospace;
+  font-size: 7px;
+  line-height: 1.7;
+  letter-spacing: .04em;
+  color: var(--ember-soft);
+  text-shadow: 2px 2px 0 rgba(0, 0, 0, .6);
+}
+
+.vs-card__desc {
+  margin: 14px 0 0;
+  font-size: 14.5px;
+  line-height: 1.62;
+  color: #cfcfcf;
+}
+
+.vs-card__facts {
+  margin: 16px 0 0;
+  padding: 12px 0 0;
+  border-top: 1px solid var(--rail-bevel-dk);
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 6px 14px;
+  font-size: 13.5px;
+  line-height: 1.5;
+}
+
+.vs-card__facts dt {
+  color: #8f9092;
+}
+
+.vs-card__facts dd {
+  margin: 0;
+  color: #d8d8d8;
+}
+
+.vs-card__go {
+  margin-top: 18px;
+  padding: 9px 12px;
+  background: #2f3031;
+  border: 2px solid;
+  border-color: var(--rail-bevel-cn) var(--rail-bevel-dk) var(--rail-bevel-dk) var(--rail-bevel-cn);
+  color: var(--ember);
+  font-family: "Press Start 2P", "Courier New", monospace;
+  font-size: 8px;
+  line-height: 1.7;
+  letter-spacing: .03em;
+  text-align: center;
+  text-shadow: 2px 2px 0 rgba(0, 0, 0, .6);
+}
+
+.vs-card:hover .vs-card__go,
+.vs-card:focus-visible .vs-card__go {
+  background: #3a3b3c;
+  color: var(--ember-soft);
+}
+
+/* Set by portal.js on the side this visitor opened last. Nothing is
+   redirected: the note is a reminder, not a decision made for them. */
+.vs-card__last {
+  margin-top: 12px;
+  font-size: 12.5px;
+  line-height: 1.5;
+  color: var(--ember-soft);
+}
+
+.vs-card__last[hidden] { display: none; }
+
+/* --------------------------------------------------------------------------
+   Card art, drawn in CSS so nothing depends on an image loading
+   -------------------------------------------------------------------------- */
+
+/* vib-MC: the site mark at jar scale. */
+.vs-art-block {
+  display: inline-grid;
+  grid-template-columns: repeat(3, 20px);
+  grid-template-rows: repeat(3, 20px);
+  border: 3px solid var(--void);
+  box-shadow: 0 3px 0 rgba(0, 0, 0, .45);
+}
+
+.vs-art-block i { display: block; background: var(--ember); }
+
+.vs-art-block i:nth-child(2),
+.vs-art-block i:nth-child(4),
+.vs-art-block i:nth-child(6),
+.vs-art-block i:nth-child(8) { background: #d9600c; }
+
+.vs-art-block i:nth-child(5) { background: var(--void); }
+
+/* Vib-launcher: a window with a title bar, a rail and a list, which is what
+   the application actually looks like. */
+.vs-art-win {
+  width: 132px;
+  border: 3px solid var(--void);
+  background: #0e0503;
+  box-shadow: 0 3px 0 rgba(0, 0, 0, .45);
+}
+
+.vs-art-win__bar {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  height: 14px;
+  padding: 0 5px;
+  background: #231814;
+  border-bottom: 2px solid #281c18;
+}
+
+.vs-art-win__bar span {
+  width: 6px;
+  height: 6px;
+  background: var(--ember);
+}
+
+.vs-art-win__bar span:nth-child(2),
+.vs-art-win__bar span:nth-child(3) { background: #4a3a33; }
+
+.vs-art-win__body {
+  display: grid;
+  grid-template-columns: 34px 1fr;
+  gap: 5px;
+  padding: 6px;
+}
+
+.vs-art-win__rail {
+  display: grid;
+  grid-template-rows: repeat(4, 8px);
+  gap: 4px;
+}
+
+.vs-art-win__rail i { display: block; background: #281c18; }
+.vs-art-win__rail i:first-child { background: var(--ember); }
+
+.vs-art-win__list {
+  display: grid;
+  grid-template-rows: repeat(3, 14px);
+  gap: 4px;
+}
+
+.vs-art-win__list i {
+  display: block;
+  background: #170c09;
+  border-left: 3px solid #281c18;
+}
+
+.vs-art-win__list i:first-child { border-left-color: var(--ember); }
+
+/* --------------------------------------------------------------------------
+   Foot of the portal
+   -------------------------------------------------------------------------- */
+
+.vs-foot {
+  margin-top: 34px;
+  padding-top: 18px;
+  border-top: 1px solid #3d3e3f;
+  font-size: 13.5px;
+  line-height: 1.7;
+  color: var(--footer-fg);
+}
+
+.vs-foot p { margin: 0 0 8px; }
+
+.vs-foot a { color: var(--footer-link); }
+
+.vs-foot a:hover { color: #fff; }
+
+.vs-foot ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 16px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+@media (max-width: 760px) {
+  .vs-page { padding-top: 104px; }
+  .vs-choice { grid-template-columns: minmax(0, 1fr); }
+  .vs-head__word { font-size: 16px; }
+}

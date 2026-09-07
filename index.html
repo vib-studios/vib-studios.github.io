@@ -1,617 +1,114 @@
 <!doctype html>
-<html lang="en" data-skin="wiki">
+<html lang="en">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>vib-MC - vib-MC Wiki</title>
-  <meta name="description" content="vib-MC is a Minecraft server written entirely by AI, one prompt at a time. Minecraft 1.8 through 26.1.2, excluding 1.16, 1.16.1 and 1.19.3, with a real survival loop. Download the latest .jar release.">
-  <meta property="og:title" content="vib-MC">
-  <meta property="og:description" content="A Minecraft server written entirely by AI, one prompt at a time. Minecraft 1.8 through 26.1.2, survival included. Java 8+.">
+  <title>Vib Studios</title>
+  <meta name="description" content="Two projects from Vib Studios: vib-MC, a Minecraft server written entirely by AI, and Vib-launcher, a native Windows launcher and vib-MC server control panel. Pick one.">
+  <meta property="og:title" content="Vib Studios">
+  <meta property="og:description" content="vib-MC, a Minecraft server written entirely by AI, and Vib-launcher, a native Windows launcher and vib-MC server control panel.">
   <meta property="og:type" content="website">
-  <meta property="og:image" content="files/og-vibmc.png">
-  <meta property="og:image:width" content="1200">
-  <meta property="og:image:height" content="630">
-  <meta name="twitter:card" content="summary_large_image">
   <meta name="theme-color" content="#303030">
   <link rel="icon" href="favicon.ico" sizes="any">
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 3 3' shape-rendering='crispEdges'%3E%3Cpath fill='%23f97316' d='M0 0h3v3H0z'/%3E%3Cpath fill='%23d9600c' d='M1 0h1v1H1zM0 1h1v1H0zM2 1h1v1H2zM1 2h1v1H1z'/%3E%3Cpath fill='%230f0f11' d='M1 1h1v1H1z'/%3E%3C/svg%3E">
   <link rel="stylesheet" href="wiki.css">
-  <script>
-    /* Applied before paint so a chosen theme never flashes the other one. */
-    try {
-      var t = localStorage.getItem("vibmc-wiki-theme");
-      if (t === "dark" || t === "light") document.documentElement.setAttribute("data-theme", t);
-    } catch (e) {}
-  </script>
-  <script src="skin.js"></script>
+  <link rel="stylesheet" href="portal.css">
 </head>
 <body>
 
 <div class="mcw-band" aria-hidden="true"></div>
 
-<div class="mcw-layout" id="top">
+<main class="vs-page">
 
-  <!-- ====================================================================
-       Left rail
-       ==================================================================== -->
-  <div class="mcw-rail">
+  <header class="vs-head">
+    <span class="vs-mark" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span>
+    <h1 class="vs-head__word">Vib Studios</h1>
+    <p class="vs-head__line">
+      Two projects, two wikis, and they are for different things. Pick the side you came for.
+      Every page on either side links across to the other, so this is not a door that locks.
+    </p>
+  </header>
 
-    <a class="mcw-logo" href="index.html">
-      <span class="mcw-logo__mark" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span>
-      <span class="mcw-logo__word">vib-MC</span>
-      <span class="mcw-logo__sub">wiki</span>
-    </a>
+  <div class="vs-choice">
 
-    <nav class="mcw-portal" aria-labelledby="p-nav">
-      <h3 id="p-nav">Navigation</h3>
-      <ul>
-        <li><a href="index.html" class="is-current">Main article</a></li>
-        <li><a href="docs.html">Documentation</a></li>
-        <li><a href="#installation">Installation</a></li>
-        <li><a href="#commands">Command list</a></li>
-        <li><a href="#history">Version history</a></li>
-        <li><a href="#bugs">Report a bug</a></li>
-        <li><a href="privacy.html">Privacy policy</a></li>
-        <li><a href="terms.html">Terms</a></li>
-      </ul>
-    </nav>
+    <!-- vib-MC ---------------------------------------------------------- -->
+    <a class="vs-card" href="vibmc.html" data-side="vibmc">
+      <span class="vs-card__art" aria-hidden="true">
+        <span class="vs-art-block"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span>
+      </span>
 
-    <nav class="mcw-portal mcw-portal--download" aria-labelledby="p-dl">
-      <h3 id="p-dl">Download</h3>
-      <a class="mcw-railbtn" id="download-btn" href="#"
-         data-fallback-url="https://github.com/vib-studios/vib-MC/releases/download/v0.0.7/vib-mc.jar">
-        <span id="download-label">Download .jar</span>
-      </a>
-      <p class="mcw-portal__note">Latest stable: <b id="version-stable">v0.0.7</b></p>
-      <p class="mcw-portal__note">Runs on Java 8 or newer. No installer, no launcher.</p>
-    </nav>
+      <span class="vs-card__name">vib-MC</span>
+      <span class="vs-card__kind">Minecraft server</span>
 
-    <nav class="mcw-portal" aria-labelledby="p-src">
-      <h3 id="p-src">Source</h3>
-      <ul>
-        <li><a href="https://github.com/vib-studios/vib-MC" target="_blank" rel="noopener">Repository</a></li>
-        <li><a href="https://github.com/vib-studios/vib-MC/releases" target="_blank" rel="noopener">All releases</a></li>
-        <li><a href="https://github.com/vib-studios/vib-MC/issues" target="_blank" rel="noopener">Issue tracker</a></li>
-        <li><a href="https://github.com/vib-studios/vib-MC/blob/main/LICENSE" target="_blank" rel="noopener">Licence</a></li>
-      </ul>
-    </nav>
-
-    <nav class="mcw-portal" aria-labelledby="p-ver">
-      <h3 id="p-ver">Supported clients</h3>
-      <p class="mcw-portal__note"><b>Java Edition</b><br>1.8 through 26.1.2</p>
-      <p class="mcw-portal__note">Not supported: 1.16, 1.16.1, 1.19.3</p>
-    </nav>
-
-  </div>
-
-  <!-- ====================================================================
-       Article
-       ==================================================================== -->
-  <div class="mcw-body">
-
-    <div class="mcw-topbar">
-      <ul class="mcw-tabs">
-        <li><a class="mcw-tab is-active" href="index.html">Article</a></li>
-        <li><a class="mcw-tab" href="docs.html">Documentation</a></li>
-        <li><a class="mcw-tab" href="privacy.html">Privacy</a></li>
-        <li><a class="mcw-tab" href="terms.html">Terms</a></li>
-      </ul>
-
-      <div class="mcw-topbar__right">
-        <div class="mcw-tools">
-          <button type="button" class="mcw-tool" id="theme-toggle" aria-pressed="false">
-            <span class="mcw-tool__icon" aria-hidden="true"></span>
-            <span class="mcw-tool__label">Dark</span>
-          </button>
-          <a class="mcw-tool mcw-tool--skin" href="classic/index.html"
-             data-skin-switch="classic" title="Go back to the original vib-MC layout">Classic layout</a>
-        </div>
-
-        <form class="mcw-search" id="page-search" role="search">
-          <div class="mcw-search__row">
-            <label for="search-input" hidden>Search this page</label>
-            <input id="search-input" type="search" autocomplete="off" placeholder="Search this page">
-            <button type="submit">Go</button>
-          </div>
-          <p class="mcw-search__msg" id="search-msg" role="status"></p>
-        </form>
-      </div>
-    </div>
-
-    <article class="mcw-sheet">
-
-      <h1 class="mcw-title">vib-MC</h1>
-      <p class="mcw-subtitle">From the vib-MC Wiki, the documentation for a server nobody wrote by hand.</p>
-
-      <p class="mcw-hatnote">
-        This article covers the server software. For writing plugins against it,
-        see <a href="docs.html">vib-MC/Documentation</a>.
+      <p class="vs-card__desc">
+        A Minecraft server written entirely by AI, one prompt at a time. One jar, no installer
+        and no control panel: drop it in a folder, run it, and point a client at port 25565.
+        Terrain, survival, the Nether and the End all work. Mobs do not exist yet.
       </p>
 
-      <div class="mcw-msgbox" role="note">
-        <span class="mcw-msgbox__icon" aria-hidden="true"></span>
-        <p>
-          <b>vib-MC is in early development and bugs can happen.</b>
-          If you find one, report it on the
-          <a class="mcw-ext" href="https://github.com/vib-studios/vib-MC/issues" target="_blank" rel="noopener">issue tracker</a>,
-          or use the <a href="#bugs">form near the bottom of this page</a>.
-        </p>
-      </div>
-
-      <!-- Infobox ------------------------------------------------------- -->
-      <aside class="mcw-infobox" aria-label="vib-MC at a glance">
-        <div class="mcw-infobox__title">vib-MC</div>
-        <div class="mcw-infobox__art">
-          <span class="mcw-jar" aria-hidden="true"></span>
-          <span class="mcw-infobox__caption">A single jar. That is the whole distribution.</span>
-        </div>
-        <table>
-          <tbody>
-            <tr>
-              <th scope="row">Latest release</th>
-              <td id="release-tag">v0.0.7</td>
-            </tr>
-            <tr>
-              <th scope="row">Released</th>
-              <td id="release-date">fetching</td>
-            </tr>
-            <tr>
-              <th scope="row">Jar size</th>
-              <td id="release-size">fetching</td>
-            </tr>
-            <tr>
-              <th scope="row">Clients</th>
-              <td>Java Edition 1.8 to 26.1.2</td>
-            </tr>
-            <tr>
-              <th scope="row">Requires</th>
-              <td>Java 8 or newer</td>
-            </tr>
-            <tr>
-              <th scope="row">Default port</th>
-              <td>25565</td>
-            </tr>
-            <tr>
-              <th scope="row">Licence</th>
-              <td><a class="mcw-ext" href="https://github.com/vib-studios/vib-MC/blob/main/LICENSE" target="_blank" rel="noopener">GPL-3.0-or-later</a></td>
-            </tr>
-            <tr>
-              <th scope="row">Written by</th>
-              <td>Prompts, one at a time</td>
-            </tr>
-          </tbody>
-        </table>
-        <div class="mcw-infobox__foot">
-          <b>Release notes</b>
-          <p id="release-notes" style="margin:.35em 0 0">Fetching the latest release notes.</p>
-        </div>
-      </aside>
-
-      <!-- Lead ---------------------------------------------------------- -->
-      <p>
-        <b>vib-MC</b> is a Minecraft server written entirely by AI, one prompt at a time.
-        It connects, generates terrain, accepts clients from Minecraft 1.8 through 26.1.2
-        (excluding 1.16, 1.16.1 and 1.19.3), and has a working survival loop.
-        No human wrote a line of it.
-      </p>
-      <p>
-        The whole thing ships as one jar. Drop it in a folder, run it with Java 8 or newer,
-        and point a client at port 25565. There is no launcher, no installer and no
-        control panel. Everything below is taken from the repository README, without a
-        marketing layer on top: where something does not work yet, this page says so.
-      </p>
-
-      <!-- TOC ----------------------------------------------------------- -->
-      <nav class="mcw-toc" id="toc" data-collapsed="false" aria-labelledby="toc-head">
-        <div class="mcw-toc__head" id="toc-head">
-          Contents
-          <button type="button" class="mcw-toc__toggle" id="toc-toggle" aria-expanded="true" aria-controls="toc-list">[hide]</button>
-        </div>
-        <ol id="toc-list">
-          <li><a href="#overview">Overview</a>
-            <ol>
-              <li><a href="#works">What works</a></li>
-              <li><a href="#missing">What does not</a></li>
-            </ol>
-          </li>
-          <li><a href="#comparison">Comparison with the vanilla server</a></li>
-          <li><a href="#installation">Installation</a>
-            <ol>
-              <li><a href="#requirements">Requirements</a></li>
-              <li><a href="#building">Building from source</a></li>
-              <li><a href="#first-run">First run</a></li>
-            </ol>
-          </li>
-          <li><a href="#commands">Commands</a></li>
-          <li><a href="#structure">Internal structure</a></li>
-          <li><a href="#history">Version history</a></li>
-          <li><a href="#bugs">Reporting bugs</a></li>
-          <li><a href="#contributors">Contributors</a></li>
-          <li><a href="#external">External links</a></li>
-        </ol>
-      </nav>
-
-      <!-- Overview ------------------------------------------------------ -->
-      <h2 id="overview">
-        <span class="mcw-editsection">[<a class="mcw-ext" href="https://github.com/vib-studios/vib-MC#readme" target="_blank" rel="noopener">edit</a>]</span>
-        Overview
-      </h2>
-
-      <p>
-        vib-MC implements the Minecraft server protocol directly rather than patching the
-        vanilla jar. Networking runs through PacketEvents, which is what makes the wide
-        client range possible: a 1.8 client and a 26.1.2 client both get a version of the
-        world they understand.
-      </p>
-
-      <h3 id="works">What works</h3>
-
-      <dl>
-        <dt>It starts</dt>
-        <dd>Every time, in roughly four seconds on ordinary hardware.</dd>
-
-        <dt>People can join</dt>
-        <dd>Handshake, login and spawn, from Minecraft 1.8 to 26.1.2, minus 1.16, 1.16.1 and 1.19.3.</dd>
-
-        <dt>Terrain generates</dt>
-        <dd>Procedural, seeded and deterministic: biomes, caves, ores, trees and a village at spawn.</dd>
-
-        <dt>Survival</dt>
-        <dd>Blocks break with drops, tools and physics. Crafting, smelting, hunger, drowning,
-          storage and combat are all in.</dd>
-
-        <dt>The Nether and the End</dt>
-        <dd>Both dimensions are real and both are reachable. You build the portal yourself.</dd>
-
-        <dt>Plugin API</dt>
-        <dd>The interface exists and events fire. See <a href="docs.html">the documentation</a>.</dd>
+      <dl class="vs-card__facts">
+        <dt>Latest</dt><dd id="mc-tag">v0.0.7</dd>
+        <dt>Clients</dt><dd>Java Edition 1.8 to 26.1.2</dd>
+        <dt>Requires</dt><dd>Java 8 or newer</dd>
+        <dt>Licence</dt><dd>GPL-3.0-or-later</dd>
       </dl>
 
-      <h3 id="missing">What does not</h3>
+      <p class="vs-card__last" data-last hidden>You opened this side last time.</p>
 
-      <ul>
-        <li><b>Mobs.</b> None yet. Players are the only entities the server sends.</li>
-        <li><b>The dragon fight.</b> The End towers are scenery. Nothing spawns on them.</li>
-        <li><b>Three client versions.</b> 1.16, 1.16.1 and 1.19.3 are not supported and are
-          unlikely to be soon.</li>
-      </ul>
+      <span class="vs-card__go">Open the vib-MC wiki</span>
+    </a>
 
-      <!-- Comparison ---------------------------------------------------- -->
-      <h2 id="comparison">
-        <span class="mcw-editsection">[<a class="mcw-ext" href="https://github.com/vib-studios/vib-MC#readme" target="_blank" rel="noopener">edit</a>]</span>
-        Comparison with the vanilla server
-      </h2>
+    <!-- Vib-launcher ---------------------------------------------------- -->
+    <a class="vs-card" href="viblauncher.html" data-side="viblauncher">
+      <span class="vs-card__art" aria-hidden="true">
+        <span class="vs-art-win">
+          <span class="vs-art-win__bar"><span></span><span></span><span></span></span>
+          <span class="vs-art-win__body">
+            <span class="vs-art-win__rail"><i></i><i></i><i></i><i></i></span>
+            <span class="vs-art-win__list"><i></i><i></i><i></i></span>
+          </span>
+        </span>
+      </span>
 
-      <p>
-        Side by side with Mojang's server jar, because the comparison is the honest way to
-        describe what state this is in.
+      <span class="vs-card__name">Vib-launcher</span>
+      <span class="vs-card__kind">Windows launcher</span>
+
+      <p class="vs-card__desc">
+        A native Windows Minecraft launcher and vib-MC server control panel. Isolated instances,
+        Microsoft and offline accounts, Fabric and Quilt, mods from Modrinth, and local vib-MC
+        servers with a console. WPF throughout: no browser and no embedded web page.
       </p>
 
-      <div class="mcw-scroll">
-        <table class="mcw-table mcw-table--wide">
-          <caption>Feature support as of v0.0.7.</caption>
-          <thead>
-            <tr>
-              <th scope="col">Feature</th>
-              <th scope="col">vib-MC</th>
-              <th scope="col">Vanilla</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <th scope="row">Server starts</th>
-              <td class="mcw-yes">Yes</td>
-              <td class="mcw-yes">Yes</td>
-            </tr>
-            <tr>
-              <th scope="row">Players can join</th>
-              <td class="mcw-yes">Yes</td>
-              <td class="mcw-yes">Yes</td>
-            </tr>
-            <tr>
-              <th scope="row">Terrain renders</th>
-              <td class="mcw-yes">Yes</td>
-              <td class="mcw-yes">Yes</td>
-            </tr>
-            <tr>
-              <th scope="row">Movement and camera</th>
-              <td class="mcw-yes">Yes</td>
-              <td class="mcw-yes">Yes</td>
-            </tr>
-            <tr>
-              <th scope="row">Lighting</th>
-              <td class="mcw-yes">Yes</td>
-              <td class="mcw-yes">Yes</td>
-            </tr>
-            <tr>
-              <th scope="row">Breaking blocks</th>
-              <td class="mcw-yes">Yes <span class="mcw-note">with drops, tools and physics</span></td>
-              <td class="mcw-yes">Yes</td>
-            </tr>
-            <tr>
-              <th scope="row">Nether and End</th>
-              <td class="mcw-yes">Yes</td>
-              <td class="mcw-yes">Yes</td>
-            </tr>
-            <tr>
-              <th scope="row">Portals</th>
-              <td class="mcw-partial">Partial <span class="mcw-note">you build them, nothing generates one</span></td>
-              <td class="mcw-yes">Yes</td>
-            </tr>
-            <tr>
-              <th scope="row">Mobs</th>
-              <td class="mcw-no">No</td>
-              <td class="mcw-yes">Yes</td>
-            </tr>
-            <tr>
-              <th scope="row">Dragon fight</th>
-              <td class="mcw-no">No <span class="mcw-note">the towers are scenery</span></td>
-              <td class="mcw-yes">Yes</td>
-            </tr>
-            <tr>
-              <th scope="row">Client version range</th>
-              <td class="mcw-yes">1.8 to 26.1.2 <span class="mcw-note">minus three versions</span></td>
-              <td class="mcw-note">One version per jar</td>
-            </tr>
-            <tr>
-              <th scope="row">Written by humans</th>
-              <td class="mcw-no">No</td>
-              <td class="mcw-yes">Yes</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
+      <dl class="vs-card__facts">
+        <dt>Latest</dt><dd id="vl-tag">v0.1.0</dd>
+        <dt>Runs on</dt><dd>Windows 10 20H1 or newer, 64-bit</dd>
+        <dt>Requires</dt><dd>Nothing. The download is self-contained</dd>
+        <dt>Download</dt><dd id="vl-size">a zip holding one .exe</dd>
+      </dl>
 
-      <!-- Installation -------------------------------------------------- -->
-      <h2 id="installation">
-        <span class="mcw-editsection">[<a class="mcw-ext" href="https://github.com/vib-studios/vib-MC#readme" target="_blank" rel="noopener">edit</a>]</span>
-        Installation
-      </h2>
+      <p class="vs-card__last" data-last hidden>You opened this side last time.</p>
 
-      <h3 id="requirements">Requirements</h3>
-
-      <ul>
-        <li><b>Java 8 or newer.</b> Check with <code>java -version</code>. Releases before
-          v0.0.6 needed Java 21.</li>
-        <li><b>The vib-MC jar</b>, from the <a class="mcw-ext" href="https://github.com/vib-studios/vib-MC/releases" target="_blank" rel="noopener">releases page</a>,
-          or built yourself.</li>
-        <li><b>A Minecraft client</b> on any supported version.</li>
-        <li><b>A JDK</b>, only if you intend to build the server or write plugins.</li>
-      </ul>
-
-      <h3 id="building">Building from source</h3>
-
-      <p>Two commands. The jar lands in <code>build/libs/</code>.</p>
-
-      <div class="mcw-codebox">
-        <div class="mcw-codebox__head">
-          <span>Terminal</span>
-          <button type="button" class="mcw-codebox__copy" id="copy-btn"><span id="copy-label">copy commands</span></button>
-        </div>
-<pre><code><span class="mcw-prompt">$ </span>./gradlew build
-<span class="mcw-prompt">$ </span>java -jar build/libs/vib-mc.jar</code></pre>
-      </div>
-
-      <h3 id="first-run">First run</h3>
-
-      <p>
-        The server binds to port <code>25565</code> and writes a <code>server.properties</code>
-        next to the jar on first start. Stop it, edit that file, start it again: values are
-        read at boot only. World data is written to <code>world/</code>,
-        <code>world_nether/</code> and <code>world_the_end/</code>.
-      </p>
-
-      <!-- Commands ------------------------------------------------------ -->
-      <h2 id="commands">
-        <span class="mcw-editsection">[<a class="mcw-ext" href="https://github.com/vib-studios/vib-MC#readme" target="_blank" rel="noopener">edit</a>]</span>
-        Commands
-      </h2>
-
-      <p>
-        The full command surface. Operators are listed in <code>ops.json</code>.
-        Select any command below to copy it.
-      </p>
-
-      <ul class="mcw-cmds">
-        <li><button type="button" class="copy-cmd">/help</button></li>
-        <li><button type="button" class="copy-cmd">/tp</button></li>
-        <li><button type="button" class="copy-cmd">/gamemode</button></li>
-        <li><button type="button" class="copy-cmd">/time</button></li>
-        <li><button type="button" class="copy-cmd">/weather</button></li>
-        <li><button type="button" class="copy-cmd">/give</button></li>
-        <li><button type="button" class="copy-cmd">/kill</button></li>
-        <li><button type="button" class="copy-cmd">/say</button></li>
-        <li><button type="button" class="copy-cmd">/seed</button></li>
-        <li><button type="button" class="copy-cmd">/save-all</button></li>
-        <li><button type="button" class="copy-cmd">/save-on</button></li>
-        <li><button type="button" class="copy-cmd">/save-off</button></li>
-        <li><button type="button" class="copy-cmd">/stop</button></li>
-        <li><button type="button" class="copy-cmd">/list</button></li>
-        <li><button type="button" class="copy-cmd">/op</button></li>
-        <li><button type="button" class="copy-cmd">/deop</button></li>
-        <li><button type="button" class="copy-cmd">/kick</button></li>
-        <li><button type="button" class="copy-cmd">/dimension</button></li>
-      </ul>
-
-      <!-- Structure ----------------------------------------------------- -->
-      <h2 id="structure">
-        <span class="mcw-editsection">[<a class="mcw-ext" href="https://github.com/vib-studios/vib-MC/tree/main/src" target="_blank" rel="noopener">edit</a>]</span>
-        Internal structure
-      </h2>
-
-      <p>
-        Fourteen packages under <code>net.vibmc</code>, coaxed into existence with prompts and
-        then patched with more prompts.
-      </p>
-
-<pre><code>net.vibmc
-├─ server          <span class="mcw-com">makes it go</span>
-├─ network         <span class="mcw-com">talks to minecraft</span>
-├─ world           <span class="mcw-com">blocks and stuff</span>
-├─ world.gen       <span class="mcw-com">makes the ground</span>
-├─ world.storage   <span class="mcw-com">saves the ground</span>
-├─ world.structure <span class="mcw-com">villages and trees</span>
-├─ entity          <span class="mcw-com">things that move</span>
-├─ player          <span class="mcw-com">the people</span>
-├─ inventory       <span class="mcw-com">slots and windows</span>
-├─ crafting        <span class="mcw-com">recipes and smelting</span>
-├─ registry        <span class="mcw-com">minecraft data</span>
-├─ plugin          <span class="mcw-com">mod support</span>
-├─ command         <span class="mcw-com">slash commands</span>
-└─ permission      <span class="mcw-com">who can do what</span></code></pre>
-
-      <!-- History ------------------------------------------------------- -->
-      <h2 id="history">
-        <span class="mcw-editsection">[<a class="mcw-ext" href="https://github.com/vib-studios/vib-MC/releases" target="_blank" rel="noopener">edit</a>]</span>
-        Version history
-      </h2>
-
-      <div class="mcw-scroll">
-        <table class="mcw-table mcw-table--wide">
-          <caption>Every published jar, oldest at the bottom.</caption>
-          <thead>
-            <tr>
-              <th scope="col">Version</th>
-              <th scope="col">Java</th>
-              <th scope="col">Notes</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <th scope="row"><a class="mcw-ext" href="https://github.com/vib-studios/vib-MC/releases/tag/v0.0.7" target="_blank" rel="noopener">v0.0.7</a>
-                <span class="mcw-note">current</span></th>
-              <td>8+</td>
-              <td>Survival. Blocks drop, physics react, and you can craft, smelt, starve,
-                drown, store items and fight.</td>
-            </tr>
-            <tr>
-              <th scope="row"><a class="mcw-ext" href="https://github.com/vib-studios/vib-MC/releases/tag/v0.0.6-hotfix.1" target="_blank" rel="noopener">v0.0.6-hotfix.1</a></th>
-              <td>8+</td>
-              <td>The multi-version milestone. PacketEvents networking opened the door to
-                1.8 through 26.1.2, with spawns and villages kept out of the water.</td>
-            </tr>
-            <tr>
-              <th scope="row"><a class="mcw-ext" href="https://github.com/vib-studios/vib-MC/releases/tag/Alpha" target="_blank" rel="noopener">v0.0.1</a>
-                <span class="mcw-note">oldest</span></th>
-              <td>21+</td>
-              <td>First breath. One client version, terrain generates, nobody knows where.</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-
-      <!-- Bugs ---------------------------------------------------------- -->
-      <h2 id="bugs">
-        <span class="mcw-editsection">[<a class="mcw-ext" href="https://github.com/vib-studios/vib-MC/issues" target="_blank" rel="noopener">edit</a>]</span>
-        Reporting bugs
-      </h2>
-
-      <p>
-        Filling this in opens a pre-written GitHub issue with everything we need.
-        Keep it short: we are also an AI.
-      </p>
-
-      <form class="mcw-form" id="bug-form">
-        <div class="mcw-field">
-          <label for="bug-title">1. The issue in one sentence
-            <span class="mcw-field__hint">This becomes the issue title.</span>
-          </label>
-          <input id="bug-title" name="title" type="text" required maxlength="90"
-                 placeholder="server crashes when i use /give">
-        </div>
-
-        <div class="mcw-field">
-          <label for="bug-what">2. What is the issue?
-            <span class="mcw-field__hint">What you saw, and what you expected instead.</span>
-          </label>
-          <textarea id="bug-what" name="what" rows="3" required
-                    placeholder="what you saw, what you expected"></textarea>
-        </div>
-
-        <div class="mcw-field">
-          <label for="bug-steps">3. How did it happen?
-            <span class="mcw-field__hint">Steps precise enough for us to reproduce it.</span>
-          </label>
-          <textarea id="bug-steps" name="steps" rows="3" required
-                    placeholder="steps so we can replicate it"></textarea>
-        </div>
-
-        <div class="mcw-grid2">
-          <div class="mcw-field">
-            <label for="bug-version">Release version</label>
-            <input id="bug-version" name="version" type="text" value="v0.0.7">
-          </div>
-          <div class="mcw-field">
-            <label for="bug-log">Server log output</label>
-            <textarea id="bug-log" name="log" rows="4"
-                      placeholder="paste the raw log output from the server console"></textarea>
-          </div>
-        </div>
-
-        <button type="submit" class="mcw-btn">Open GitHub issue</button>
-      </form>
-
-      <!-- Contributors -------------------------------------------------- -->
-      <h2 id="contributors">
-        <span class="mcw-editsection">[<a class="mcw-ext" href="https://github.com/vib-studios/vib-MC/graphs/contributors" target="_blank" rel="noopener">edit</a>]</span>
-        Contributors
-      </h2>
-
-      <p>
-        The people who pointed the prompts somewhere useful. Pulled live from the
-        GitHub contributors endpoint.
-      </p>
-
-      <div class="contrib-inline" hidden>
-        <span class="contrib-inline__label">Commit authors on the default branch:</span>
-        <ul class="contrib-inline__list" data-contributors></ul>
-      </div>
-
-      <!-- External ------------------------------------------------------ -->
-      <h2 id="external">
-        <span class="mcw-editsection">[<a class="mcw-ext" href="https://github.com/vib-studios/vib-MC" target="_blank" rel="noopener">edit</a>]</span>
-        External links
-      </h2>
-
-      <ul>
-        <li><a class="mcw-ext" href="https://github.com/vib-studios/vib-MC" target="_blank" rel="noopener">vib-MC on GitHub</a></li>
-        <li><a class="mcw-ext" href="https://github.com/vib-studios/vib-MC/releases" target="_blank" rel="noopener">Release archive</a></li>
-        <li><a class="mcw-ext" href="https://github.com/vib-studios/vib-MC/issues" target="_blank" rel="noopener">Issue tracker</a></li>
-        <li><a href="docs.html">Plugin documentation</a></li>
-        <li><a class="mcw-new" href="#">Protocol notes</a> <span class="mcw-note">(not written yet)</span></li>
-      </ul>
-
-      <div class="mcw-catlinks">
-        <b>Categories:</b>
-        <ul>
-          <li>Server software</li>
-          <li>Java Edition</li>
-          <li>GPL-3.0</li>
-          <li>Early development</li>
-        </ul>
-      </div>
-
-    </article>
-
-    <footer class="mcw-footer">
-      <p>Content on this page is generated from the vib-MC repository README and the GitHub releases API.</p>
-      <p>vib-MC is licensed <a href="https://github.com/vib-studios/vib-MC/blob/main/LICENSE" target="_blank" rel="noopener">GPL-3.0-or-later</a>. Not an official Minecraft product. Not approved by or associated with Mojang or Microsoft.</p>
-      <ul>
-        <li><a href="index.html">Main article</a></li>
-        <li><a href="docs.html">Documentation</a></li>
-        <li><a href="#bugs">Report a bug</a></li>
-        <li><a href="privacy.html">Privacy</a></li>
-        <li><a href="terms.html">Terms</a></li>
-        <li><a href="#top">Back to top</a></li>
-        <li><a href="classic/index.html" data-skin-switch="classic">Classic layout</a></li>
-      </ul>
-    </footer>
+      <span class="vs-card__go">Open the Vib-launcher wiki</span>
+    </a>
 
   </div>
-</div>
 
-<script src="wiki.js"></script>
-<script src="website.js"></script>
-<script src="contributors.js"></script>
+  <footer class="vs-foot">
+    <p>
+      Release numbers on this page come from the GitHub releases API and are the ones published
+      right now. Neither project is an official Minecraft product. Neither is approved by or
+      associated with Mojang or Microsoft.
+    </p>
+    <ul>
+      <li><a href="https://github.com/vib-studios" target="_blank" rel="noopener">Vib Studios on GitHub</a></li>
+      <li><a href="privacy.html">Privacy</a></li>
+      <li><a href="terms.html">Terms</a></li>
+      <li><a href="classic/index.html">Classic vib-MC layout</a></li>
+    </ul>
+  </footer>
+
+</main>
+
+<script src="portal.js"></script>
 </body>
 </html>

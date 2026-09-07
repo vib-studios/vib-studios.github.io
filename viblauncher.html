@@ -1,0 +1,865 @@
+<!doctype html>
+<html lang="en" data-skin="wiki">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Vib-launcher - Vib Studios Wiki</title>
+  <meta name="description" content="Vib-launcher is a native Windows Minecraft launcher and vib-MC server control panel. Instances, Microsoft and offline accounts, Fabric and Quilt, mods from Modrinth, and local vib-MC servers. Download the latest release.">
+  <meta property="og:title" content="Vib-launcher">
+  <meta property="og:description" content="A native Windows Minecraft launcher and vib-MC server control panel. WPF throughout, no browser and no embedded web page.">
+  <meta property="og:type" content="website">
+  <meta name="theme-color" content="#303030">
+  <link rel="icon" href="favicon.ico" sizes="any">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 3 3' shape-rendering='crispEdges'%3E%3Cpath fill='%23f97316' d='M0 0h3v3H0z'/%3E%3Cpath fill='%23d9600c' d='M1 0h1v1H1zM0 1h1v1H0zM2 1h1v1H2zM1 2h1v1H1z'/%3E%3Cpath fill='%230f0f11' d='M1 1h1v1H1z'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="wiki.css">
+  <script>
+    /* Applied before paint so a chosen theme never flashes the other one. */
+    try {
+      var t = localStorage.getItem("vibmc-wiki-theme");
+      if (t === "dark" || t === "light") document.documentElement.setAttribute("data-theme", t);
+    } catch (e) {}
+  </script>
+</head>
+<body>
+
+<div class="mcw-band" aria-hidden="true"></div>
+
+<div class="mcw-layout" id="top">
+
+  <!-- ====================================================================
+       Left rail
+       ==================================================================== -->
+  <div class="mcw-rail">
+
+    <a class="mcw-logo" href="viblauncher.html">
+      <span class="mcw-logo__mark" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span>
+      <span class="mcw-logo__word">Vib-launcher</span>
+      <span class="mcw-logo__sub">wiki</span>
+    </a>
+
+    <nav class="mcw-portal" aria-labelledby="p-nav">
+      <h3 id="p-nav">Navigation</h3>
+      <ul>
+        <li><a href="viblauncher.html" class="is-current">Main article</a></li>
+        <li><a href="#installation">Installation</a></li>
+        <li><a href="#instances">Instances</a></li>
+        <li><a href="#accounts">Accounts</a></li>
+        <li><a href="#servers">vib-MC servers</a></li>
+        <li><a href="#history">Version history</a></li>
+        <li><a href="#bugs">Report a bug</a></li>
+        <li><a href="privacy.html">Privacy policy</a></li>
+        <li><a href="terms.html">Terms</a></li>
+      </ul>
+    </nav>
+
+    <nav class="mcw-portal mcw-portal--download" aria-labelledby="p-dl">
+      <h3 id="p-dl">Download</h3>
+      <a class="mcw-railbtn" id="download-btn"
+         href="https://github.com/vib-studios/viblauncher/releases/download/v0.1.0/VibLauncher-0.1.0-win-x64.zip">
+        <span id="download-label">Download v0.1.0</span>
+      </a>
+      <p class="mcw-portal__note">Latest release: <b id="version-stable">v0.1.0</b></p>
+      <p class="mcw-portal__note">Windows 10 20H1 or newer, 64-bit. Self-contained, so nothing has to be installed first.</p>
+    </nav>
+
+    <nav class="mcw-portal" aria-labelledby="p-src">
+      <h3 id="p-src">Source</h3>
+      <ul>
+        <li><a href="https://github.com/vib-studios/viblauncher" target="_blank" rel="noopener">Repository</a></li>
+        <li><a href="https://github.com/vib-studios/viblauncher/releases" target="_blank" rel="noopener">All releases</a></li>
+        <li><a href="https://github.com/vib-studios/viblauncher/issues" target="_blank" rel="noopener">Issue tracker</a></li>
+      </ul>
+    </nav>
+
+    <nav class="mcw-portal" aria-labelledby="p-other">
+      <h3 id="p-other">The other side</h3>
+      <p class="mcw-portal__note">The server this launcher installs and runs is <a href="vibmc.html">vib-MC</a>.</p>
+      <p class="mcw-portal__note">Both projects start from the <a href="index.html">Vib Studios portal</a>.</p>
+    </nav>
+
+  </div>
+
+  <!-- ====================================================================
+       Article
+       ==================================================================== -->
+  <div class="mcw-body">
+
+    <div class="mcw-topbar">
+      <ul class="mcw-tabs">
+        <li><a class="mcw-tab is-active" href="viblauncher.html">Article</a></li>
+        <li><a class="mcw-tab" href="vibmc.html">vib-MC</a></li>
+        <li><a class="mcw-tab" href="privacy.html">Privacy</a></li>
+        <li><a class="mcw-tab" href="terms.html">Terms</a></li>
+      </ul>
+
+      <div class="mcw-topbar__right">
+        <div class="mcw-tools">
+          <button type="button" class="mcw-tool" id="theme-toggle" aria-pressed="false">
+            <span class="mcw-tool__icon" aria-hidden="true"></span>
+            <span class="mcw-tool__label">Dark</span>
+          </button>
+          <a class="mcw-tool mcw-tool--skin" href="index.html" title="Back to the project picker">All projects</a>
+        </div>
+
+        <form class="mcw-search" id="page-search" role="search">
+          <div class="mcw-search__row">
+            <label for="search-input" hidden>Search this page</label>
+            <input id="search-input" type="search" autocomplete="off" placeholder="Search this page">
+            <button type="submit">Go</button>
+          </div>
+          <p class="mcw-search__msg" id="search-msg" role="status"></p>
+        </form>
+      </div>
+    </div>
+
+    <article class="mcw-sheet">
+
+      <h1 class="mcw-title">Vib-launcher</h1>
+      <p class="mcw-subtitle">From the Vib Studios Wiki, the documentation for the launcher half of the project.</p>
+
+      <p class="mcw-hatnote">
+        This article covers the desktop launcher. For the server it installs and runs,
+        see <a href="vibmc.html">vib-MC</a>.
+      </p>
+
+      <div class="mcw-msgbox" role="note">
+        <span class="mcw-msgbox__icon" aria-hidden="true"></span>
+        <p>
+          <b>Vib-launcher is at its first release and bugs can happen.</b>
+          If you find one, report it on the
+          <a class="mcw-ext" href="https://github.com/vib-studios/viblauncher/issues" target="_blank" rel="noopener">issue tracker</a>,
+          or use the <a href="#bugs">form near the bottom of this page</a>.
+        </p>
+      </div>
+
+      <!-- Infobox ------------------------------------------------------- -->
+      <aside class="mcw-infobox" aria-label="Vib-launcher at a glance">
+        <div class="mcw-infobox__title">Vib-launcher</div>
+        <div class="mcw-infobox__art">
+          <span class="mcw-window" aria-hidden="true">
+            <span class="mcw-window__bar"><span></span><span></span><span></span></span>
+            <span class="mcw-window__body">
+              <span class="mcw-window__rail"><i></i><i></i><i></i><i></i></span>
+              <span class="mcw-window__list"><i></i><i></i><i></i></span>
+            </span>
+          </span>
+          <span class="mcw-infobox__caption">One window, and no browser inside it.</span>
+        </div>
+        <table>
+          <tbody>
+            <tr>
+              <th scope="row">Latest release</th>
+              <td id="release-tag">v0.1.0</td>
+            </tr>
+            <tr>
+              <th scope="row">Released</th>
+              <td id="release-date">fetching</td>
+            </tr>
+            <tr>
+              <th scope="row">Download size</th>
+              <td id="release-size">fetching</td>
+            </tr>
+            <tr>
+              <th scope="row">Platform</th>
+              <td>Windows 10 20H1 or newer, 64-bit</td>
+            </tr>
+            <tr>
+              <th scope="row">To run</th>
+              <td>Nothing. The release is self-contained</td>
+            </tr>
+            <tr>
+              <th scope="row">To play</th>
+              <td>A Java runtime, which one depends on the Minecraft version</td>
+            </tr>
+            <tr>
+              <th scope="row">Interface</th>
+              <td>WPF, native XAML throughout</td>
+            </tr>
+            <tr>
+              <th scope="row">Source</th>
+              <td><a class="mcw-ext" href="https://github.com/vib-studios/viblauncher" target="_blank" rel="noopener">vib-studios/viblauncher</a></td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="mcw-infobox__foot">
+          <b>Release notes</b>
+          <p id="release-notes" style="margin:.35em 0 0">Fetching the latest release notes.</p>
+        </div>
+      </aside>
+
+      <!-- Lead ---------------------------------------------------------- -->
+      <p>
+        <b>Vib-launcher</b> is a native Windows Minecraft launcher and
+        <a href="vibmc.html">vib-MC</a> server control panel. It manages isolated Minecraft
+        instances, Microsoft and offline accounts, mod loaders, mods from Modrinth, and local
+        vib-MC servers, in one desktop application wearing the Vib Studios Classic theme.
+      </p>
+      <p>
+        It is a real WPF application. There is no browser, no WebView and no embedded web page
+        anywhere in it. Nothing from Minecraft is bundled either: client jars, libraries and
+        assets are fetched from Mojang's own distribution endpoints and verified against the
+        hashes Mojang publishes with them. Everything below comes from the repository README,
+        without a marketing layer on top, so where something does not work yet this page says so.
+      </p>
+
+      <!-- TOC ----------------------------------------------------------- -->
+      <nav class="mcw-toc" id="toc" data-collapsed="false" aria-labelledby="toc-head">
+        <div class="mcw-toc__head" id="toc-head">
+          Contents
+          <button type="button" class="mcw-toc__toggle" id="toc-toggle" aria-expanded="true" aria-controls="toc-list">[hide]</button>
+        </div>
+        <ol id="toc-list">
+          <li><a href="#overview">Overview</a>
+            <ol>
+              <li><a href="#works">What works</a></li>
+              <li><a href="#missing">What does not</a></li>
+            </ol>
+          </li>
+          <li><a href="#installation">Installation</a>
+            <ol>
+              <li><a href="#requirements">Requirements</a></li>
+              <li><a href="#first-run">First run</a></li>
+              <li><a href="#building">Building from source</a></li>
+            </ol>
+          </li>
+          <li><a href="#instances">Instances</a>
+            <ol>
+              <li><a href="#transfer">Exporting and importing</a></li>
+            </ol>
+          </li>
+          <li><a href="#accounts">Accounts</a></li>
+          <li><a href="#mods">Mod loaders and mods</a></li>
+          <li><a href="#servers">vib-MC servers</a></li>
+          <li><a href="#data">Where things are kept</a></li>
+          <li><a href="#architecture">Architecture</a></li>
+          <li><a href="#theme">The Classic theme</a></li>
+          <li><a href="#history">Version history</a></li>
+          <li><a href="#bugs">Reporting bugs</a></li>
+          <li><a href="#external">External links</a></li>
+        </ol>
+      </nav>
+
+      <!-- Overview ------------------------------------------------------ -->
+      <h2 id="overview">
+        <span class="mcw-editsection">[<a class="mcw-ext" href="https://github.com/vib-studios/viblauncher#readme" target="_blank" rel="noopener">edit</a>]</span>
+        Overview
+      </h2>
+
+      <p>
+        The launcher does three separate jobs from one window: it keeps Minecraft instances
+        apart from each other, it signs accounts in, and it runs vib-MC servers on the same
+        machine. Instances and servers never share a directory, because a client and a server
+        want different things from a folder.
+      </p>
+
+      <h3 id="works">What works</h3>
+
+      <dl>
+        <dt>Instances</dt>
+        <dd>Created, launched, imported and exported, each in its own folder, with versions,
+          libraries and assets shared between them.</dd>
+
+        <dt>Accounts</dt>
+        <dd>Microsoft sign in over the device code flow, and offline profiles that keep their
+          player data across launches.</dd>
+
+        <dt>Mod loaders</dt>
+        <dd>Fabric and Quilt install completely. Forge and NeoForge are listed but not installed.</dd>
+
+        <dt>Mods</dt>
+        <dd>Searched and installed from Modrinth, filtered to what the instance can actually run,
+          with required dependencies resolved.</dd>
+
+        <dt>vib-MC servers</dt>
+        <dd>Downloaded, started, watched through a console, backed up, updated and edited, without
+          the launcher ever hosting the server process inside itself.</dd>
+
+        <dt>Downloads</dt>
+        <dd>Queued with progress, retried on failure, cancellable, and every file checked against
+          the hash published with it.</dd>
+      </dl>
+
+      <h3 id="missing">What does not</h3>
+
+      <p>Stated plainly rather than hidden behind a disabled button.</p>
+
+      <ul>
+        <li><b>Forge and NeoForge cannot be installed.</b> Their real published builds are listed,
+          and the Create Instance dialog explains the limitation instead of making an instance that
+          would not start. Fabric and Quilt are complete.</li>
+        <li><b>Microsoft sign in needs a client id supplied by whoever ships the build.</b> The full
+          auth chain is implemented and works once one is configured. Offline accounts need nothing.</li>
+        <li><b>No managed Java downloads.</b> The launcher finds installed runtimes and names the
+          release a version needs, but does not fetch one for you.</li>
+        <li><b>CurseForge packs are not imported</b>, and CurseForge is not a mod source. That format
+          names its mods by project id, which needs an API key this launcher does not ship.</li>
+        <li><b>Server plugin management is not implemented.</b> Servers get a <code>plugins/</code>
+          folder and a button that opens it.</li>
+        <li><b>Player counts and server memory use are not shown</b>, because nothing available
+          reports them reliably. The fields show what is known rather than invented numbers.</li>
+        <li><b>Windows only.</b> WPF is a Windows toolkit, and the launcher uses DPAPI and a DWM call
+          besides.</li>
+      </ul>
+
+      <!-- Installation -------------------------------------------------- -->
+      <h2 id="installation">
+        <span class="mcw-editsection">[<a class="mcw-ext" href="https://github.com/vib-studios/viblauncher#readme" target="_blank" rel="noopener">edit</a>]</span>
+        Installation
+      </h2>
+
+      <h3 id="requirements">Requirements</h3>
+
+      <div class="mcw-scroll">
+        <table class="mcw-table mcw-table--wide">
+          <caption>What each part of the launcher needs.</caption>
+          <thead>
+            <tr>
+              <th scope="col">For</th>
+              <th scope="col">You need</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th scope="row">Running the release</th>
+              <td>Windows 10 20H1 or newer, 64-bit. Nothing else: the download is self-contained.</td>
+            </tr>
+            <tr>
+              <th scope="row">Running from source</th>
+              <td>The <a class="mcw-ext" href="https://dotnet.microsoft.com/download/dotnet/10.0" target="_blank" rel="noopener">.NET 10 Desktop Runtime</a>, or the SDK to build it.</td>
+            </tr>
+            <tr>
+              <th scope="row">Playing</th>
+              <td>A Java runtime. Java 8 for 1.16 and older, 17 for 1.18, 21 for 1.20.5 and newer.
+                The launcher detects what is installed and says which is needed.</td>
+            </tr>
+            <tr>
+              <th scope="row">Running a server</th>
+              <td>Java 8 or newer, which is vib-MC's own requirement.</td>
+            </tr>
+            <tr>
+              <th scope="row">Microsoft accounts</th>
+              <td>An Azure application id, set in Settings or in <code>VIBLAUNCHER_MSA_CLIENT_ID</code>.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3 id="first-run">First run</h3>
+
+      <p>
+        The release is a zip holding a single <code>VibLauncher.exe</code>. Unzip it anywhere and
+        run it. There is no installer and nothing is written outside
+        <code>%APPDATA%\VibLauncher</code>. Windows SmartScreen will warn about an unsigned
+        executable, because it is unsigned.
+      </p>
+
+      <p>
+        On a first start there are no instances and no accounts. Add an account first, offline or
+        Microsoft, then create an instance: pick a Minecraft version, pick a loader, and the
+        launcher downloads what that combination needs and verifies each file as it arrives.
+      </p>
+
+      <h3 id="building">Building from source</h3>
+
+      <p>Two commands, with the .NET 10 SDK installed.</p>
+
+      <div class="mcw-codebox">
+        <div class="mcw-codebox__head">
+          <span>Terminal</span>
+          <button type="button" class="mcw-codebox__copy" id="copy-btn"><span id="copy-label">copy commands</span></button>
+        </div>
+<pre><code><span class="mcw-prompt">$ </span>dotnet build -c Release
+<span class="mcw-prompt">$ </span>dotnet run --project src/VibLauncher.App</code></pre>
+      </div>
+
+      <p>
+        <code>dotnet test</code> runs 208 tests covering instance and account persistence, import
+        and export, mod compatibility and enable or disable, download success, checksum failure,
+        retry and cancellation, <code>server.properties</code> round-tripping, port probing, version
+        metadata parsing and merging, argument building, path safety and credential redaction. None
+        of them need a network: the download tests stand up a loopback HTTP server.
+      </p>
+
+      <!-- Instances ------------------------------------------------------ -->
+      <h2 id="instances">
+        <span class="mcw-editsection">[<a class="mcw-ext" href="https://github.com/vib-studios/viblauncher/tree/main/src/VibLauncher.Core/Instances" target="_blank" rel="noopener">edit</a>]</span>
+        Instances
+      </h2>
+
+      <p>
+        An instance is one folder under <code>instances/</code> holding the launcher's record, the
+        mods it installed, its own extracted natives and its own <code>.minecraft</code> game
+        directory. Versions, libraries and assets live outside it and are shared, so a second
+        instance on a version already installed costs almost nothing on disk. Only the game
+        directory and the natives are per instance.
+      </p>
+
+      <p>
+        The record is <code>instance.json</code>, readable and hand editable:
+      </p>
+
+<pre><code>{
+  <span class="mcw-kw">"id"</span>: <span class="mcw-str">"fabric-survival"</span>,
+  <span class="mcw-kw">"name"</span>: <span class="mcw-str">"Fabric Survival"</span>,
+  <span class="mcw-kw">"minecraftVersion"</span>: <span class="mcw-str">"1.21.8"</span>,
+  <span class="mcw-kw">"loader"</span>: <span class="mcw-str">"fabric"</span>,
+  <span class="mcw-kw">"loaderVersion"</span>: <span class="mcw-str">"0.17.2"</span>,
+  <span class="mcw-kw">"launchVersionId"</span>: <span class="mcw-str">"fabric-loader-0.17.2-1.21.8"</span>,
+  <span class="mcw-kw">"javaPath"</span>: null,
+  <span class="mcw-kw">"minMemoryMb"</span>: 1024,
+  <span class="mcw-kw">"maxMemoryMb"</span>: 6144,
+  <span class="mcw-kw">"jvmArguments"</span>: <span class="mcw-str">"-XX:+UseG1GC"</span>
+}</code></pre>
+
+      <p>
+        <code>launchVersionId</code> is what actually gets launched. For Vanilla it equals
+        <code>minecraftVersion</code>; installing a loader replaces it with the loader's own
+        profile id.
+      </p>
+
+      <h3 id="transfer">Exporting and importing</h3>
+
+      <p>
+        An export is a <code>.vibinstance</code> zip holding that record plus the mods, config,
+        resource packs, shader packs and worlds. Assets, libraries, versions, logs and crash
+        reports are left out: they are redownloadable, and bundling Mojang's files into a
+        shareable archive is not something the launcher does.
+      </p>
+
+      <p>
+        Export opens a picker first. It shows everything the archive would carry as a tree with a
+        size against each branch, and unticking a folder or a single file leaves it out. Nothing on
+        disk is touched: the instance is unchanged, only the archive is smaller. A folder with some
+        of its files unticked shows a half tick, so what the archive holds is readable without
+        opening every branch.
+      </p>
+
+      <p>Import accepts three shapes, told apart by what is inside the file rather than by its extension.</p>
+
+      <div class="mcw-scroll">
+        <table class="mcw-table mcw-table--wide">
+          <caption>Import formats as of v0.1.0.</caption>
+          <thead>
+            <tr>
+              <th scope="col">Shape</th>
+              <th scope="col">Recognised by</th>
+              <th scope="col">What happens</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th scope="row"><code>.vibinstance</code></th>
+              <td><code>vibinstance.json</code></td>
+              <td class="mcw-yes">The record and files are restored, and the mod loader it names is installed.</td>
+            </tr>
+            <tr>
+              <th scope="row"><code>.mrpack</code></th>
+              <td><code>modrinth.index.json</code></td>
+              <td class="mcw-yes">Version and loader come from the pack's dependencies, overrides are unpacked,
+                and every file the index lists is downloaded from its published address and checked against its
+                published SHA-1. Files marked client unsupported are skipped.</td>
+            </tr>
+            <tr>
+              <th scope="row">plain <code>.zip</code></th>
+              <td>a <code>.minecraft</code> folder, or one holding <code>mods</code>, <code>config</code>,
+                <code>saves</code> or <code>options.txt</code></td>
+              <td class="mcw-yes">The game folder is unpacked. An <code>instance.json</code> beside it is honoured;
+                without one the launcher asks for a version rather than guessing.</td>
+            </tr>
+            <tr>
+              <th scope="row">CurseForge pack</th>
+              <td>its own manifest</td>
+              <td class="mcw-no">Refused with an explanation. Resolving its mods needs the CurseForge API,
+                which this launcher does not ship a key for.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p>
+        An archive re-zipped inside a wrapper folder is still read correctly: the format's root is
+        found at whatever depth it sits at. Every entry name is resolved under the destination
+        before anything is written, so an archive cannot place a file outside the instance it is
+        being imported into, and the same check applies to the paths in a modpack's index. An
+        import that fails part way through, including a modpack whose downloads do not complete,
+        leaves nothing behind.
+      </p>
+
+      <!-- Accounts ------------------------------------------------------- -->
+      <h2 id="accounts">
+        <span class="mcw-editsection">[<a class="mcw-ext" href="https://github.com/vib-studios/viblauncher/tree/main/src/VibLauncher.Core/Accounts" target="_blank" rel="noopener">edit</a>]</span>
+        Accounts
+      </h2>
+
+      <p>
+        Microsoft accounts use the device code flow: Microsoft identity, then Xbox Live, then XSTS,
+        then Minecraft services. <b>The launcher never sees a Microsoft password.</b> It shows a
+        code, the person signs in on Microsoft's own page, and the launcher polls until it is done.
+      </p>
+
+      <p>
+        <code>accounts.json</code> holds only names, UUIDs and expiry times. Tokens go to a separate
+        store encrypted with DPAPI under the current Windows user, and every log line passes through
+        a redaction filter on the way out, so a token cannot reach a log even inside an exception
+        message.
+      </p>
+
+      <p>
+        Offline accounts derive the same UUID a server computes for an unauthenticated player: a
+        version 3 UUID over <code>OfflinePlayer:&lt;name&gt;</code>. A local profile therefore keeps
+        its player data across launches, and matches what a vib-MC server with
+        <code>online-mode=false</code> hands out.
+      </p>
+
+      <p>
+        Microsoft sign in needs an Azure application id, and one is deliberately not compiled in. A
+        client id is public rather than secret, but it belongs to whoever ships a build. Set it in
+        Settings, or in the <code>VIBLAUNCHER_MSA_CLIENT_ID</code> environment variable. The window
+        says so rather than offering a button that would fail.
+      </p>
+
+      <!-- Mods ----------------------------------------------------------- -->
+      <h2 id="mods">
+        <span class="mcw-editsection">[<a class="mcw-ext" href="https://github.com/vib-studios/viblauncher/tree/main/src/VibLauncher.Core/Mods" target="_blank" rel="noopener">edit</a>]</span>
+        Mod loaders and mods
+      </h2>
+
+      <div class="mcw-scroll">
+        <table class="mcw-table mcw-table--wide">
+          <caption>Loader support as of v0.1.0.</caption>
+          <thead>
+            <tr>
+              <th scope="col">Loader</th>
+              <th scope="col">Lists versions</th>
+              <th scope="col">Installs</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th scope="row">Vanilla</th>
+              <td class="mcw-note">not applicable</td>
+              <td class="mcw-note">not applicable</td>
+            </tr>
+            <tr>
+              <th scope="row">Fabric</th>
+              <td class="mcw-yes">Yes</td>
+              <td class="mcw-yes">Yes</td>
+            </tr>
+            <tr>
+              <th scope="row">Quilt</th>
+              <td class="mcw-yes">Yes</td>
+              <td class="mcw-yes">Yes</td>
+            </tr>
+            <tr>
+              <th scope="row">NeoForge</th>
+              <td class="mcw-yes">Yes</td>
+              <td class="mcw-no">No</td>
+            </tr>
+            <tr>
+              <th scope="row">Forge</th>
+              <td class="mcw-yes">Yes</td>
+              <td class="mcw-no">No</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p>
+        Fabric and Quilt install completely: their metadata services publish a ready made version
+        profile, which the launcher writes into the versions folder and merges over the vanilla
+        version at launch. Forge and NeoForge install by running their own installer jar, which
+        patches the client and writes a profile, so their real published builds are listed and the
+        install is refused with a reason rather than producing an instance that does not start.
+      </p>
+
+      <p>
+        Mods come from Modrinth, through its documented v2 API. No page is scraped and no key is
+        required. Compatibility is a property of the query rather than an afterthought: the search
+        is filtered by the instance's Minecraft version and loader before it leaves the launcher, so
+        every result shown is installable. The specific file is checked again at install time, and a
+        mismatch is refused with both sides named:
+      </p>
+
+<pre><code>"Sodium 0.5.8" cannot be installed into "Fabric Survival".
+
+That release supports Minecraft 1.20.1 on fabric. This instance is
+Minecraft 1.21.8 on Fabric. Pick a different release, or change the
+instance's version.</code></pre>
+
+      <p>
+        Required dependencies are resolved automatically, depth limited against cycles, and anything
+        that could not be satisfied is reported rather than silently skipped. Disabling a mod renames
+        it to <code>.jar.disabled</code>, which every loader ignores. Nothing is deleted, so
+        re-enabling is exact.
+      </p>
+
+      <!-- Servers -------------------------------------------------------- -->
+      <h2 id="servers">
+        <span class="mcw-editsection">[<a class="mcw-ext" href="https://github.com/vib-studios/viblauncher/tree/main/src/VibLauncher.Core/Servers" target="_blank" rel="noopener">edit</a>]</span>
+        vib-MC servers
+      </h2>
+
+      <p>
+        Servers are a separate concept from instances and never share a directory. An instance is a
+        client the launcher starts; a server is a Java process that listens on a port and owns its
+        own worlds. Jars come from the <a href="vibmc.html">vib-MC</a> project's GitHub releases:
+        this website is where a person reads about that project, and the launcher goes to the API
+        for a jar and builds its own native window around it.
+      </p>
+
+      <dl>
+        <dt>The process</dt>
+        <dd>A child process with its streams redirected, never inside the launcher, so a server
+          crash cannot take the launcher down. Output feeds the console view and a per run log file,
+          typed commands go to stdin, and a crash is reported with its exit code and a route to the
+          log. Nothing is auto restarted.</dd>
+
+        <dt>Ports</dt>
+        <dd>Checked before a start, and a conflict offers the next free port. The port is never
+          changed for you: a server that silently moves is a server nobody can connect to.</dd>
+
+        <dt>Updates</dt>
+        <dd>Only the jar is replaced, after a backup is taken. Worlds, player data, plugins and
+          <code>server.properties</code> are never touched.</dd>
+
+        <dt>Backups</dt>
+        <dd>Kept outside the server folder, so deleting a server does not delete them, and a restore
+          archives the current worlds before overwriting them.</dd>
+
+        <dt><code>server.properties</code></dt>
+        <dd>Edited with comments, key order and unknown keys preserved, because that file is one a
+          server owner is likely to have edited by hand. Settings that only take effect on a rebind
+          are labelled as needing a restart.</dd>
+      </dl>
+
+      <!-- Data ----------------------------------------------------------- -->
+      <h2 id="data">
+        <span class="mcw-editsection">[<a class="mcw-ext" href="https://github.com/vib-studios/viblauncher#readme" target="_blank" rel="noopener">edit</a>]</span>
+        Where things are kept
+      </h2>
+
+      <p>Everything lives under <code>%APPDATA%\VibLauncher</code>.</p>
+
+<pre><code>VibLauncher
+├─ launcher-data/       <span class="mcw-com">settings, accounts, tokens, cached metadata, logs</span>
+├─ instances/&lt;id&gt;/      <span class="mcw-com">one folder per instance</span>
+│  ├─ instance.json     <span class="mcw-com">the launcher's record</span>
+│  ├─ mods.json         <span class="mcw-com">where each installed mod came from</span>
+│  ├─ natives/          <span class="mcw-com">extracted per instance, so versions cannot clash</span>
+│  ├─ logs/             <span class="mcw-com">stdout and stderr, one file per launch</span>
+│  └─ .minecraft/       <span class="mcw-com">mods, config, saves, screenshots</span>
+├─ servers/&lt;id&gt;/        <span class="mcw-com">one folder per vib-MC server</span>
+│  └─ console-logs/     <span class="mcw-com">console output, one file per run</span>
+├─ minecraft/           <span class="mcw-com">versions, libraries and assets, shared</span>
+├─ backups/&lt;id&gt;/        <span class="mcw-com">world backups, deliberately outside the server</span>
+└─ downloads/</code></pre>
+
+      <p>
+        No path is built by hand anywhere in the code. Everything goes through
+        <code>ILauncherPaths</code>, so moving the data root is a one line change.
+      </p>
+
+      <!-- Architecture --------------------------------------------------- -->
+      <h2 id="architecture">
+        <span class="mcw-editsection">[<a class="mcw-ext" href="https://github.com/vib-studios/viblauncher/tree/main/src" target="_blank" rel="noopener">edit</a>]</span>
+        Architecture
+      </h2>
+
+<pre><code>VibLauncher.App              <span class="mcw-com">WPF. Views, view models, theme. No launcher logic.</span>
+      │
+      ├── VibLauncher.Core   <span class="mcw-com">The domain and its rules. No network, no UI,</span>
+      │                      <span class="mcw-com">no Windows APIs.</span>
+      │
+      └── VibLauncher.Infrastructure
+                             <span class="mcw-com">Where Core's interfaces meet the outside world.</span></code></pre>
+
+      <p>
+        Core defines the interfaces, Infrastructure implements them, and the App composes them once
+        in <code>LauncherServices</code> and hands them to view models. Core references neither of
+        the others, which is what lets the rules be tested without a network or a window.
+      </p>
+
+      <p>
+        Adding a loader means implementing <code>ILoaderProvider</code> and adding it to the list in
+        <code>LauncherServices</code>. Adding a mod source means implementing
+        <code>IModProvider</code> the same way. A provider that needs credentials reports itself
+        unavailable with a reason until it has them, and the window hides it instead of failing a
+        search.
+      </p>
+
+      <!-- Theme ---------------------------------------------------------- -->
+      <h2 id="theme">
+        <span class="mcw-editsection">[<a class="mcw-ext" href="https://github.com/vib-studios/viblauncher/tree/main/src/VibLauncher.App/Themes" target="_blank" rel="noopener">edit</a>]</span>
+        The Classic theme
+      </h2>
+
+      <p>
+        The palette, type and shapes come from the <a href="classic/index.html">classic vib-MC
+        layout</a>, whose tokens are authored in oklch and converted to sRGB in the theme, with the
+        originals kept in comments.
+      </p>
+
+      <div class="mcw-scroll">
+        <table class="mcw-table mcw-table--wide">
+          <caption>The tokens the window is painted with.</caption>
+          <thead>
+            <tr>
+              <th scope="col">Token</th>
+              <th scope="col">oklch</th>
+              <th scope="col">sRGB</th>
+              <th scope="col">Role</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><th scope="row"><code>void-950</code></th><td><code>oklch(13% .02 40)</code></td><td><code>#0E0503</code></td><td>app background</td></tr>
+            <tr><th scope="row"><code>void-900</code></th><td><code>oklch(17% .02 40)</code></td><td><code>#170C09</code></td><td>card</td></tr>
+            <tr><th scope="row"><code>void-800</code></th><td><code>oklch(22% .02 40)</code></td><td><code>#231814</code></td><td>raised surface</td></tr>
+            <tr><th scope="row"><code>line</code></th><td><code>oklch(24% .02 40)</code></td><td><code>#281C18</code></td><td>hairline border</td></tr>
+            <tr><th scope="row"><code>ember-400</code></th><td><code>oklch(72% .17 40)</code></td><td><code>#FB794A</code></td><td>accent</td></tr>
+            <tr><th scope="row"><code>ember-300</code></th><td><code>oklch(80% .16 45)</code></td><td><code>#FF9960</code></td><td>hover</td></tr>
+            <tr><th scope="row"><code>ember-500</code></th><td><code>oklch(64% .19 40)</code></td><td><code>#E65719</code></td><td>pressed</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p>
+        Every WPF control is retemplated, because the stock chrome is light themed and rounded in a
+        different idiom. Icons are vector paths on a 16 unit grid, never an icon font and never
+        emoji, so nothing depends on a typeface being installed. The title bar is darkened through
+        DWM so it matches the window.
+      </p>
+
+      <p>
+        One deliberate departure from the website: its buttons are pills, which read as a web
+        control on the desktop, so buttons in the launcher use the same 6px radius as the inputs
+        beside them.
+      </p>
+
+      <!-- History -------------------------------------------------------- -->
+      <h2 id="history">
+        <span class="mcw-editsection">[<a class="mcw-ext" href="https://github.com/vib-studios/viblauncher/releases" target="_blank" rel="noopener">edit</a>]</span>
+        Version history
+      </h2>
+
+      <div class="mcw-scroll">
+        <table class="mcw-table mcw-table--wide">
+          <caption>Every published build, newest at the top.</caption>
+          <thead>
+            <tr>
+              <th scope="col">Version</th>
+              <th scope="col">Platform</th>
+              <th scope="col">Notes</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th scope="row"><a class="mcw-ext" href="https://github.com/vib-studios/viblauncher/releases/tag/v0.1.0" target="_blank" rel="noopener">v0.1.0</a>
+                <span class="mcw-note">current</span></th>
+              <td>win-x64</td>
+              <td>The first release. Instances with import and export, Microsoft and offline
+                accounts, Fabric and Quilt, mods from Modrinth, and vib-MC servers with a console,
+                backups and a <code>server.properties</code> editor.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Bugs ----------------------------------------------------------- -->
+      <h2 id="bugs">
+        <span class="mcw-editsection">[<a class="mcw-ext" href="https://github.com/vib-studios/viblauncher/issues" target="_blank" rel="noopener">edit</a>]</span>
+        Reporting bugs
+      </h2>
+
+      <p>
+        Filling this in opens a pre-written GitHub issue with everything we need. The launcher writes
+        a log per launch under <code>instances/&lt;id&gt;/logs/</code>, and tokens are redacted before
+        anything reaches it, so pasting one is safe.
+      </p>
+
+      <form class="mcw-form" id="bug-form">
+        <div class="mcw-field">
+          <label for="bug-title">1. The issue in one sentence
+            <span class="mcw-field__hint">This becomes the issue title.</span>
+          </label>
+          <input id="bug-title" name="title" type="text" required maxlength="90"
+                 placeholder="instance will not launch after installing fabric">
+        </div>
+
+        <div class="mcw-field">
+          <label for="bug-what">2. What is the issue?
+            <span class="mcw-field__hint">What you saw, and what you expected instead.</span>
+          </label>
+          <textarea id="bug-what" name="what" rows="3" required
+                    placeholder="what you saw, what you expected"></textarea>
+        </div>
+
+        <div class="mcw-field">
+          <label for="bug-steps">3. How did it happen?
+            <span class="mcw-field__hint">Steps precise enough for us to reproduce it.</span>
+          </label>
+          <textarea id="bug-steps" name="steps" rows="3" required
+                    placeholder="steps so we can replicate it"></textarea>
+        </div>
+
+        <div class="mcw-grid2">
+          <div class="mcw-field">
+            <label for="bug-version">Release version</label>
+            <input id="bug-version" name="version" type="text" value="v0.1.0">
+          </div>
+          <div class="mcw-field">
+            <label for="bug-log">Launcher or instance log</label>
+            <textarea id="bug-log" name="log" rows="4"
+                      placeholder="paste the relevant part of the log"></textarea>
+          </div>
+        </div>
+
+        <button type="submit" class="mcw-btn">Open GitHub issue</button>
+      </form>
+
+      <!-- External ------------------------------------------------------- -->
+      <h2 id="external">
+        <span class="mcw-editsection">[<a class="mcw-ext" href="https://github.com/vib-studios/viblauncher" target="_blank" rel="noopener">edit</a>]</span>
+        External links
+      </h2>
+
+      <ul>
+        <li><a class="mcw-ext" href="https://github.com/vib-studios/viblauncher" target="_blank" rel="noopener">Vib-launcher on GitHub</a></li>
+        <li><a class="mcw-ext" href="https://github.com/vib-studios/viblauncher/releases" target="_blank" rel="noopener">Release archive</a></li>
+        <li><a class="mcw-ext" href="https://github.com/vib-studios/viblauncher/issues" target="_blank" rel="noopener">Issue tracker</a></li>
+        <li><a href="vibmc.html">vib-MC, the server it runs</a></li>
+        <li><a href="docs.html">vib-MC plugin documentation</a></li>
+        <li><a class="mcw-ext" href="https://dotnet.microsoft.com/download/dotnet/10.0" target="_blank" rel="noopener">.NET 10 Desktop Runtime</a></li>
+      </ul>
+
+      <div class="mcw-catlinks">
+        <b>Categories:</b>
+        <ul>
+          <li>Launchers</li>
+          <li>Windows</li>
+          <li>Java Edition</li>
+          <li>First release</li>
+        </ul>
+      </div>
+
+    </article>
+
+    <footer class="mcw-footer">
+      <p>Content on this page is generated from the Vib-launcher repository README and the GitHub releases API.</p>
+      <p>Not an official Minecraft product. Not approved by or associated with Mojang or Microsoft. No Prism Launcher code, assets or branding. Minecraft files are obtained through Mojang's own distribution mechanisms and none are redistributed.</p>
+      <ul>
+        <li><a href="index.html">All projects</a></li>
+        <li><a href="vibmc.html">vib-MC</a></li>
+        <li><a href="#bugs">Report a bug</a></li>
+        <li><a href="privacy.html">Privacy</a></li>
+        <li><a href="terms.html">Terms</a></li>
+        <li><a href="#top">Back to top</a></li>
+      </ul>
+    </footer>
+
+  </div>
+</div>
+
+<script src="wiki.js"></script>
+<script src="launcher.js"></script>
+</body>
+</html>
