@@ -12,7 +12,7 @@
 
   const REPO = "vib-studios/viblauncher";
   const API = `https://api.github.com/repos/${REPO}/releases/latest`;
-  const FALLBACK_TAG = "v0.1.0";
+  const FALLBACK_TAG = "v0.1.1";
   const FALLBACK_ZIP =
     `https://github.com/${REPO}/releases/download/${FALLBACK_TAG}/VibLauncher-${FALLBACK_TAG.slice(1)}-win-x64.zip`;
 
