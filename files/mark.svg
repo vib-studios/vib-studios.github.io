@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 3 3" shape-rendering="crispEdges" width="768" height="768" role="img" aria-label="Vib Studios mark">
+  <!--
+    The Vib Studios mark, and the source of truth for the brand.
+
+    favicon.ico is generated from this, as is files/org-avatar.png, which is what
+    the GitHub organisation profile picture is set from. Keeping one vector
+    source is the only way the three stay identical; the org icon drifted to a
+    different 2x2 mark at some point, which is exactly the sort of thing that
+    happens when each artefact is drawn by hand.
+
+    A 3x3 grid on a 3-unit viewBox, so every edge lands on a whole pixel at any
+    size and shape-rendering="crispEdges" keeps it that way:
+
+      * the full 3x3 is ember
+      * the four edge-centre cells are a darker ember, which reads as a diamond
+      * the centre cell is near-black, which is the counter
+
+    The palette matches src/input.css: --color-ember and --color-ink.
+  -->
+  <path fill="#f97316" d="M0 0h3v3H0z"/>
+  <path fill="#d9600c" d="M1 0h1v1H1zM0 1h1v1H1zM2 1h1v1H1zM1 2h1v1H1z"/>
+  <path fill="#0b0b0c" d="M1 1h1v1H1z"/>
+</svg>

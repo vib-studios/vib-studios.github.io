@@ -14,8 +14,9 @@
   <meta property="og:image:height" content="630">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="theme-color" content="#0b0b0c">
-  <link rel="icon" href="favicon.ico" sizes="any">
-  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 3 3' shape-rendering='crispEdges'%3E%3Cpath fill='%23f97316' d='M0 0h3v3H0z'/%3E%3Cpath fill='%23d9600c' d='M1 0h1v1H1zM0 1h1v1H1zM2 1h1v1H1zM1 2h1v1H1z'/%3E%3Cpath fill='%230b0b0c' d='M1 1h1v1H1z'/%3E%3C/svg%3E">
+  <!-- One .ico carrying 16, 32 and 48px. sizes="any" would be wrong here:
+       it means "scalable", and this icon is not. -->
+  <link rel="icon" href="favicon.ico" sizes="16x16 32x32 48x48">
   <link rel="stylesheet" href="styles.css">
   <!-- Sets the colour theme before first paint, so dark never flashes white. -->
   <script src="theme-boot.js"></script>
