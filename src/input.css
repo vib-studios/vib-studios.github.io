@@ -16,7 +16,6 @@
 /* Tell the scanner where the class names actually live. Without this it follows
    the CSS entry point and never sees the HTML. */
 @source "../*.html";
-@source "../classic/*.html";
 @source "../src/*.css";
 
 /* -- Fonts ---------------------------------------------------------------- */
