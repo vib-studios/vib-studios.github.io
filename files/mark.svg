@@ -15,7 +15,12 @@
       * the four edge-centre cells are a darker ember, which reads as a diamond
       * the centre cell is near-black, which is the counter
 
-    The palette matches src/input.css: --color-ember and --color-ink.
+    The palette matches the ember and ink tokens in src/input.css.
+
+    Caution when editing this comment: XML forbids a run of two hyphens anywhere
+    inside a comment, and one makes the entire file fail to parse. The symptom is
+    an empty box in the page, not an error, which is why tools/check-links.mjs
+    now parses every .svg it finds rather than only checking that it loads.
   -->
   <path fill="#f97316" d="M0 0h3v3H0z"/>
   <path fill="#d9600c" d="M1 0h1v1H1zM0 1h1v1H1zM2 1h1v1H1zM1 2h1v1H1z"/>

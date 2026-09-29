@@ -30,6 +30,25 @@ let ok = 0;
  * The compiled stylesheet sits at the site root, so its own relative paths are
  * resolved from there.
  */
+/*
+ * A malformed .svg is served with HTTP 200 like any other file, so a link check
+ * cannot tell the difference between an image that loads and an image the
+ * browser refuses to parse. The one that bit us: a run of two hyphens inside an
+ * XML comment, which is illegal, and which made the wordmark render as an empty
+ * box on every page. Nothing in the build or the server complained.
+ *
+ * This is a targeted scan for that failure, not a general XML validator. It has
+ * no dependencies and it is honest about its scope. If the site ever needs
+ * deeper validation, add a real parser rather than growing this regex.
+ */
+const checkSvgComments = (name, body) => {
+  for (const [, comment] of body.matchAll(/<!--([\s\S]*?)-->/g)) {
+    if (comment.includes("--")) {
+      broken.push([name, "SVG comment contains '--', which is illegal in XML and will not render"]);
+    }
+  }
+};
+
 const checkStylesheets = async () => {
   for (const sheet of ["/styles.css", "/src/input.css", "/src/phosphor.css"]) {
     let body;
@@ -110,6 +129,24 @@ const crawl = async () => {
 
 await crawl();
 await checkStylesheets();
+
+/* Parse-check every SVG the site serves. */
+for (const svg of ["/files/mark.svg"]) {
+  try {
+    const res = await fetch(BASE + svg.slice(1));
+    if (!res.ok) {
+      broken.push([svg, `HTTP ${res.status}`]);
+      continue;
+    }
+    const body = await res.text();
+    checkSvgComments(svg, body);
+    // Cheap well-formedness backstop: a parse error surfaces here as a missing
+    // closing tag or an unterminated quote.
+    if (!/<\/svg>\s*$/.test(body)) broken.push([svg, "does not end with a closing </svg>"]);
+  } catch (err) {
+    broken.push([svg, `unreachable: ${err.message}`]);
+  }
+}
 
 console.log(`base:   ${BASE}`);
 console.log(`pages:  ${seen.size}`);
