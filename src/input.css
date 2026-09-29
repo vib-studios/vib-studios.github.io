@@ -125,6 +125,19 @@
   --color-void-body: oklch(78% 0 0);
   --color-void-muted: oklch(62% 0 0);
 
+  /*
+   * Colours that have to be derived from another colour, so that flipping the
+   * theme flips them too. Anything that needs "the text colour on top of the
+   * ink fill" has to be a token rather than a literal #fff: in the dark theme
+   * the ink fill becomes near-white, and a literal white label on it would be
+   * invisible. These four are the only derived colours in the system.
+   */
+
+  --color-on-ember: #ffffff;      /* text on --color-ember */
+  --color-on-void: #ffffff;       /* text on --color-void */
+  --color-sunken: oklch(97% 0 0); /* code blocks, one step below the page */
+  --color-placeholder: oklch(92% 0 0); /* stand-in before an image loads */
+
   --font-display: "Space Grotesk Variable", "Inter", -apple-system,
     BlinkMacSystemFont, "Segoe UI", sans-serif;
   --font-mono: "JetBrains Mono Variable", ui-monospace, "SFMono-Regular",
@@ -145,6 +158,86 @@
   --radius-card: 2px;
 
   --ease-out-quint: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* -- Dark theme ---------------------------------------------------------- */
+
+/*
+ * Dark mode reassigns the same variable names rather than adding a parallel
+ * set. Every utility on the site compiles to var(--color-*) — Tailwind emits
+ * `.text-ink{color:var(--color-ink)}` — so overriding the names here flips the
+ * entire page at once, with no dark: variants scattered through the markup and
+ * no risk of one being missed.
+ *
+ * The inverted bands need care. In the light theme the vib-MC band is near
+ * black on a white page, so it separates by being darker than its surroundings.
+ * On a near-black page that inverts the relationship, so the band becomes a
+ * raised charcoal instead: still clearly a distinct block, but now lighter than
+ * the page rather than darker.
+ */
+[data-theme="dark"] {
+  --color-paper: #0d0d0e;
+  --color-ink: #f4f4f5;
+  --color-ink-soft: #0b0b0c;
+
+  --color-body: oklch(84% 0 0);
+  --color-muted: oklch(66% 0 0);
+  --color-faint: oklch(52% 0 0);
+
+  --color-line: oklch(100% 0 0 / 0.14);
+  --color-line-soft: oklch(100% 0 0 / 0.08);
+  --color-line-strong: oklch(100% 0 0 / 0.3);
+
+  --color-ember: oklch(72% 0.18 48);
+  --color-ember-wash: oklch(24% 0.04 45);
+
+  /* The band inverts its relationship to the page: see the note above. */
+  --color-void: #1e1e23;
+  --color-void-raised: oklch(24% 0 0);
+  --color-void-body: oklch(84% 0 0);
+  --color-void-muted: oklch(64% 0 0);
+
+  --color-on-ink: #0b0b0c;
+  --color-on-ember: #0b0b0c;
+  --color-on-void: #ffffff;
+  --color-sunken: oklch(21% 0 0);
+  --color-placeholder: oklch(26% 0 0);
+
+  color-scheme: dark;
+}
+
+/* Code inside the dark theme needs its own ink, since a light block on a dark
+   page reads as a hole punched through the layout. */
+[data-theme="dark"] pre {
+  color: var(--color-body);
+}
+[data-theme="dark"] :not(pre) > code {
+  color: var(--color-body);
+}
+
+/* The blueprint pieces are pale tints with dark labels in the light theme. On a
+   dark page that becomes a cluster of bright chips, so invert them: a dark
+   tinted fill with the hue as the text colour. The four hues stay distinct,
+   which is the only thing they are encoding. */
+[data-theme="dark"] .sb-piece {
+  background: transparent;
+  color: inherit;
+}
+[data-theme="dark"] .sb-cmd    { background: oklch(30% 0.07 250); border-color: oklch(52% 0.13 250); color: oklch(82% 0.09 250); }
+[data-theme="dark"] .sb-lsn    { background: oklch(32% 0.07 85);  border-color: oklch(55% 0.12 80);  color: oklch(85% 0.10 80); }
+[data-theme="dark"] .sb-act    { background: oklch(30% 0.07 300); border-color: oklch(54% 0.13 300); color: oklch(84% 0.09 300); }
+[data-theme="dark"] .sb-cancel { background: oklch(30% 0.08 25);  border-color: oklch(55% 0.14 25);  color: oklch(84% 0.10 25); }
+
+/* The placeholder hatch is drawn with a dark-on-light tint, so on a dark page
+   it disappears entirely. Swap the two stops. */
+[data-theme="dark"] .shot-empty {
+  background:
+    repeating-linear-gradient(
+      -45deg,
+      oklch(100% 0 0 / 0.05) 0 8px,
+      transparent 8px 16px
+    ),
+    var(--color-void-raised);
 }
 
 /* -- Base ----------------------------------------------------------------- */
@@ -169,7 +262,7 @@
 
   ::selection {
     background: var(--color-ember);
-    color: #fff;
+    color: var(--color-on-ember);
   }
 
   :focus-visible {
@@ -230,7 +323,7 @@
     gap: 0.5rem;
     padding: 0.8125rem 1.375rem;
     background: var(--color-ink);
-    color: #fff;
+    color: var(--color-on-ink);
     font-family: var(--font-mono);
     font-size: 0.75rem;
     font-weight: 500;
@@ -263,7 +356,7 @@
   .btn-invert:hover {
     background: var(--color-ember);
     border-color: var(--color-ember);
-    color: #fff;
+    color: var(--color-on-ember);
   }
 
   /* Data readout. Used in the release strips, where the number is the point. */
@@ -284,6 +377,47 @@
   }
   .datum-invert dt { color: oklch(100% 0 0 / 0.5); }
   .datum-invert dd { color: #fff; }
+
+  /* An inverted section. In the light theme it separates from the page by being
+     near-black against white. In the dark theme that relationship inverts, so
+     the band becomes a raised charcoal and grows hairline edges: a step between
+     two near-blacks is not something surface contrast alone can carry. */
+  .band {
+    background: var(--color-void);
+    color: var(--color-void-body);
+  }
+  [data-theme="dark"] .band {
+    border-top: 1px solid var(--color-line-invert);
+    border-bottom: 1px solid var(--color-line-invert);
+  }
+
+  /* The theme toggle. Sized to sit in the header nav without changing the
+     header's height, and outlined rather than filled so it does not compete
+     with the one filled control on the page. */
+  .theme-toggle {
+    display: grid;
+    place-items: center;
+    width: 2rem;
+    height: 2rem;
+    margin-left: 0.25rem;
+    color: var(--color-ink);
+    background: transparent;
+    border: 1px solid var(--color-line);
+    border-radius: var(--radius-card);
+    cursor: pointer;
+    transition: color 0.15s var(--ease-out-quint),
+                border-color 0.15s var(--ease-out-quint);
+  }
+  .theme-toggle:hover {
+    color: var(--color-ember);
+    border-color: var(--color-ember);
+  }
+  .theme-toggle [data-icon] {
+    font-size: 0.9375rem;
+    line-height: 1;
+  }
+  /* Set by theme.js, so the three states are visible in devtools. */
+  .theme-toggle[data-state="system"] { border-style: dashed; }
 
   /* A figure slot for real photography. The image goes in as a background
      layer or an <img> with object-cover; the block reserves the aspect ratio
@@ -371,7 +505,7 @@
   height: 100%;
   border-radius: 9999px;
   object-fit: cover;
-  background: oklch(92% 0 0);
+  background: var(--color-placeholder);
   transition: box-shadow 0.18s var(--ease-out-quint),
               transform 0.25s var(--ease-out-quint);
 }
@@ -392,7 +526,7 @@
   gap: 0.375rem;
   padding: 0.3125rem 0.5625rem;
   background: var(--color-ink);
-  color: #fff;
+  color: var(--color-on-ink);
   font-family: var(--font-mono);
   font-size: 0.6875rem;
   line-height: 1.2;
@@ -404,7 +538,7 @@
               visibility 0.14s var(--ease-out-quint);
 }
 
-.contrib-link__tip b { color: #fff; font-weight: 500; }
+.contrib-link__tip b { color: var(--color-on-ink); font-weight: 500; }
 
 .contrib-link:hover .contrib-link__tip,
 .contrib-link:focus-visible .contrib-link__tip {
@@ -636,7 +770,7 @@
     font-size: 0.8125rem;
     line-height: 1.7;
     color: var(--color-ink);
-    background: oklch(97% 0 0);
+    background: var(--color-sunken);
     border: 1px solid var(--color-line);
     border-radius: var(--radius-card);
     tab-size: 2;
@@ -647,7 +781,7 @@
   }
   :not(pre) > code {
     padding: 0.1em 0.35em;
-    background: oklch(96.5% 0 0);
+    background: var(--color-sunken);
     border: 1px solid var(--color-line-soft);
     border-radius: 2px;
   }

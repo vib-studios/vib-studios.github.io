@@ -115,6 +115,46 @@ numeric id never changes, so keying on it keeps the avatar and the dedupe
 working across a rename. There is a test for this behaviour; see the comment on
 the `EXTRA` list.
 
+## Colour theme
+
+Light or dark, driven by one attribute on `<html>`. Until the toggle is pressed
+the site follows `prefers-color-scheme`.
+
+| File | Role |
+|---|---|
+| `theme-boot.js` | Blocking script in `<head>`. Applies the theme before first paint, so dark never flashes white. |
+| `theme.js` | The button, and following the OS until a choice is made. |
+
+**How the flip works.** Every colour utility compiles to a variable —
+`.text-ink{color:var(--color-ink)}` — so `[data-theme="dark"]` in
+`src/input.css` only has to reassign the names and the whole page inverts. There
+are no `dark:` variants in the markup, and therefore none to forget.
+
+Colours *derived* from another colour have to be tokens, because a literal
+cannot flip. `--color-on-ink` is the label colour for a fill painted with
+`--color-ink`; in the dark theme ink becomes near-white, so a hardcoded white
+label on it would be invisible. Use these rather than a hex value:
+
+| Token | Meaning |
+|---|---|
+| `--color-on-ink` | text on an `--color-ink` fill |
+| `--color-on-ember` | text on an ember fill |
+| `--color-on-void` | text on a band |
+| `--color-sunken` | code blocks, one step below the page |
+| `--color-placeholder` | stand-in fill before an image loads |
+
+**The inverted band needs care.** In the light theme the vib-MC band is
+near-black on white, so it separates by being darker than its surroundings. On a
+near-black page that inverts, so the band becomes a raised charcoal instead. A
+step between two near-blacks is not something surface contrast alone can carry,
+so in dark the band also grows hairline edges (`.band`). The blueprint pieces
+invert for the same reason — as pale tints they became a cluster of bright chips
+on a dark page.
+
+**Adding a colour:** define it in `@theme` *and* in the `[data-theme="dark"]`
+block. A token defined for the light theme only is a bug waiting to happen, and
+`tools/check-links.mjs` will not catch it.
+
 ## Legal pages
 
 `privacy.html` and `terms.html` are accurate to the current build and load no

@@ -17,6 +17,8 @@
   <link rel="icon" href="favicon.ico" sizes="any">
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 3 3' shape-rendering='crispEdges'%3E%3Cpath fill='%23f97316' d='M0 0h3v3H0z'/%3E%3Cpath fill='%23d9600c' d='M1 0h1v1H1zM0 1h1v1H1zM2 1h1v1H1zM1 2h1v1H1z'/%3E%3Cpath fill='%230b0b0c' d='M1 1h1v1H1z'/%3E%3C/svg%3E">
   <link rel="stylesheet" href="styles.css">
+  <!-- Sets the colour theme before first paint, so dark never flashes white. -->
+  <script src="theme-boot.js"></script>
 </head>
 <body class="bg-paper text-body antialiased">
 
@@ -31,6 +33,10 @@
         <a href="#vib-mc" class="text-muted hover:text-ink transition-colors">vib-MC</a>
         <a href="#vib-launcher" class="text-muted hover:text-ink transition-colors">launcher</a>
         <a href="docs.html" class="text-muted hover:text-ink transition-colors">docs</a>
+        <button type="button" data-theme-toggle class="theme-toggle"
+                aria-label="Colour theme">
+          <span data-icon aria-hidden="true">☀</span>
+        </button>
       </nav>
     </div>
   </header>
@@ -75,7 +81,7 @@
     </section>
 
     <!-- vib-MC ---------------------------------------------------------- -->
-    <section id="vib-mc" class="bg-void text-void-body scroll-mt-16">
+    <section id="vib-mc" class="band scroll-mt-16">
       <div class="mx-auto max-w-[1240px] px-5 md:px-8 py-16 md:py-24">
 
         <div class="grid gap-10 md:grid-cols-12">
@@ -354,5 +360,6 @@
 
   <script src="site.js"></script>
   <script src="contributors.js"></script>
+  <script src="theme.js"></script>
 </body>
 </html>

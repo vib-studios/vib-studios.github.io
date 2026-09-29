@@ -10,6 +10,8 @@
   <link rel="icon" href="favicon.ico" sizes="any">
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 3 3' shape-rendering='crispEdges'%3E%3Cpath fill='%23f97316' d='M0 0h3v3H0z'/%3E%3Cpath fill='%23d9600c' d='M1 0h1v1H1zM0 1h1v1H1zM2 1h1v1H1zM1 2h1v1H1z'/%3E%3Cpath fill='%230b0b0c' d='M1 1h1v1H1z'/%3E%3C/svg%3E">
   <link rel="stylesheet" href="styles.css">
+  <!-- Sets the colour theme before first paint, so dark never flashes white. -->
+  <script src="theme-boot.js"></script>
 </head>
 <body class="bg-paper text-body antialiased">
 
@@ -22,6 +24,10 @@
       <nav class="flex items-center gap-6 md:gap-8 font-mono text-[12px] tracking-[0.06em] uppercase" aria-label="Sections">
         <a href="index.html" class="text-muted hover:text-ink transition-colors">home</a>
         <a href="docs.html" class="text-muted hover:text-ink transition-colors">docs</a>
+        <button type="button" data-theme-toggle class="theme-toggle"
+                aria-label="Colour theme">
+          <span data-icon aria-hidden="true">☀</span>
+        </button>
       </nav>
     </div>
   </header>
@@ -161,11 +167,19 @@
     <section class="py-12 border-t border-line">
       <h2 class="text-title text-ink">What stays on your device</h2>
       <p class="mt-4 max-w-[60ch] text-[1.0625rem] leading-[1.65]">
-        The site uses your browser's local storage for two interface settings. This
-        data never leaves your machine and is not readable by us.
+        The site uses your browser's local storage for a few interface settings.
+        This data never leaves your machine and is not readable by us.
       </p>
 
       <dl class="mt-10 space-y-8">
+        <div class="border-t border-line-soft pt-5">
+          <dt class="font-mono text-[0.8125rem] text-ink">Colour theme</dt>
+          <dd class="mt-2 text-[0.9375rem] leading-[1.6] text-muted">
+            Remembers whether you chose the light or dark theme. Until you press
+            the toggle the site follows your operating system setting, and nothing
+            is written. Key: <code>vibmc:theme</code>
+          </dd>
+        </div>
         <div class="border-t border-line-soft pt-5">
           <dt class="font-mono text-[0.8125rem] text-ink">Contributors panel</dt>
           <dd class="mt-2 text-[0.9375rem] leading-[1.6] text-muted">
@@ -277,5 +291,6 @@
       </p>
     </div>
   </footer>
+  <script src="theme.js"></script>
 </body>
 </html>
