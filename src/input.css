@@ -105,7 +105,7 @@
   /* Text tints, as ink at falling opacity. */
   --color-body: oklch(28% 0 0);
   --color-muted: oklch(52% 0 0);
-  --color-faint: oklch(66% 0 0);
+  --color-faint: oklch(56% 0 0);
 
   /* Hairlines. Rules do the work cards and shadows used to. */
   --color-line: oklch(11% 0 0 / 0.12);
@@ -133,7 +133,7 @@
    * invisible. These four are the only derived colours in the system.
    */
 
-  --color-on-ember: #ffffff;      /* text on --color-ember */
+  --color-on-ember: #0b0b0c;      /* text on --color-ember */
   --color-on-void: #ffffff;       /* text on --color-void */
   --color-sunken: oklch(97% 0 0); /* code blocks, one step below the page */
   --color-placeholder: oklch(92% 0 0); /* stand-in before an image loads */
@@ -182,7 +182,7 @@
 
   --color-body: oklch(84% 0 0);
   --color-muted: oklch(66% 0 0);
-  --color-faint: oklch(52% 0 0);
+  --color-faint: oklch(60% 0 0);
 
   --color-line: oklch(100% 0 0 / 0.14);
   --color-line-soft: oklch(100% 0 0 / 0.08);
@@ -347,11 +347,16 @@
     border-color: var(--color-ember);
   }
 
-  /* Inverted band version of the filled control. */
+  /* Inverted band version of the filled control: a near-white button on a band.
+     The band is dark in BOTH themes (near-black on the light page, raised
+     charcoal on the dark page), so the button is near-white in both too, and
+     its label must therefore come from --color-void rather than --color-ink.
+     Using --color-ink here put a near-white label on a white button in dark
+     mode: 1.10:1, invisible until hovered. */
   .btn-invert {
-    background: #fff;
-    color: var(--color-ink);
-    border-color: #fff;
+    background: var(--color-on-void);
+    color: var(--color-void);
+    border-color: var(--color-on-void);
   }
   .btn-invert:hover {
     background: var(--color-ember);
