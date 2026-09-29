@@ -1,0 +1,16 @@
+{
+  "name": "vib-studios-site",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Marketing and docs site for vib-MC and Vib-launcher.",
+  "scripts": {
+    "build": "tailwindcss -i src/input.css -o styles.css --minify",
+    "watch": "tailwindcss -i src/input.css -o styles.css --watch",
+    "start": "python3 -m http.server 8000 --bind 127.0.0.1",
+    "check": "node tools/check-links.mjs"
+  },
+  "devDependencies": {
+    "@tailwindcss/cli": "^4.3.3",
+    "tailwindcss": "^4.3.3"
+  }
+}
