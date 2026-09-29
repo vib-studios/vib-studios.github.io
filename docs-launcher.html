@@ -1,0 +1,343 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Docs — Vib-launcher</title>
+  <meta name="description" content="Install Vib-launcher, set up an instance, add accounts and mods, and run a local vib-MC server from the launcher.">
+  <meta property="og:title" content="Docs — Vib-launcher">
+  <meta property="og:description" content="Install Vib-launcher, set up an instance, add accounts and mods, and run a local vib-MC server.">
+  <meta property="og:type" content="article">
+  <meta property="og:image" content="https://vibstudios.space/files/og-vibmc.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="theme-color" content="#0b0b0c">
+  <link rel="icon" href="favicon.ico" sizes="16x16 32x32 48x48">
+  <link rel="stylesheet" href="styles.css">
+  <script src="theme-boot.js"></script>
+</head>
+<body class="bg-paper text-body antialiased">
+
+  <!-- Header ------------------------------------------------------------- -->
+  <header class="sticky top-0 z-50 bg-paper/85 backdrop-blur-sm border-b border-line">
+    <div class="mx-auto max-w-[1240px] px-5 md:px-8 h-16 flex items-center justify-between">
+      <a href="index.html" class="flex items-center gap-2.5 text-ink no-underline">
+        <img src="files/mark.svg" alt="" width="16" height="16" class="h-4 w-4 shrink-0" aria-hidden="true" style="border-radius:2px">
+        <span class="font-mono text-[12px] font-medium tracking-[0.16em] uppercase">Vib Studios</span>
+      </a>
+      <nav class="flex items-center gap-6 md:gap-8 font-mono text-[12px] tracking-[0.06em] uppercase" aria-label="Sections">
+        <a href="index.html#vib-mc" class="text-muted hover:text-ink transition-colors">vib-MC</a>
+        <a href="index.html#vib-launcher" class="text-muted hover:text-ink transition-colors">launcher</a>
+        <a href="docs.html" class="text-muted hover:text-ink transition-colors">docs</a>
+        <button type="button" data-theme-toggle class="theme-toggle"
+                aria-label="Colour theme">
+          <span data-icon aria-hidden="true">☀</span>
+        </button>
+      </nav>
+    </div>
+  </header>
+
+  <main class="mx-auto max-w-[1240px] px-5 md:px-8">
+
+    <!-- Intro ------------------------------------------------------------ -->
+    <section class="pt-16 md:pt-24 pb-10">
+      <p class="eyebrow reveal">Documentation</p>
+      <h1 class="mt-6 text-hero text-ink reveal">
+        Install it, <span class="font-bold">point it at a server</span>,<br>
+        and see what it will not do
+      </h1>
+      <p class="mt-8 max-w-[60ch] text-[1.0625rem] leading-[1.65] reveal">
+        Vib-launcher is a native Linux application. It installs Minecraft instances,
+        manages accounts and mods, and runs a local vib-MC server.
+      </p>
+
+      <nav class="mt-12 border-t border-line pt-6" aria-label="On this page">
+        <p class="eyebrow">On this page</p>
+        <ol class="mt-4 flex flex-wrap gap-x-7 gap-y-2 font-mono text-[0.8125rem] text-muted">
+          <li><a class="hover:text-ember transition-colors" href="#requirements">requirements</a></li>
+          <li><a class="hover:text-ember transition-colors" href="#install">install</a></li>
+          <li><a class="hover:text-ember transition-colors" href="#instances">instances</a></li>
+          <li><a class="hover:text-ember transition-colors" href="#accounts">accounts</a></li>
+          <li><a class="hover:text-ember transition-colors" href="#mods">mods</a></li>
+          <li><a class="hover:text-ember transition-colors" href="#servers">local servers</a></li>
+          <li><a class="hover:text-ember transition-colors" href="#limits">what it will not do</a></li>
+        </ol>
+      </nav>
+    </section>
+
+    <!-- Requirements ----------------------------------------------------- -->
+    <section id="requirements" class="py-12 border-t border-line scroll-mt-16">
+      <h2 class="text-title text-ink reveal">Requirements</h2>
+      <p class="mt-4 max-w-[60ch] reveal">
+        Linux is the supported platform. Everything here follows from that.
+      </p>
+
+      <dl class="mt-10 grid gap-x-8 gap-y-8 md:grid-cols-2">
+        <div class="reveal">
+          <dt class="font-mono text-[0.8125rem] text-ink">.NET 10 runtime</dt>
+          <dd class="mt-2 text-[0.9375rem] leading-[1.6]">
+            x86-64 or aarch64. On Arch, <code>dotnet-runtime-10.0</code> from the
+            official repositories. Published builds are self-contained, so you can
+            also run the binary with no runtime installed at all.
+          </dd>
+        </div>
+        <div class="reveal" style="--reveal-delay:60ms" data-release
+             data-repo="vib-studios/viblauncher"
+             data-asset="linux"
+             data-fallback-tag="v0.2.0"
+             data-fallback-url="https://github.com/vib-studios/viblauncher/releases/download/v0.2.0/viblauncher-0.2.0-linux-x64.tar.gz"
+             data-copy-cmd="dotnet build -c Release&#10;dotnet run --project src/VibLauncher.App"
+             data-issue-repo="vib-studios/viblauncher">
+          <dt class="font-mono text-[0.8125rem] text-ink">The launcher</dt>
+          <dd class="mt-2 text-[0.9375rem] leading-[1.6]">
+            Grab the latest tarball from the
+            <a class="link" href="index.html#vib-launcher">downloads section</a>. Both
+            <code>linux-x64</code> and <code>linux-arm64</code> are published. Latest
+            release: <span data-release-tag>v0.2.0</span>
+          </dd>
+        </div>
+        <div class="reveal" style="--reveal-delay:120ms">
+          <dt class="font-mono text-[0.8125rem] text-ink">A Wayland or X11 session</dt>
+          <dd class="mt-2 text-[0.9375rem] leading-[1.6]">
+            On Wayland the launcher runs under XWayland, because Avalonia's backend
+            targets X11. There is no native Wayland backend in this build.
+          </dd>
+        </div>
+        <div class="reveal" style="--reveal-delay:180ms">
+          <dt class="font-mono text-[0.8125rem] text-ink">Optional: libsecret</dt>
+          <dd class="mt-2 text-[0.9375rem] leading-[1.6]">
+            Account tokens go to the system keyring through
+            <code>secret-tool</code>. Without it the launcher falls back to a
+            machine-bound file store and says so on the Accounts page. It never
+            writes tokens somewhere without telling you.
+          </dd>
+        </div>
+      </dl>
+    </section>
+
+    <!-- Install ---------------------------------------------------------- -->
+    <section id="install" class="py-12 border-t border-line scroll-mt-16">
+      <h2 class="text-title text-ink reveal">Install</h2>
+      <p class="mt-4 max-w-[60ch] reveal">
+        One archive. There is no installer and nothing to configure first.
+      </p>
+
+      <div class="code mt-8 reveal">
+        <pre data-code><code># 1. unpack it anywhere you can write to
+$ tar xzf viblauncher-0.2.0-linux-x64.tar.gz
+
+# 2. make it executable and run it
+$ chmod +x viblauncher
+$ ./viblauncher</code></pre>
+        <button type="button" data-copy aria-label="Copy install commands">copy</button>
+      </div>
+
+      <h3 class="mt-12 text-[1.25rem] text-ink reveal">From source</h3>
+      <p class="mt-3 max-w-[60ch] text-[0.9375rem] leading-[1.6] reveal">
+        The build needs the .NET 10 SDK. Clone, build, run — no editor and no
+        native toolchain beyond what the SDK pulls in.
+      </p>
+      <div class="code mt-5 reveal">
+        <pre data-code><code>git clone https://github.com/vib-studios/viblauncher
+$ dotnet build -c Release
+$ dotnet run --project src/VibLauncher.App</code></pre>
+        <button type="button" data-copy aria-label="Copy build commands">copy</button>
+      </div>
+    </section>
+
+    <!-- Instances -------------------------------------------------------- -->
+    <section id="instances" class="py-12 border-t border-line scroll-mt-16">
+      <h2 class="text-title text-ink reveal">Instances</h2>
+      <p class="mt-4 max-w-[60ch] reveal">
+        An instance is a Minecraft client the launcher installs and starts. Several
+        can coexist; a second instance on a version already installed costs almost
+        nothing, because the client jar, libraries and assets are shared.
+      </p>
+
+      <p class="mt-6 max-w-[60ch] text-[0.9375rem] leading-[1.6] reveal">
+        An instance is a client. A server is a separate concept, covered under
+        <a class="link" href="#servers">local servers</a>. They never share a
+        directory.
+      </p>
+
+      <p class="mt-6 max-w-[60ch] text-[0.9375rem] leading-[1.6] reveal">
+        Nothing from Minecraft is bundled. Client jars, libraries and assets are
+        fetched from Mojang's own servers, so a version the launcher does not know
+        about will not resolve.
+      </p>
+    </section>
+
+    <!-- Accounts --------------------------------------------------------- -->
+    <section id="accounts" class="py-12 border-t border-line scroll-mt-16">
+      <h2 class="text-title text-ink reveal">Accounts</h2>
+      <p class="mt-4 max-w-[60ch] reveal">
+        Offline accounts work immediately. Microsoft sign-in needs a client id
+        supplied by whoever ships the build.
+      </p>
+
+      <p class="mt-6 max-w-[60ch] text-[0.9375rem] leading-[1.6] reveal">
+        The full auth chain is implemented and works once a client id is
+        configured. An unsigned build will tell you it cannot sign in rather than
+        failing at the launcher window.
+      </p>
+    </section>
+
+    <!-- Mods ------------------------------------------------------------- -->
+    <section id="mods" class="py-12 border-t border-line scroll-mt-16">
+      <h2 class="text-title text-ink reveal">Mods</h2>
+      <p class="mt-4 max-w-[60ch] reveal">
+        Search Modrinth, filtered by the instance's Minecraft version and loader
+        before the query leaves the launcher, so every result shown is installable.
+      </p>
+
+      <p class="mt-6 max-w-[60ch] text-[0.9375rem] leading-[1.6] reveal">
+        The specific file is checked again at install time, and a mismatch is
+        refused with both sides named rather than installed and left to crash:
+      </p>
+
+      <div class="code mt-5 reveal">
+        <pre data-code><code>"Sodium 0.5.8" cannot be installed into "Fabric Survival".
+
+That release supports Minecraft 1.20.1 on fabric. This instance is
+Minecraft 1.21.8 on Fabric. Pick a different release, or change the
+instance's version.</code></pre>
+      </div>
+
+      <p class="mt-6 max-w-[60ch] text-[0.9375rem] leading-[1.6] reveal">
+        Fabric and Quilt are complete. Disabling a mod renames it to
+        <code>.jar.disabled</code>, which every loader ignores — nothing is
+        deleted, so enabling it again is a rename back.
+      </p>
+    </section>
+
+    <!-- Servers ---------------------------------------------------------- -->
+    <section id="servers" class="py-12 border-t border-line scroll-mt-16">
+      <h2 class="text-title text-ink reveal">Local servers</h2>
+      <p class="mt-4 max-w-[60ch] reveal">
+        The launcher can run a vib-MC server on this machine, as a child process
+        with its own folder per server. It is never run inside the launcher, so a
+        server crash cannot take the launcher down.
+      </p>
+
+      <p class="mt-6 max-w-[60ch] text-[0.9375rem] leading-[1.6] reveal">
+        Server jars come from the vib-MC project's GitHub releases rather than from
+        scraping a web page. The server needs a Java runtime of its own — the
+        launcher's .NET runtime is not Java. See
+        <a class="link" href="docs.html#requirements">the server requirements</a>.
+      </p>
+
+      <p class="mt-6 max-w-[60ch] text-[0.9375rem] leading-[1.6] reveal">
+        stdout and stderr feed the console view and a per-run log file; typed
+        commands go to stdin. A crash is reported with its exit code and a route to
+        the log, and the launcher never auto-restarts.
+      </p>
+
+      <p class="mt-6 max-w-[60ch] text-[0.9375rem] leading-[1.6] reveal">
+        Ports are checked before a start and a conflict offers the next free port.
+        The port is never changed automatically: a server that silently moves is a
+        server nobody can connect to. An update replaces only the jar — worlds,
+        player data, plugins and <code>server.properties</code> are never touched,
+        and a backup is taken first.
+      </p>
+    </section>
+
+    <!-- Limits ----------------------------------------------------------- -->
+    <section id="limits" class="py-12 border-t border-line scroll-mt-16">
+      <h2 class="text-title text-ink reveal">What it will not do</h2>
+      <p class="mt-4 max-w-[60ch] reveal">
+        Stated plainly rather than hidden behind a disabled button.
+      </p>
+
+      <ul class="mt-8 max-w-[70ch] grid gap-y-4 text-[0.9375rem] leading-[1.6] reveal">
+        <li class="border-l-2 border-line pl-4">
+          <strong class="text-ink">Forge and NeoForge cannot be installed.</strong>
+          Versions are listed; the install step is not implemented. Fabric and
+          Quilt are complete.
+        </li>
+        <li class="border-l-2 border-line pl-4">
+          <strong class="text-ink">CurseForge is not implemented.</strong> The
+          provider abstraction is there for it. CurseForge packs cannot be imported
+          either — that needs the CurseForge API to resolve mods, and the import
+          says so instead of failing quietly.
+        </li>
+        <li class="border-l-2 border-line pl-4">
+          <strong class="text-ink">No managed Java downloads.</strong> The launcher
+          finds installed runtimes and tells you which release a version needs, but
+          does not fetch one for you.
+        </li>
+        <li class="border-l-2 border-line pl-4">
+          <strong class="text-ink">Server plugin management is not implemented.</strong>
+          Servers get a <code>plugins/</code> folder and a button to open it.
+        </li>
+        <li class="border-l-2 border-line pl-4">
+          <strong class="text-ink">Player counts and server memory use are not
+          shown</strong>, because nothing available reports them reliably. The
+          fields show what is actually known rather than invented numbers.
+        </li>
+        <li class="border-l-2 border-line pl-4">
+          <strong class="text-ink">Windows is untested.</strong> It builds from the
+          same sources and the shared logic is covered by tests, but nobody on the
+          project runs Windows, so nothing on it is verified by hand.
+        </li>
+      </ul>
+    </section>
+
+    <!-- Report a bug ----------------------------------------------------- -->
+    <section id="bugs" class="py-12 border-t border-line scroll-mt-16" data-release
+             data-repo="vib-studios/viblauncher"
+             data-issue-repo="vib-studios/viblauncher">
+      <h2 class="text-title text-ink reveal">Report a bug</h2>
+      <p class="mt-4 max-w-[60ch] reveal">
+        Opens a prefilled issue on GitHub in a new tab.
+      </p>
+
+      <form class="mt-8 grid gap-5 md:grid-cols-2 max-w-[70ch]" data-bug-form>
+        <div>
+          <label class="block font-mono text-[11px] tracking-[0.14em] uppercase text-faint mb-2" for="bug-title">title</label>
+          <input id="bug-title" data-bug-title type="text" placeholder="Short summary" required>
+        </div>
+        <div>
+          <label class="block font-mono text-[11px] tracking-[0.14em] uppercase text-faint mb-2" for="bug-version">version</label>
+          <input id="bug-version" data-bug-version type="text" value="v0.2.0">
+        </div>
+        <div class="md:col-span-2">
+          <label class="block font-mono text-[11px] tracking-[0.14em] uppercase text-faint mb-2" for="bug-what">what happened</label>
+          <input id="bug-what" data-bug-what type="text" placeholder="What you saw, and what you expected" required>
+        </div>
+        <div class="md:col-span-2">
+          <label class="block font-mono text-[11px] tracking-[0.14em] uppercase text-faint mb-2" for="bug-steps">steps</label>
+          <input id="bug-steps" data-bug-steps type="text" placeholder="Steps to get there" required>
+        </div>
+        <div class="md:col-span-2 flex items-center gap-4">
+          <button type="submit" class="btn">open issue</button>
+          <span class="font-mono text-[11px] text-faint">opens on github.com in a new tab</span>
+        </div>
+      </form>
+    </section>
+
+    <p class="py-12 border-t border-line text-[0.875rem] text-muted">
+      Vib-launcher is licensed GPL-3.0-or-later.
+    </p>
+  </main>
+
+  <!-- Footer ------------------------------------------------------------- -->
+  <footer class="border-t border-line">
+    <div class="mx-auto max-w-[1240px] px-5 md:px-8 py-10">
+      <div class="flex flex-wrap items-center justify-between gap-x-8 gap-y-4">
+        <div class="flex items-center gap-2.5">
+          <img src="files/mark.svg" alt="" width="16" height="16" class="h-4 w-4 shrink-0" aria-hidden="true" style="border-radius:2px">
+          <span class="font-mono text-[11px] tracking-[0.16em] uppercase text-muted">Vib Studios</span>
+        </div>
+        <nav class="flex flex-wrap items-center gap-x-6 gap-y-2 font-mono text-[12px] text-muted" aria-label="Footer">
+          <a href="index.html" class="hover:text-ink transition-colors">home</a>
+          <a href="https://github.com/vib-studios/viblauncher" target="_blank" rel="noopener" class="hover:text-ink transition-colors">github</a>
+          <a href="privacy.html" class="hover:text-ink transition-colors">privacy</a>
+          <a href="terms.html" class="hover:text-ink transition-colors">terms</a>
+        </nav>
+      </div>
+    </div>
+  </footer>
+
+  <script src="site.js"></script>
+  <script src="theme.js"></script>
+</body>
+</html>
