@@ -46,6 +46,42 @@ node tools/check-links.mjs https://vib-studios.github.io   # or a deployed copy
 file can exist on disk and still 404 when a `../` segment is wrong. It skips
 HTML comments, so the image-slot notes below are not reported as broken links.
 
+## Link previews
+
+`index.html` carries a Discord component embed, which replaces the standard
+preview card with a layout built from Discord components. Documented in
+[discord/discord-api-docs#8606](https://github.com/discord/discord-api-docs/pull/8606).
+
+The payload is a `<script id="discord:component-embed" type="application/json">`
+in the head. It is server-rendered rather than injected by `site.js` because
+Discord does not execute JavaScript, so a client-side tag would never be seen.
+
+`og:` tags stay alongside it as the fallback for when a component embed cannot
+render. `og:image` is the icon, not a screenshot, so `twitter:card` is
+`summary` rather than `summary_large_image`: the large layout scales a 48px
+image into a mostly empty card.
+
+```sh
+npm run check:embed         # validate the payload against the documented rules
+```
+
+`check:embed` is worth having because Discord fails silently. One stray key on
+a button, or a media item with anything set besides `url`, invalidates the
+entire payload and the page quietly falls back to the og tags, so a broken
+embed looks exactly like a working one until you compare the two previews.
+
+The thumbnail is `files/icon-embed.png`: the 48px frame of `favicon.ico`,
+extracted because Discord reads PNG, GIF, JPEG, WebP and AVIF, and not `.ico`.
+Regenerate it with:
+
+```sh
+magick 'favicon.ico[2]' -strip PNG32:files/icon-embed.png
+```
+
+Discord caches previews for roughly 30 minutes, and a `#fragment` is not part of
+the cache key. To see a change, share the URL with a new query string, or use
+the [Embed Debugger](https://discord.com/developers/embeds).
+
 ## Images
 
 Originals live in `photos/`. The site serves re-encoded WebP from `files/`,

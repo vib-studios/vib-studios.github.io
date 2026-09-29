@@ -7,8 +7,9 @@
     "build": "tailwindcss -i src/input.css -o styles.css --minify",
     "watch": "tailwindcss -i src/input.css -o styles.css --watch",
     "start": "python3 -m http.server 8000 --bind 127.0.0.1",
-    "check": "node tools/check-links.mjs && node tools/check-contrast.mjs",
-    "check:contrast": "node tools/check-contrast.mjs"
+    "check": "node tools/check-links.mjs && node tools/check-contrast.mjs && node tools/check-embed.mjs",
+    "check:contrast": "node tools/check-contrast.mjs",
+    "check:embed": "node tools/check-embed.mjs"
   },
   "devDependencies": {
     "@tailwindcss/cli": "^4.3.3",

@@ -9,14 +9,58 @@
   <meta property="og:description" content="A Minecraft server written entirely by AI, and a native launcher for it. Both built by Vib Studios.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://vib-studios.github.io/">
-  <meta property="og:image" content="https://vib-studios.github.io/files/og-vibmc.png">
-  <meta property="og:image:width" content="1200">
-  <meta property="og:image:height" content="630">
-  <meta name="twitter:card" content="summary_large_image">
+  <meta property="og:image" content="https://vib-studios.github.io/files/icon-embed.png">
+  <meta property="og:image:width" content="48">
+  <meta property="og:image:height" content="48">
+  <meta property="og:image:alt" content="The Vib Studios mark">
+  <!-- summary, not summary_large_image: the image is a 48px icon, and the large
+       layout scales it up into a mostly empty card. The default small-thumbnail
+       layout is what an icon-sized og:image actually wants. -->
+  <meta name="twitter:card" content="summary">
   <meta name="theme-color" content="#0b0b0c">
   <!-- One .ico carrying 16, 32 and 48px. sizes="any" would be wrong here:
        it means "scalable", and this icon is not. -->
   <link rel="icon" href="favicon.ico" sizes="16x16 32x32 48x48">
+  <!-- Discord component embed, replacing the standard preview card.
+       Server-rendered on purpose: Discord does not run JavaScript, so a tag
+       injected by site.js would never be seen. Documented in
+       discord/discord-api-docs#8606. The og tags above stay as the fallback
+       for when a component embed cannot render.
+
+       The thumbnail is the 48px frame lifted out of favicon.ico, because
+       Discord reads PNG/GIF/JPEG/WebP/AVIF and not .ico.
+       accent_color 15951887 is --color-ember, oklch(68% 0.19 45) #f3680f. -->
+  <script id="discord:component-embed" type="application/json">
+  {
+    "component": {
+      "type": 17,
+      "accent_color": 15951887,
+      "components": [
+        {
+          "type": 9,
+          "components": [
+            {
+              "type": 10,
+              "content": "## **[Vib Studios](https://vib-studios.github.io/)**\nA Minecraft server written entirely by AI, and a native launcher for it. Both free and open source."
+            }
+          ],
+          "accessory": {
+            "type": 11,
+            "media": { "url": "https://vib-studios.github.io/files/icon-embed.png" }
+          }
+        },
+        {
+          "type": 1,
+          "components": [
+            { "type": 2, "style": 5, "url": "https://vib-studios.github.io/docs.html", "label": "Docs" },
+            { "type": 2, "style": 5, "url": "https://github.com/vib-studios/vib-MC/releases/tag/v0.0.7", "label": "vib-MC v0.0.7" },
+            { "type": 2, "style": 5, "url": "https://github.com/vib-studios/viblauncher/releases/tag/v0.2.0", "label": "Launcher v0.2.0" }
+          ]
+        }
+      ]
+    }
+  }
+  </script>
   <link rel="stylesheet" href="styles.css">
   <!-- Sets the colour theme before first paint, so dark never flashes white. -->
   <script src="theme-boot.js"></script>
