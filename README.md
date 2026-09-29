@@ -39,7 +39,7 @@ reproducible, which is the whole reason it exists.
 ```sh
 npm start                  # serve, then in another terminal:
 npm run check              # crawl every page, fetch every local link and asset
-node tools/check-links.mjs https://vib-studios.github.io   # or a deployed copy
+node tools/check-links.mjs https://vibstudios.space   # or a deployed copy
 ```
 
 `check` fetches over HTTP rather than only testing the filesystem, because a

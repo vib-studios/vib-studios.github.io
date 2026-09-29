@@ -11,7 +11,7 @@
  *   npm run check    # terminal 2
  *
  * Pass a base URL to check a deployed copy instead:
- *   node tools/check-links.mjs https://vib-studios.github.io
+ *   node tools/check-links.mjs https://vibstudios.space
  */
 
 const BASE = (process.argv[2] || "http://127.0.0.1:8000").replace(/\/$/, "") + "/";
