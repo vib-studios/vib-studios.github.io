@@ -8,27 +8,40 @@
   // can genuinely get rate-limited. Keep a baked-in list so the rail still
   // renders something real when the fetch fails.
   const FALLBACK = [
-    { login: "gabytz777", contributions: 53 },
-    { login: "anmvc", contributions: 5 },
+    { id: 168933756, login: "gabytz777", contributions: 53 },
+    { id: 175139208, login: "anmvc", contributions: 5 },
   ];
 
   // People the /contributors endpoint will never return. It only counts commits
   // reachable from the default branch, so work that shipped on a tag but was
-  // never merged into main is invisible to it — see usekiko's bd56159
+  // never merged into main is invisible to it — see 7kimchi's bd56159
   // ("add world saving so chunks actually persist"), which lives only under
   // v0.0.4-hotfix.3. Entries here are merged in; if the API ever does report
   // one of them, the API's own numbers win.
+  //
+  // `id` is the GitHub numeric user id and is REQUIRED here, not optional
+  // decoration. A login is a name the account owner can change at any time, and
+  // the old one then stops resolving: when this user went from "usekiko" to
+  // "7kimchi", both https://github.com/usekiko.png and
+  // https://api.github.com/users/usekiko started returning 404 and their avatar
+  // silently vanished. The numeric id never changes, so keying off it keeps the
+  // picture and the dedupe working across a rename.
   const EXTRA = [
-    { login: "usekiko", contributions: 1 },
+    { id: 204347579, login: "7kimchi", contributions: 1 },
   ];
 
   const mounts = Array.from(document.querySelectorAll("[data-contributors]"));
   if (!mounts.length) return;
 
-  const avatarFor = (c) =>
-    c.avatar_url
-      ? `${c.avatar_url}${c.avatar_url.includes("?") ? "&" : "?"}s=96`
-      : `https://github.com/${encodeURIComponent(c.login)}.png?size=96`;
+  // Order matters: prefer the id-based URL, which is stable across a rename.
+  // The login-based URL is only a last resort and will 404 the moment the
+  // account's username changes.
+  const avatarFor = (c) => {
+    if (c.avatar_url)
+      return `${c.avatar_url}${c.avatar_url.includes("?") ? "&" : "?"}s=96`;
+    if (c.id) return `https://avatars.githubusercontent.com/u/${c.id}?s=96`;
+    return `https://github.com/${encodeURIComponent(c.login)}.png?size=96`;
+  };
 
   const profileFor = (c) => c.html_url || `https://github.com/${encodeURIComponent(c.login)}`;
 
@@ -84,10 +97,14 @@
     });
   };
 
+  // Identity for dedupe/matching. Prefer the numeric id so a hand-written entry
+  // still matches the same person once the API reports them under a new login.
+  const identity = (c) => (c.id ? `id:${c.id}` : `login:${c.login.toLowerCase()}`);
+
   // Merge EXTRA in without letting it shadow a real API entry for the same person.
   const withExtras = (list) => {
-    const seen = new Set(list.map((c) => c.login.toLowerCase()));
-    return list.concat(EXTRA.filter((c) => !seen.has(c.login.toLowerCase())));
+    const seen = new Set(list.map(identity));
+    return list.concat(EXTRA.filter((c) => !seen.has(identity(c))));
   };
 
   const clean = (list) =>
