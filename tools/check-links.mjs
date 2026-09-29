@@ -21,6 +21,45 @@ const queue = ["/"];
 const broken = [];
 let ok = 0;
 
+/*
+ * Stylesheets too, not just markup.
+ *
+ * A url() inside CSS is invisible to an href/src scan, and that is exactly how
+ * a font path can point one directory above the site root, 404 on every page,
+ * and leave a whole icon font silently missing with nothing in the build log.
+ * The compiled stylesheet sits at the site root, so its own relative paths are
+ * resolved from there.
+ */
+const checkStylesheets = async () => {
+  for (const sheet of ["/styles.css", "/src/input.css", "/src/phosphor.css"]) {
+    let body;
+    try {
+      const res = await fetch(BASE + sheet.slice(1));
+      if (!res.ok) {
+        broken.push([sheet, `HTTP ${res.status}`]);
+        continue;
+      }
+      body = await res.text();
+    } catch (err) {
+      broken.push([sheet, `unreachable: ${err.message}`]);
+      continue;
+    }
+    for (const [, value] of body.matchAll(/url\(\s*['"]?([^'")]+)['"]?\s*\)/g)) {
+      if (/^(https?:|data:|\/\/|#)/.test(value)) continue;
+      const target = new URL(value, BASE);
+      if (target.origin !== new URL(BASE).origin) continue;
+      try {
+        const r = await fetch(target);
+        await r.arrayBuffer();
+        if (r.ok) ok++;
+        else broken.push([sheet, `${value} -> HTTP ${r.status}`]);
+      } catch (err) {
+        broken.push([sheet, `${value} -> ${err.message}`]);
+      }
+    }
+  }
+};
+
 const crawl = async () => {
   while (queue.length) {
     const path = queue.shift();
@@ -70,6 +109,7 @@ const crawl = async () => {
 };
 
 await crawl();
+await checkStylesheets();
 
 console.log(`base:   ${BASE}`);
 console.log(`pages:  ${seen.size}`);
