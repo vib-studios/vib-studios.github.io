@@ -62,12 +62,14 @@ jobs:
         run: pacman -S --noconfirm --needed git
 
       # git refuses to operate on a repository whose ownership it does not
-      # recognise, which is the case here: actions/checkout writes the worktree
-      # as the runner user, and the container runs as root with a different uid
-      # mapping. Without this every git command fails with "not in a git
-      # directory" or "detected dubious ownership".
+      # recognise, and the container's root maps to a different uid than the
+      # runner user that wrote the worktree. Setting safe.directory globally is
+      # not enough on its own here, so every git command below also passes it
+      # with -c, which works regardless of where git looks for global config.
       - name: Trust the checkout
-        run: git config --global --add safe.directory "$GITHUB_WORKSPACE"
+        run: |
+          git -c safe.directory='*' config --global --add safe.directory '*' || true
+          git -c safe.directory='*' status --short >/dev/null
 
       - uses: actions/setup-node@v5
         with:
@@ -144,12 +146,15 @@ jobs:
           if [ -z "$tag" ]; then
             tag="$RELEASE_TAG"
           fi
-          git config user.name 'github-actions[bot]'
-          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add repo
-          if git diff --cached --quiet; then
+          # safe.directory passed per invocation, so this does not depend on a
+          # writable global config in the container image.
+          gitc() { git -c safe.directory='*' "$@"; }
+          gitc config user.name 'github-actions[bot]'
+          gitc config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          gitc add repo
+          if gitc diff --cached --quiet; then
             echo "pacman repo already up to date for $tag"
             exit 0
           fi
-          git commit -m "Publish the $tag Arch packages"
-          git push origin HEAD:main
+          gitc commit -m "Publish the $tag Arch packages"
+          gitc push origin HEAD:main
