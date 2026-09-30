@@ -1,0 +1,126 @@
+# Publish the viblauncher Arch packages into a pacman repository served from
+# this site.
+#
+# The packages are built by the Release workflow's Arch job in the viblauncher
+# repository and attached to the GitHub release. This job collects them, builds
+# the pacman database with repo-add, and commits repo/ to main, because this
+# repo's Pages is the legacy "deploy from a branch" kind: whatever is committed
+# to main is what is served. That makes vibstudios.space the canonical host for
+# the pacman repo, which is the right place for it - it is the domain the
+# studio already owns and points people at, and it avoids the org's other
+# repositories each claiming a Pages deployment of the apex domain.
+#
+# pacman needs three files for the repo to be usable, and all three are here:
+#   repo/viblauncher.db        the package database pacman reads
+#   repo/viblauncher.files     the file list, for pacman -F
+#   repo/*.pkg.tar.zst         the packages themselves
+#
+# pacman's config points at https://vibstudios.space/repo/$arch, so $arch is
+# appended to that URL. The packages carry their architecture in the filename
+# and the database indexes both, so one directory serves both.
+
+name: Pacman repository
+
+on:
+  # Fires when the launcher workflow attaches packages to a new release, so the
+  # pacman repo follows releases without being told the version separately.
+  release:
+    types: [published]
+    repos:
+      - vib-studios/viblauncher
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: 'Existing launcher tag to publish, e.g. v0.2.0'
+        required: false
+        default: ''
+
+permissions:
+  contents: write
+
+concurrency:
+  group: pacman
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    name: Build pacman database
+    runs-on: ubuntu-latest
+    # repo-add is part of pacman, so this job runs in an Arch container rather
+    # than installing pacman on Ubuntu.
+    container:
+      image: archlinux:base
+
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Update system
+        run: pacman -Syu --noconfirm
+
+      - uses: actions/setup-node@v5
+        with:
+          node-version: '24'
+
+      # The packages come from the release rather than being rebuilt here. A
+      # pacman repo whose contents differ from the released package would be
+      # worse than no pacman repo: a user installing from here and a user
+      # installing the attached tarball would get different builds.
+      - name: Download packages from the release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          INPUT_TAG: ${{ inputs.tag }}
+        run: |
+          set -euo pipefail
+          tag="$INPUT_TAG"
+          if [ -z "$tag" ]; then
+            tag=$(gh release view --repo vib-studios/viblauncher --json tagName --jq .tagName)
+          fi
+          echo "using tag $tag"
+          mkdir -p packages
+          gh release download "$tag" \
+            --repo vib-studios/viblauncher \
+            --pattern '*.pkg.tar.zst' \
+            --dir packages
+          ls -l packages
+
+      - name: Build the database
+        run: |
+          set -euo pipefail
+          # Only the packages, not the debug ones. repo-add would index both
+          # happily; pacman would then offer a -debug package that carries no
+          # runtime value over the main one.
+          rm -f packages/*-debug-*.pkg.tar.zst
+          ls -l packages
+          mkdir -p repo
+          repo-add repo/viblauncher.db.tar.gz packages/*.pkg.tar.zst
+          # pacman looks for the uncompressed name, which is what -gpg and
+          # --print-format resolve against; the .tar.gz copies are for tools
+          # that expect the compressed form.
+          rm -f repo/viblauncher.db repo/viblauncher.files
+          cp repo/viblauncher.db.tar.gz repo/viblauncher.db
+          cp repo/viblauncher.files.tar.gz repo/viblauncher.files
+          cp packages/*.pkg.tar.zst repo/
+          ls -l repo
+
+      # Nothing here should be changed by hand, and the database is a build
+      # artifact: keeping it out of review avoids a diff of binary files on
+      # every release, and a stale index is replaced wholesale rather than
+      # merged with something.
+      - name: Commit the repository
+        env:
+          INPUT_TAG: ${{ inputs.tag }}
+        run: |
+          set -euo pipefail
+          tag="$INPUT_TAG"
+          if [ -z "$tag" ]; then
+            tag=$(gh release view --repo vib-studios/viblauncher --json tagName --jq .tagName)
+          fi
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add repo
+          if git diff --cached --quiet; then
+            echo "pacman repo already up to date for $tag"
+            exit 0
+          fi
+          git commit -m "Publish the $tag Arch packages"
+          git push origin HEAD:main

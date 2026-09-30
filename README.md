@@ -2,8 +2,13 @@
 
 Static site for two projects: **vib-MC** (a Minecraft server written by AI) and
 **Vib-launcher** (a native launcher and server control panel). No backend, no
-analytics, no cookies. Four pages: `index.html`, `docs.html`, `privacy.html`,
-`terms.html`.
+analytics, no cookies. Six pages: `index.html`, `docs.html`, `docs-launcher.html`,
+`privacy.html`, `terms.html`, and `404` via the hosting layer.
+
+This repository is also the host for the **Arch pacman repository** under
+`repo/`, built by `.github/workflows/pacman.yml` from the packages the
+launcher repository attaches to its releases. That is why `repo/` is committed
+here and not built by a deploy step: Pages here serves `main` as-is.
 
 ## Build
 
