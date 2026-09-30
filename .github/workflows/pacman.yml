@@ -61,6 +61,14 @@ jobs:
       - name: Install git
         run: pacman -S --noconfirm --needed git
 
+      # git refuses to operate on a repository whose ownership it does not
+      # recognise, which is the case here: actions/checkout writes the worktree
+      # as the runner user, and the container runs as root with a different uid
+      # mapping. Without this every git command fails with "not in a git
+      # directory" or "detected dubious ownership".
+      - name: Trust the checkout
+        run: git config --global --add safe.directory "$GITHUB_WORKSPACE"
+
       - uses: actions/setup-node@v5
         with:
           node-version: '24'
