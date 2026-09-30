@@ -144,6 +144,15 @@ $ sudo pacman -S viblauncher</code></pre>
         <button type="button" data-copy aria-label="Copy pacman install">copy</button>
       </div>
       <p class="mt-4 max-w-[60ch] text-[0.9375rem] leading-[1.6] reveal">
+        The pacman repository indexes x86_64 at the moment. On aarch64, take the
+        <code>.pkg.tar.zst</code> from the
+        <a class="link" href="https://github.com/vib-studios/viblauncher/releases">release
+        page</a> and install it with
+        <code>pacman -U viblauncher-&lt;version&gt;-1-aarch64.pkg.tar.zst</code>. Both
+        builds are the same version, and a pacman database holds one package per name
+        and version, so it can only carry one architecture at a time.
+      </p>
+      <p class="mt-4 max-w-[60ch] text-[0.9375rem] leading-[1.6] reveal">
         The Arch package is framework-dependent and depends on
         <code>dotnet-runtime-10.0</code>. The tarball above is self-contained and
         needs no runtime installed — on any other Linux, take the tarball.
