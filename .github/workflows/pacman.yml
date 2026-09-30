@@ -1,16 +1,16 @@
 # Publish the viblauncher Arch packages into a pacman repository served from
 # this site.
 #
-# The packages are built by the Release workflow's Arch job in the viblauncher
-# repository and attached to the GitHub release. This job collects them, builds
-# the pacman database with repo-add, and commits repo/ to main, because this
-# repo's Pages is the legacy "deploy from a branch" kind: whatever is committed
-# to main is what is served. That makes vibstudios.space the canonical host for
-# the pacman repo, which is the right place for it - it is the domain the
-# studio already owns and points people at, and it avoids the org's other
-# repositories each claiming a Pages deployment of the apex domain.
+# The packages are built by the Arch job in the viblauncher repository and
+# attached to its GitHub release. This workflow collects them, builds the pacman
+# database with repo-add, and commits repo/ to main, because this repo's Pages is
+# the legacy "deploy from a branch" kind: whatever is committed to main is what
+# is served. That makes vibstudios.space the canonical host for the pacman repo,
+# which is the right place for it - it is the domain the studio already owns and
+# points people at, and it avoids every other repository in the org claiming a
+# Pages deployment of the apex domain.
 #
-# pacman needs three files for the repo to be usable, and all three are here:
+# pacman needs three things, and all three are in repo/:
 #   repo/viblauncher.db        the package database pacman reads
 #   repo/viblauncher.files     the file list, for pacman -F
 #   repo/*.pkg.tar.zst         the packages themselves
@@ -18,6 +18,12 @@
 # pacman's config points at https://vibstudios.space/repo/$arch, so $arch is
 # appended to that URL. The packages carry their architecture in the filename
 # and the database indexes both, so one directory serves both.
+#
+# The job is split in two on purpose. repo-add needs pacman, and the Arch image
+# has no node, so a JavaScript action such as actions/checkout cannot run there.
+# Building the database in the container and committing it back on the runner
+# keeps each half on a platform where its own tooling works, instead of
+# installing a toolchain into the image to work around it.
 
 name: Pacman repository
 
@@ -43,46 +49,31 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  publish:
+  build:
     name: Build pacman database
     runs-on: ubuntu-latest
-    # repo-add is part of pacman, so this job runs in an Arch container rather
-    # than installing pacman on Ubuntu.
+    # repo-add is part of pacman, so this job runs in an Arch container. No
+    # checkout and no JavaScript actions: the image has neither node nor a
+    # repository to work in, and it only needs the release and the packages.
     container:
       image: archlinux:base
 
-    steps:
-      - uses: actions/checkout@v7
+    outputs:
+      tag: ${{ steps.tag.outputs.tag }}
 
+    steps:
       - name: Update system
         run: pacman -Syu --noconfirm
-
-      # git is not in archlinux:base, and the final step commits repo/ to main.
-      - name: Install git
-        run: pacman -S --noconfirm --needed git
-
-      # git refuses to operate on a repository whose ownership it does not
-      # recognise, and the container's root maps to a different uid than the
-      # runner user that wrote the worktree. Setting safe.directory globally is
-      # not enough on its own here, so every git command below also passes it
-      # with -c, which works regardless of where git looks for global config.
-      - name: Trust the checkout
-        run: |
-          git -c safe.directory='*' config --global --add safe.directory '*' || true
-          git -c safe.directory='*' status --short >/dev/null
-
-      - uses: actions/setup-node@v5
-        with:
-          node-version: '24'
 
       # The packages come from the release rather than being rebuilt here. A
       # pacman repo whose contents differ from the released package would be
       # worse than no pacman repo: a user installing from here and a user
       # installing the attached tarball would get different builds.
       #
-      # curl rather than the gh CLI: the gh binary is not in the Arch
-      # container, and the release asset URL is a stable, documented endpoint.
+      # curl rather than the gh CLI: the gh binary is not in the Arch image, and
+      # the release asset URL is a stable, documented endpoint.
       - name: Download packages from the release
+        id: tag
         env:
           GH_TOKEN: ${{ github.token }}
           INPUT_TAG: ${{ inputs.tag }}
@@ -94,11 +85,12 @@ jobs:
             tag="$RELEASE_TAG"
           fi
           echo "using tag $tag"
+          echo "tag=$tag" >> "$GITHUB_OUTPUT"
           mkdir -p packages
           api="https://api.github.com/repos/vib-studios/viblauncher/releases/tags/$tag"
           # Every asset whose name ends in the package extension. jq is not in
-          # the base image either, so this reads the names out of the JSON with
-          # sed; the fields this touches are plain strings.
+          # the image either, so the names are read out of the JSON with sed;
+          # the fields this touches are plain strings.
           curl -fsSL -H "Authorization: Bearer $GH_TOKEN" "$api" \
             | sed -n 's/.*"browser_download_url": *"\([^"]*\.pkg\.tar\.zst\)".*/\1/p' \
             > urls.txt
@@ -116,45 +108,63 @@ jobs:
       - name: Build the database
         run: |
           set -euo pipefail
-          # Only the packages, not the debug ones. repo-add would index both
+          # Only the packages, not the debug ones. repo-add indexes both
           # happily; pacman would then offer a -debug package that carries no
           # runtime value over the main one.
           rm -f packages/*-debug-*.pkg.tar.zst
           ls -l packages
+          # Both architectures have to be here. A repo that indexes only one
+          # looks complete, and a user on the other architecture gets "no
+          # packages match" rather than a reason.
+          for arch in x86_64 aarch64; do
+            if ! ls packages/ | grep -q -- "-${arch}\.pkg\.tar\.zst$"; then
+              echo "no package for $arch" >&2
+              exit 1
+            fi
+          done
           mkdir -p repo
           repo-add repo/viblauncher.db.tar.gz packages/*.pkg.tar.zst
-          # pacman looks for the uncompressed name, which is what -gpg and
-          # --print-format resolve against; the .tar.gz copies are for tools
-          # that expect the compressed form.
+          # pacman looks for the uncompressed name, which is what --print-format
+          # and -Si resolve against; the .tar.gz copies are for tools that
+          # expect the compressed form.
           rm -f repo/viblauncher.db repo/viblauncher.files
           cp repo/viblauncher.db.tar.gz repo/viblauncher.db
           cp repo/viblauncher.files.tar.gz repo/viblauncher.files
           cp packages/*.pkg.tar.zst repo/
           ls -l repo
 
-      # Nothing here should be changed by hand, and the database is a build
-      # artifact: keeping it out of review avoids a diff of binary files on
-      # every release, and a stale index is replaced wholesale rather than
-      # merged with something.
+      - uses: actions/upload-artifact@v7
+        with:
+          name: pacman-repo
+          path: repo
+          if-no-files-found: error
+
+  publish:
+    name: Publish to main
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: actions/download-artifact@v8
+        with:
+          name: pacman-repo
+          path: repo
+
+      # The database is a build artifact, not source: keeping it out of review
+      # avoids a diff of binary files on every release, and a new release
+      # replaces the index wholesale rather than merging with a stale one.
       - name: Commit the repository
         env:
-          INPUT_TAG: ${{ inputs.tag }}
-          RELEASE_TAG: ${{ github.event.release.tag_name }}
+          TAG: ${{ needs.build.outputs.tag }}
         run: |
           set -euo pipefail
-          tag="$INPUT_TAG"
-          if [ -z "$tag" ]; then
-            tag="$RELEASE_TAG"
-          fi
-          # safe.directory passed per invocation, so this does not depend on a
-          # writable global config in the container image.
-          gitc() { git -c safe.directory='*' "$@"; }
-          gitc config user.name 'github-actions[bot]'
-          gitc config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          gitc add repo
-          if gitc diff --cached --quiet; then
-            echo "pacman repo already up to date for $tag"
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add repo
+          if git diff --cached --quiet; then
+            echo "pacman repo already up to date for $TAG"
             exit 0
           fi
-          gitc commit -m "Publish the $tag Arch packages"
-          gitc push origin HEAD:main
+          git commit -m "Publish the $TAG Arch packages"
+          git push origin HEAD:main
