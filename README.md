@@ -143,19 +143,6 @@ tarballs where v0.1.1 shipped a Windows zip, so a matcher that only understood
 `v0.2.0` while linking the `v0.1.1` build. Keep the matcher set in step with
 what a release actually publishes.
 
-## Contributors
-
-`contributors.js` renders into any `[data-contributors]` element from the
-`vib-studios/vib-MC` contributors endpoint.
-
-Hand-written entries in its `FALLBACK` and `EXTRA` lists need a numeric `id` as
-well as a `login`. **The id is required.** A login is a name the account owner
-can change, and once they do the old one stops resolving — that is exactly how a
-contributor's avatar silently disappeared when `usekiko` became `7kimchi`. The
-numeric id never changes, so keying on it keeps the avatar and the dedupe
-working across a rename. There is a test for this behaviour; see the comment on
-the `EXTRA` list.
-
 ## Colour theme
 
 Light or dark, driven by one attribute on `<html>`. Until the toggle is pressed

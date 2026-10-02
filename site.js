@@ -32,6 +32,33 @@
 (() => {
   "use strict";
 
+  /* -- scroll reveal ------------------------------------------------------ */
+
+  /* First thing in this file, on purpose. theme-boot.js has already put .js on
+     <html>, which is what arms the hidden state in src/input.css, so from this
+     moment on every .reveal is invisible until it is revealed. That makes this
+     the one block that must not be allowed to strand the page: a throw anywhere
+     below would leave the whole document at opacity 0. So it runs before
+     anything else can fail. */
+  const revealables = document.querySelectorAll(".reveal:not(.is-visible)");
+  const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  if (!reduced && "IntersectionObserver" in window) {
+    const io = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+          entry.target.classList.add("is-visible");
+          io.unobserve(entry.target);
+        });
+      },
+      { threshold: 0.12, rootMargin: "0px 0px -40px 0px" }
+    );
+    revealables.forEach((el) => io.observe(el));
+  } else {
+    revealables.forEach((el) => el.classList.add("is-visible"));
+  }
+
   /* -- formatting --------------------------------------------------------- */
 
   const fmtSize = (bytes) => {
@@ -245,27 +272,6 @@
       flash(btn, "copied", 1200);
     });
   });
-
-  /* -- scroll reveal ------------------------------------------------------ */
-
-  const revealables = document.querySelectorAll(".reveal:not(.is-visible)");
-  const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-
-  if (!reduced && "IntersectionObserver" in window) {
-    const io = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (!entry.isIntersecting) return;
-          entry.target.classList.add("is-visible");
-          io.unobserve(entry.target);
-        });
-      },
-      { threshold: 0.12, rootMargin: "0px 0px -40px 0px" }
-    );
-    revealables.forEach((el) => io.observe(el));
-  } else {
-    revealables.forEach((el) => el.classList.add("is-visible"));
-  }
 
   /* -- go ----------------------------------------------------------------- */
 

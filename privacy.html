@@ -43,7 +43,7 @@
       <p class="mt-8 max-w-[60ch] text-[1.0625rem] leading-[1.65]">
         No trackers, no cookies, no accounts, no newsletter. This page describes
         exactly which requests your browser makes when you visit, and the two
-        settings the site keeps on your own device.
+        things the site keeps on your own device.
       </p>
       <p class="mt-6 font-mono text-[11px] tracking-[0.14em] uppercase text-faint">
         Last updated: 29 September 2026
@@ -114,25 +114,22 @@
         <div>
           <h3 class="font-mono text-[0.8125rem] text-ink">Live data from the GitHub API</h3>
           <p class="mt-2 max-w-[68ch] text-[0.9375rem] leading-[1.6]">
-            Two small scripts, served from this domain, call the public GitHub API from
+            One small script, served from this domain, calls the public GitHub API from
             your browser so you see current information rather than stale numbers:
           </p>
           <ul class="mt-4 max-w-[68ch] space-y-2.5 text-[0.9375rem] leading-[1.6] text-muted">
             <li class="flex gap-3">
               <span class="mt-[9px] h-1 w-1 shrink-0 bg-ember" aria-hidden="true"></span>
-              <span>The home page and the docs page request current release details from
-              <code>api.github.com</code> — for vib-MC, and on the home page for
-              Vib-launcher as well.</span>
+              <span>Three pages request current release details from
+              <code>api.github.com</code>: the home page for both projects, the docs
+              page for vib-MC, and the launcher docs page for Vib-launcher.</span>
             </li>
             <li class="flex gap-3">
               <span class="mt-[9px] h-1 w-1 shrink-0 bg-ember" aria-hidden="true"></span>
-              <span>The home page also requests the contributor list from the same API,
-              and loads each contributor avatar from <code>github.com</code>.</span>
-            </li>
-            <li class="flex gap-3">
-              <span class="mt-[9px] h-1 w-1 shrink-0 bg-ember" aria-hidden="true"></span>
-              <span>This privacy page and the terms page make no such requests, and load
-              no scripts at all.</span>
+              <span>This privacy page and the terms page make no such requests. They do load
+              two small scripts from this domain — the theme picker and the script
+              that applies your colour choice before first paint — and both stay
+              on this domain.</span>
             </li>
           </ul>
           <p class="mt-4 max-w-[68ch] text-[0.9375rem] leading-[1.6]">
@@ -179,13 +176,6 @@
             Remembers whether you chose the light or dark theme. Until you press
             the toggle the site follows your operating system setting, and nothing
             is written. Key: <code>vibmc:theme</code>
-          </dd>
-        </div>
-        <div class="border-t border-line-soft pt-5">
-          <dt class="font-mono text-[0.8125rem] text-ink">Contributors panel</dt>
-          <dd class="mt-2 text-[0.9375rem] leading-[1.6] text-muted">
-            Remembers whether you collapsed the contributors rail, so it stays how you
-            left it. Key: <code>vibmc:contributors-collapsed</code>
           </dd>
         </div>
         <div class="border-t border-line-soft pt-5">
