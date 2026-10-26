@@ -1,14 +1,11 @@
 # Vib Studios site
 
-Static site for two projects: **vib-MC** (a Minecraft server written by AI) and
-**Vib-launcher** (a native launcher and server control panel). No backend, no
-analytics, no cookies. Six pages: `index.html`, `docs.html`, `docs-launcher.html`,
-`privacy.html`, `terms.html`, and `404` via the hosting layer.
+Static site for **vib-MC** (a Minecraft server written by AI). No backend, no
+analytics, no cookies. Four pages: `index.html`, `docs.html`, `privacy.html`,
+`terms.html`, and `404` via the hosting layer.
 
-This repository is also the host for the **Arch pacman repository** under
-`repo/`, built by `.github/workflows/pacman.yml` from the packages the
-launcher repository attaches to its releases. That is why `repo/` is committed
-here and not built by a deploy step: Pages here serves `main` as-is.
+Pages here serves `main` as-is, so everything the site needs is committed and no
+deploy step builds it.
 
 ## Build
 
@@ -96,15 +93,12 @@ because the source screenshots are far too heavy to ship: `photos/vibmc.png` is
 | Page | Source | Served | Size |
 |---|---|---|---|
 | `index.html` hero | `photos/vibmc.png` (3840×2160) | `files/hero.webp` (2100×900) | 128 KB |
-| `index.html` launcher | `photos/viblauncher.png` (1883×1047) | `files/launcher.webp` (1600×890) | 20 KB |
 
 Regenerate after replacing a source:
 
 ```sh
 magick photos/vibmc.png -resize 2100x -gravity center -crop 2100x900+0+0 +repage \
   -quality 80 -define webp:method=6 files/hero.webp
-magick photos/viblauncher.png -resize 1600x -quality 82 -define webp:method=6 \
-  files/launcher.webp
 ```
 
 The vib-MC band below the hero carries no image on purpose: it is the same
@@ -127,7 +121,7 @@ that describes itself:
 <div data-release
      data-repo="vib-studios/vib-MC"
      data-tag="v0.0.7"          <!-- omit to follow the latest release -->
-     data-asset="jar"           <!-- jar | linux | winzip -->
+     data-asset="jar"           <!-- jar -->
      data-fallback-tag="v0.0.7"
      data-fallback-url="https://github.com/.../vib-mc.jar"
      data-issue-repo="vib-studios/vib-MC">
@@ -137,11 +131,10 @@ Everything the script writes already holds its current value in the markup, so
 a rate-limited or blocked request leaves the page correct instead of showing
 "fetching" forever.
 
-`data-asset` matters more than it looks. Vib-launcher v0.2.0 ships Linux
-tarballs where v0.1.1 shipped a Windows zip, so a matcher that only understood
-`.zip` would find nothing, fall back to a hardcoded URL, and label the button
-`v0.2.0` while linking the `v0.1.1` build. Keep the matcher set in step with
-what a release actually publishes.
+`data-asset` names the release asset a block wants. vib-MC publishes one file,
+`vib-mc.jar`, so the only matcher is `jar`. Keep the matcher set in step with
+what a release actually publishes: a matcher that finds nothing falls back to a
+hardcoded URL and can label the button with one version while linking another.
 
 ## Colour theme
 

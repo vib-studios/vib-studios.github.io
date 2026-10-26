@@ -1,18 +1,13 @@
 /*
  * Site behaviour: release data, copy buttons, bug reports, scroll reveal.
  *
- * Release data used to live in two near-identical scripts, website.js for
- * vib-MC and launcher.js for Vib-launcher, each hardcoded to one repository
- * and each reaching for the same element ids (download-btn, bug-form,
- * copy-btn, ...). That worked only because the two projects lived on separate
- * pages. The landing page now carries both in one document, where a second
- * element with the same id is invalid and getElementById would silently return
- * the wrong project's controls.
- *
- * So both are driven from one script, scoped to a block instead of to ids.
- * Each project section declares itself with data-release and the script only
- * ever touches descendants of that block, so any number of projects can share a
- * page. The ids are gone from the markup entirely.
+ * Release data used to live in per-project scripts that each reached for the
+ * same element ids (download-btn, bug-form, copy-btn, ...), which only worked
+ * while each project had a page of its own. It is now driven from one script,
+ * scoped to a block instead of to ids: a section declares itself with
+ * data-release and the script only ever touches descendants of that block, so
+ * any number of projects can share a page. The ids are gone from the markup
+ * entirely.
  *
  *   <section data-release
  *            data-repo="vib-studios/vib-MC"
@@ -23,11 +18,10 @@
  *            data-copy-cmd="./gradlew build"
  *            data-issue-repo="vib-studios/vib-MC">
  *
- * data-tag pins a known-good release. Omit it to follow the latest release,
- * which is what Vib-launcher wants because it ships continuously. Every value
- * the script writes is already present in the markup at its current value, so a
- * rate-limited, blocked or failed request leaves the page correct rather than
- * showing "fetching" forever.
+ * data-tag pins a known-good release. Omit it to follow the latest release.
+ * Every value the script writes is already present in the markup at its current
+ * value, so a rate-limited, blocked or failed request leaves the page correct
+ * rather than showing "fetching" forever.
  */
 (() => {
   "use strict";
@@ -88,23 +82,12 @@
   const ASSET_MATCHERS = {
     // vib-MC: one jar, and it is called vib-mc.jar.
     jar: (a) => (a.name === "vib-mc.jar" || a.name.endsWith(".jar") ? 1 : 0),
-    // Vib-launcher: Linux tarballs, one per architecture. x64 ranks above
-    // arm64 because it is the common case.
-    linux: (a) =>
-      /linux.*x64.*\.tar\.gz$/i.test(a.name) ? 2 : /linux.*arm64.*\.tar\.gz$/i.test(a.name) ? 1 : 0,
-    // The Windows build, for releases that still ship one.
-    winzip: (a) => (/win-x64\.zip$/i.test(a.name) ? 2 : /\.zip$/i.test(a.name) ? 1 : 0),
   };
 
   /*
    * Ranked rather than first-match, so a project always resolves to the
    * artefact it actually published instead of quietly falling back to a
    * hardcoded download URL pointing at some other version.
-   *
-   * This is not hypothetical: Vib-launcher v0.2.0 ships Linux tarballs, where
-   * v0.1.1 shipped a Windows zip. A matcher set that only knew about .zip
-   * would find nothing in v0.2.0, fall through to the fallback URL, and link
-   * the v0.1.1 build while labelling the button v0.2.0.
    */
   const pickAsset = (release, kind) => {
     const assets = (release && release.assets) || [];
