@@ -304,5 +304,77 @@
     };
   }
 
-  return { generate, ACTIONS, EVENTS };
+  /**
+   * The build scripts shipped next to a generated plugin.
+   *
+   * Compiling needs `javac`, so both scripts look beyond PATH: JAVA_HOME first,
+   * then common JDK install locations (including launchers that keep a private
+   * JDK). A machine with only a JRE gets a clear message instead of the opaque
+   * "javac: command not found".
+   *
+   * @param {{className: string, packageName: string, jarUrl: string}} options
+   * @return {{bat: string, sh: string, readme: string}}
+   */
+  function buildScripts({ className, packageName, jarUrl }) {
+    const pkgPath = packageName.split(".").join("/");
+    const pkgPathWindows = packageName.split(".").join("\\");
+    const bat = `@echo off\r\nsetlocal\r\ncd /d "%~dp0"\r\nset "jar_url=${jarUrl}"\r\nset "jar_name=vib-mc.jar"\r\n\r\nrem A JDK, not just a JRE: compiling needs javac. Prefer JAVA_HOME, then PATH.\r\nset "JAVAC="\r\nset "JAR="\r\nif defined JAVA_HOME if exist "%JAVA_HOME%\\bin\\javac.exe" set "JAVAC=%JAVA_HOME%\\bin\\javac.exe"\r\nif defined JAVA_HOME if exist "%JAVA_HOME%\\bin\\jar.exe" set "JAR=%JAVA_HOME%\\bin\\jar.exe"\r\nif not defined JAVAC for %%I in (javac.exe) do set "JAVAC=%%~$PATH:I"\r\nif not defined JAR for %%I in (jar.exe) do set "JAR=%%~$PATH:I"\r\nif not defined JAVAC goto no_jdk\r\nif not defined JAR goto no_jdk\r\n\r\nif not exist "%jar_name%" (\r\n  echo Downloading %jar_name%...\r\n  powershell -NoProfile -Command "Invoke-WebRequest -Uri '%jar_url%' -OutFile '%jar_name%'"\r\n  if errorlevel 1 (\r\n    echo Download failed - check your internet connection\r\n    pause\r\n    exit /b 1\r\n  )\r\n)\r\n"%JAVAC%" -cp "%jar_name%" -d out src\\${pkgPathWindows}\\${className}.java\r\nif errorlevel 1 (\r\n  echo Compile failed - see the errors above\r\n  pause\r\n  exit /b 1\r\n)\r\n"%JAR%" cf ${className}.jar -C out . plugin.yml\r\necho Built ${className}.jar - drop it in plugins/ and restart the server\r\npause\r\nexit /b 0\r\n\r\n:no_jdk\r\necho No JDK found: javac is required to build plugins ^(a JRE is not enough^).\r\necho Install a JDK, or set JAVA_HOME to an existing JDK, then run this script again.\r\npause\r\nexit /b 1\r\n`;
+    const sh = `#!/bin/sh
+set -eu
+cd "$(dirname "$0")"
+
+jar_name=vib-mc.jar
+src_file=src/${pkgPath}/${className}.java
+out_jar=${className}.jar
+
+# A JDK, not just a JRE: compiling needs javac. JRE-only installs and launchers
+# that keep Java in a private folder are common, so look in the usual places.
+find_java_tool() {
+  tool=$1
+  if [ -n "\${JAVA_HOME:-}" ] && [ -x "$JAVA_HOME/bin/$tool" ]; then
+    echo "$JAVA_HOME/bin/$tool"
+    return 0
+  fi
+  if command -v "$tool" >/dev/null 2>&1; then
+    command -v "$tool"
+    return 0
+  fi
+  for java_home in /usr/lib/jvm/* /usr/java/* /opt/java/* /opt/jdk* "$HOME/.jdks"/* "$HOME/.local/share/PrismLauncher/java"/* "$HOME/Library/Java/JavaVirtualMachines"/*/Contents/Home /Library/Java/JavaVirtualMachines/*/Contents/Home; do
+    if [ -x "$java_home/bin/$tool" ]; then
+      echo "$java_home/bin/$tool"
+      return 0
+    fi
+  done
+  return 1
+}
+
+JAVAC=$(find_java_tool javac || true)
+JAR=$(find_java_tool jar || true)
+if [ -z "$JAVAC" ] || [ -z "$JAR" ]; then
+  echo "No JDK found: javac is required to build plugins (a JRE is not enough)." >&2
+  echo "Install a JDK, or set JAVA_HOME to an existing JDK, then run this script again." >&2
+  exit 1
+fi
+
+if [ ! -f "$jar_name" ]; then
+  echo "Downloading $jar_name..."
+  if command -v curl >/dev/null 2>&1; then
+    curl -fL -o "$jar_name" ${jarUrl}
+  elif command -v wget >/dev/null 2>&1; then
+    wget -O "$jar_name" ${jarUrl}
+  else
+    echo "Need curl or wget to download $jar_name" >&2
+    exit 1
+  fi
+fi
+
+"$JAVAC" -cp "$jar_name" -d out "$src_file" || { echo "Compile failed"; exit 1; }
+"$JAR" cf "$out_jar" -C out . plugin.yml
+echo "Built $out_jar - drop it in plugins/ and restart the server"
+`;
+    const readme = `${className} - built with the vib-MC plugin blueprint\n\nFiles\n  plugin.yml                     the plugin descriptor\n  src/${pkgPath}/${className}.java     your plugin\n  build.bat / build.sh           build scripts\n\nBuild\n  Windows:   double-click build.bat\n  Linux/Mac: sh build.sh\n\nThe scripts download the latest vib-mc.jar if it is not already in this folder.\nRequires a JDK 8 or newer (a JRE alone cannot compile). The scripts look for\njavac in JAVA_HOME, on PATH, and in common JDK locations. If yours is somewhere\nelse, run: JAVA_HOME=/path/to/jdk sh build.sh\nThe result, ${className}.jar, goes in <server>/plugins/.\n\nThis is ordinary Java - open the source and change whatever you like.\n`;
+    return { bat, sh, readme };
+  }
+
+  return { generate, buildScripts, ACTIONS, EVENTS };
 });
