@@ -452,9 +452,11 @@
     const pkgPath = g.packageName.split(".").join("/");
     const jarUrl = "https://github.com/vib-studios/vib-MC/releases/latest/download/vib-mc.jar";
 
-    const bat = `@echo off\r\nrem requires a JDK 8+ (javac and jar on PATH)\r\nif not exist vib-mc.jar (\r\n  echo Downloading vib-mc.jar...\r\n  powershell -NoProfile -Command "Invoke-WebRequest -Uri '${jarUrl}' -OutFile 'vib-mc.jar'"\r\n)\r\njavac -cp vib-mc.jar -d out src\\${pkgPath}\\${cls}.java\r\nif errorlevel 1 (\r\n  echo Compile failed - see the errors above\r\n  pause\r\n  exit /b 1\r\n)\r\njar cf ${cls}.jar -C out . plugin.yml\r\necho Built ${cls}.jar - drop it in plugins/ and restart the server\r\npause\r\n`;
-    const sh = `#!/bin/sh\n# requires a JDK 8+ (javac and jar on PATH)\nif [ ! -f vib-mc.jar ]; then\n  echo "Downloading vib-mc.jar..."\n  curl -L -o vib-mc.jar ${jarUrl}\nfi\njavac -cp vib-mc.jar -d out src/${pkgPath}/${cls}.java || { echo "Compile failed"; exit 1; }\njar cf ${cls}.jar -C out . plugin.yml\necho "Built ${cls}.jar - drop it in plugins/ and restart the server"\n`;
-    const readme = `${cls} - built with the vib-MC plugin blueprint\n\nFiles\n  plugin.yml                     the plugin descriptor\n  src/${pkgPath}/${cls}.java     your plugin\n  build.bat / build.sh           build scripts\n\nBuild\n  Windows:   double-click build.bat\n  Linux/Mac: sh build.sh\n\nThe scripts download the latest vib-mc.jar if it is not already in this folder.\nRequires a JDK 8 or newer. The result, ${cls}.jar, goes in <server>/plugins/.\n\nThis is ordinary Java - open the source and change whatever you like.\n`;
+    const { bat, sh, readme } = window.BlueprintCodegen.buildScripts({
+      className: cls,
+      packageName: g.packageName,
+      jarUrl,
+    });
 
     const blob = makeZip([
       { name: "plugin.yml", data: utf8(g.yml) },
