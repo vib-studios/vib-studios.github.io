@@ -46,22 +46,20 @@ looking at the filesystem, because a wrong `../` can pass on disk and still
 
 ## Release data
 
-Version numbers, dates and download sizes are fetched from the GitHub API at
-runtime by `app.js`, not baked in. The download block declares itself with
-`data-release`:
+Release details, dates and download sizes are fetched from the GitHub API at
+runtime by `app.js`, not baked in. The download follows the rolling `latest`
+release and declares itself with `data-release`:
 
 ```html
 <section data-release
          data-repo="vib-studios/vib-MC"
-         data-tag="v0.0.7"
          data-asset="jar"
-         data-fallback-tag="v0.0.7"
-         data-fallback-url="https://github.com/.../vib-mc.jar">
+         data-fallback-url="https://github.com/.../releases/latest/download/vib-mc.jar">
 ```
 
-Every value the script writes is already present in the markup at its current
-value, so a rate-limited or blocked request leaves the page correct instead of
-showing “fetching” forever. `data-asset` matches the published jar name.
+The markup carries working fallback values for every field, so a rate-limited
+or blocked request still shows a correct rolling-release download instead of
+“fetching” forever. `data-asset` matches the published jar name.
 
 ## Images
 

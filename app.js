@@ -18,11 +18,8 @@
   const release = document.querySelector("[data-release]");
   if (release) {
     const repo = release.dataset.repo;
-    const tag = release.dataset.tag;
     const assetMatch = release.dataset.asset || "jar";
-    const url = tag
-      ? `https://api.github.com/repos/${repo}/releases/tags/${encodeURIComponent(tag)}`
-      : `https://api.github.com/repos/${repo}/releases/latest`;
+    const url = `https://api.github.com/repos/${repo}/releases/latest`;
 
     fetch(url, { headers: { Accept: "application/vnd.github+json" } })
       .then((response) => { if (!response.ok) throw new Error(response.status); return response.json(); })
@@ -35,18 +32,18 @@
             link.removeAttribute("data-fallback");
           });
           const label = document.querySelector("[data-download-label]");
-          if (label && data.tag_name) label.textContent = `Download ${data.tag_name}`;
+          if (label) label.textContent = "Download latest";
         }
         const set = (selector, value) => {
           const el = release.querySelector(selector);
           if (el && value) el.textContent = value;
         };
-        set("[data-release-tag]", data.tag_name);
+        set("[data-release-title]", data.name || "Latest build");
         set("[data-release-date]", data.published_at ? data.published_at.slice(0, 10) : null);
         set("[data-release-size]", asset ? `${(asset.size / 1024 / 1024).toFixed(1)} MB` : null);
         if (data.body) {
           const firstLine = data.body.split(/\r?\n/).map((line) => line.trim()).find(Boolean);
-          if (firstLine) set("[data-release-notes]", firstLine.replace(/^#+\s*/, ""));
+          if (firstLine) set("[data-release-notes]", firstLine.replace(/`/g, "").replace(/^#+\s*/, ""));
         }
       })
       .catch(() => { /* Markup already holds the fallback values. */ });

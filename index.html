@@ -42,7 +42,7 @@
         <a href="#plugins">Plugins</a>
         <a href="docs.html">Docs</a>
       </nav>
-      <a class="btn btn-primary btn-sm nav-download" data-download href="https://github.com/vib-studios/vib-MC/releases/download/v0.0.7/vib-mc.jar">Download</a>
+      <a class="btn btn-primary btn-sm nav-download" data-download href="https://github.com/vib-studios/vib-MC/releases/latest/download/vib-mc.jar">Download</a>
     </div>
   </header>
 
@@ -60,7 +60,7 @@
         <div class="hero-grid">
           <p class="lead hero-in" style="--d:240ms">One prompt at a time. It connects, generates terrain, takes clients from Minecraft 1.8 through 26.1.2, and now has a real survival loop that persists across restarts.</p>
           <div class="hero-actions hero-in" style="--d:330ms">
-            <a class="btn btn-primary" data-download href="https://github.com/vib-studios/vib-MC/releases/download/v0.0.7/vib-mc.jar"><svg class="icon"><use href="#i-download"/></svg><span data-download-label>Download v0.0.7</span></a>
+            <a class="btn btn-primary" data-download href="https://github.com/vib-studios/vib-MC/releases/latest/download/vib-mc.jar"><svg class="icon"><use href="#i-download"/></svg><span data-download-label>Download latest</span></a>
             <a class="btn btn-secondary" href="docs.html">Read the docs <svg class="icon"><use href="#i-arrow-right"/></svg></a>
           </div>
         </div>
@@ -80,25 +80,23 @@
     <!-- RELEASE STRIP -->
     <section class="release-strip" id="download" data-release
              data-repo="vib-studios/vib-MC"
-             data-tag="v0.0.7"
              data-asset="jar"
-             data-fallback-tag="v0.0.7"
-             data-fallback-url="https://github.com/vib-studios/vib-MC/releases/download/v0.0.7/vib-mc.jar"
+             data-fallback-url="https://github.com/vib-studios/vib-MC/releases/latest/download/vib-mc.jar"
              data-issue-repo="vib-studios/vib-MC">
       <div class="wrap release-grid">
         <div class="release-intro">
-          <p class="eyebrow">Latest stable</p>
-          <h2 class="release-version" data-release-tag>v0.0.7</h2>
-          <p class="muted" data-release-notes>v0.0.7 is the current stable baseline.</p>
+          <p class="eyebrow">Rolling release</p>
+          <h2 class="release-version" data-release-title>Latest build</h2>
+          <p class="muted" data-release-notes>Rebuilt automatically on every push to main.</p>
         </div>
         <dl class="release-meta">
-          <div><dt>Published</dt><dd data-release-date>2026-08-28</dd></div>
+          <div><dt>Updated</dt><dd data-release-date>2026-10-26</dd></div>
           <div><dt>Size</dt><dd data-release-size>10.4 MB</dd></div>
           <div><dt>License</dt><dd>GPL-3.0</dd></div>
           <div><dt>Java</dt><dd>8 or newer</dd></div>
         </dl>
         <div class="release-actions">
-          <a class="btn btn-primary" data-download data-fallback href="https://github.com/vib-studios/vib-MC/releases/download/v0.0.7/vib-mc.jar"><svg class="icon"><use href="#i-download"/></svg>Download jar</a>
+          <a class="btn btn-primary" data-download data-fallback href="https://github.com/vib-studios/vib-MC/releases/latest/download/vib-mc.jar"><svg class="icon"><use href="#i-download"/></svg>Download jar</a>
           <button class="btn btn-secondary" type="button" data-copy data-copy-target="#run-command">Copy run command</button>
         </div>
       </div>
@@ -260,7 +258,7 @@ getPluginManager().registerEvents(new JoinListener(), this);</code></pre>
         <div class="terminal-window reveal">
           <div class="code-bar terminal-bar"><span class="code-dots" aria-hidden="true"><i></i><i></i><i></i></span><span>vib-mc — console</span><button type="button" data-copy data-copy-target="#run-command">copy</button></div>
           <pre id="run-command" class="terminal-out"><code><span class="prompt">$</span> java -jar vib-mc.jar
-<span class="ok">[INFO]</span> Starting vib-MC v0.0.7
+<span class="ok">[INFO]</span> Starting vib-MC (rolling build)
 <span class="ok">[INFO]</span> Java 21.0.4, 2100 MB memory
 <span class="ok">[INFO]</span> Generating world: default
 <span class="ok">[INFO]</span> Terrain ready — village at spawn
@@ -332,7 +330,7 @@ getPluginManager().registerEvents(new JoinListener(), this);</code></pre>
         <h2 class="display"><span class="block">Start the vibe</span> in two commands</h2>
         <p class="site-lead">Download the jar, run it, point a supported client at port 25565. The village is already generating.</p>
         <div class="hero-actions">
-          <a class="btn btn-white" data-download href="https://github.com/vib-studios/vib-MC/releases/download/v0.0.7/vib-mc.jar">Download v0.0.7</a>
+          <a class="btn btn-white" data-download href="https://github.com/vib-studios/vib-MC/releases/latest/download/vib-mc.jar">Download latest</a>
           <a class="btn btn-ghost" href="docs.html">Open the docs <svg class="icon"><use href="#i-arrow-up-right"/></svg></a>
         </div>
       </div>
