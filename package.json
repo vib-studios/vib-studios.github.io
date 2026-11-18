@@ -4,16 +4,8 @@
   "private": true,
   "description": "Marketing and docs site for vib-MC.",
   "scripts": {
-    "build": "tailwindcss -i src/input.css -o styles.css --minify",
-    "watch": "tailwindcss -i src/input.css -o styles.css --watch",
     "start": "python3 -m http.server 8000 --bind 127.0.0.1",
-    "check": "node tools/check-blueprint.mjs && node tools/check-links.mjs && node tools/check-contrast.mjs && node tools/check-embed.mjs",
-    "check:blueprint": "node tools/check-blueprint.mjs",
-    "check:contrast": "node tools/check-contrast.mjs",
-    "check:embed": "node tools/check-embed.mjs"
-  },
-  "devDependencies": {
-    "@tailwindcss/cli": "^4.3.3",
-    "tailwindcss": "^4.3.3"
+    "check": "node tools/check-links.mjs",
+    "check:links": "node tools/check-links.mjs"
   }
 }

@@ -50,7 +50,7 @@ const checkSvgComments = (name, body) => {
 };
 
 const checkStylesheets = async () => {
-  for (const sheet of ["/styles.css", "/src/input.css", "/src/phosphor.css"]) {
+  for (const sheet of ["/styles.css"]) {
     let body;
     try {
       const res = await fetch(BASE + sheet.slice(1));

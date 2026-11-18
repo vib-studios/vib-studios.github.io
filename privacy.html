@@ -3,285 +3,81 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="dark">
   <title>Privacy — Vib Studios</title>
-  <meta name="description" content="No analytics, no trackers, no cookies, no accounts. Exactly which requests your browser makes when you visit this site, and what the site keeps on your own device.">
-  <meta name="robots" content="index, follow">
-  <meta name="theme-color" content="#0b0b0c">
-  <!-- One .ico carrying 16, 32 and 48px. sizes="any" would be wrong here:
-       it means "scalable", and this icon is not. -->
+  <meta name="description" content="How the Vib Studios preview handles data: no analytics, no cookies, no accounts.">
   <link rel="icon" href="favicon.ico" sizes="16x16 32x32 48x48">
   <link rel="stylesheet" href="styles.css">
-  <!-- Sets the colour theme before first paint, so dark never flashes white. -->
-  <script src="theme-boot.js"></script>
 </head>
-<body class="bg-paper text-body antialiased">
+<body>
+  <svg class="sprite" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"><symbol id="i-arrow-right" viewBox="0 0 24 24"><path d="M4 12h15m-6-6 6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></symbol></svg>
 
-  <header class="sticky top-0 z-50 bg-paper/85 backdrop-blur-sm border-b border-line">
-    <div class="mx-auto max-w-[1240px] px-5 md:px-8 h-16 flex items-center justify-between">
-      <a href="index.html" class="flex items-center gap-2.5 text-ink no-underline">
-        <img src="files/mark.svg" alt="" width="16" height="16" class="h-4 w-4 shrink-0" aria-hidden="true" style="border-radius:2px">
-        <span class="font-mono text-[12px] font-medium tracking-[0.16em] uppercase">Vib Studios</span>
-      </a>
-      <nav class="flex items-center gap-6 md:gap-8 font-mono text-[12px] tracking-[0.06em] uppercase" aria-label="Sections">
-        <a href="index.html" class="text-muted hover:text-ink transition-colors">home</a>
-        <a href="docs.html" class="text-muted hover:text-ink transition-colors">docs</a>
-        <button type="button" data-theme-toggle class="theme-toggle"
-                aria-label="Colour theme">
-          <span data-icon aria-hidden="true">☀</span>
-        </button>
-      </nav>
-    </div>
-  </header>
+  <header class="site-header"><div class="site-nav">
+    <a class="brand" href="index.html"><img src="files/mark.svg" alt="" width="20" height="20"><span>Vib Studios</span></a>
+    <nav class="nav-links" aria-label="Sections"><a href="index.html">vib-MC</a><a href="docs.html">docs</a><a href="terms.html">terms</a></nav>
+    <a class="btn btn-secondary btn-sm nav-download" href="index.html">Home</a>
+  </div></header>
 
-  <main class="mx-auto max-w-[1240px] px-5 md:px-8">
-
-    <section class="pt-16 md:pt-24 pb-10">
+  <main class="site doc"><div class="wrap">
+    <header class="doc-header">
+      <a class="doc-back" href="index.html"><svg class="icon"><use href="#i-arrow-right"/></svg> Back to vib-MC</a>
       <p class="eyebrow">Privacy</p>
-      <h1 class="mt-6 text-hero text-ink">
-        This site has<br><span class="font-bold">no analytics</span>
-      </h1>
-      <p class="mt-8 max-w-[60ch] text-[1.0625rem] leading-[1.65]">
-        No trackers, no cookies, no accounts, no newsletter. This page describes
-        exactly which requests your browser makes when you visit, and the two
-        things the site keeps on your own device.
-      </p>
-      <p class="mt-6 font-mono text-[11px] tracking-[0.14em] uppercase text-faint">
-        Last updated: 29 September 2026
-      </p>
-    </section>
+      <h1 class="display">This site has no analytics</h1>
+      <p class="lead">No trackers, no cookies, no accounts, no newsletter. This page describes what this preview asks your browser to do.</p>
+      <p class="doc-updated">Last updated: 18 November 2026</p>
+    </header>
 
-    <!-- What we collect -------------------------------------------------- -->
-    <section class="py-12 border-t border-line">
-      <h2 class="text-title text-ink">What we collect</h2>
-      <p class="mt-4 max-w-[60ch] text-[1.0625rem] leading-[1.65]">
-        Nothing. This website is a set of static files. There is no backend, no
-        database, and no server that belongs to us.
-      </p>
-
-      <div class="mt-10 grid gap-x-8 gap-y-8 md:grid-cols-2">
-        <div>
-          <h3 class="font-mono text-[0.8125rem] text-ink">No analytics or tracking</h3>
-          <p class="mt-2 text-[0.9375rem] leading-[1.6]">
-            The site loads no analytics script, no tag manager, no advertising pixel
-            and no session recorder. You can confirm this by reading the page source:
-            the only scripts are the ones served from this domain.
-          </p>
-        </div>
-        <div>
-          <h3 class="font-mono text-[0.8125rem] text-ink">No cookies</h3>
-          <p class="mt-2 text-[0.9375rem] leading-[1.6]">
-            The site sets no cookies of its own, which is why you are not being asked
-            to dismiss a consent banner.
-          </p>
-        </div>
-        <div>
-          <h3 class="font-mono text-[0.8125rem] text-ink">No accounts</h3>
-          <p class="mt-2 text-[0.9375rem] leading-[1.6]">
-            There is nothing to sign up for. We never ask for your name, email address
-            or payment details, so we hold no personal records about you.
-          </p>
-        </div>
-        <div>
-          <h3 class="font-mono text-[0.8125rem] text-ink">Self-hosted fonts</h3>
-          <p class="mt-2 text-[0.9375rem] leading-[1.6]">
-            Typefaces and icons are served from this domain rather than a font CDN, so
-            loading the page does not announce your visit to a third-party font
-            provider.
-          </p>
-        </div>
+    <section class="doc-section">
+      <h2 class="site-title">What we collect</h2>
+      <p class="lead">Nothing. This preview is a set of static files. There is no backend, no database and no server that belongs to us.</p>
+      <div class="doc-grid">
+        <div><h3>No analytics or tracking</h3><p>The page loads no analytics script, tag manager, advertising pixel or session recorder. The only script is the one served from this folder.</p></div>
+        <div><h3>No cookies</h3><p>The site sets no cookies of its own, which is why there is no consent banner.</p></div>
+        <div><h3>No accounts</h3><p>There is nothing to sign up for. We never ask for your name, email address or payment details.</p></div>
+        <div><h3>Self-hosted fonts</h3><p>Typefaces are served from this folder rather than a font CDN, so loading the page does not announce your visit to a third-party font provider.</p></div>
       </div>
     </section>
 
-    <!-- Requests --------------------------------------------------------- -->
-    <section class="py-12 border-t border-line">
-      <h2 class="text-title text-ink">Requests your browser makes</h2>
-      <p class="mt-4 max-w-[60ch] text-[1.0625rem] leading-[1.65]">
-        We collect nothing, but the site is hosted by GitHub and pulls some live data
-        from GitHub. Those requests come from your browser, so GitHub can see them.
-      </p>
-
-      <div class="mt-10 space-y-10">
-        <div>
-          <h3 class="font-mono text-[0.8125rem] text-ink">Hosting</h3>
-          <p class="mt-2 max-w-[68ch] text-[0.9375rem] leading-[1.6]">
-            The site runs on GitHub Pages. Serving a page necessarily involves your IP
-            address and the request itself reaching GitHub's infrastructure, and GitHub
-            may log that for security and abuse prevention. That processing is GitHub's,
-            not ours, and is described in the GitHub Privacy Statement.
-          </p>
-        </div>
-
-        <div>
-          <h3 class="font-mono text-[0.8125rem] text-ink">Live data from the GitHub API</h3>
-          <p class="mt-2 max-w-[68ch] text-[0.9375rem] leading-[1.6]">
-            One small script, served from this domain, calls the public GitHub API from
-            your browser so you see current information rather than stale numbers:
-          </p>
-          <ul class="mt-4 max-w-[68ch] space-y-2.5 text-[0.9375rem] leading-[1.6] text-muted">
-            <li class="flex gap-3">
-              <span class="mt-[9px] h-1 w-1 shrink-0 bg-ember" aria-hidden="true"></span>
-              <span>Two pages request current release details from
-              <code>api.github.com</code>: the home page and the docs page, both for
-              vib-MC.</span>
-            </li>
-            <li class="flex gap-3">
-              <span class="mt-[9px] h-1 w-1 shrink-0 bg-ember" aria-hidden="true"></span>
-              <span>This privacy page and the terms page make no such requests. They do load
-              two small scripts from this domain — the theme picker and the script
-              that applies your colour choice before first paint — and both stay
-              on this domain.</span>
-            </li>
-          </ul>
-          <p class="mt-4 max-w-[68ch] text-[0.9375rem] leading-[1.6]">
-            These calls are unauthenticated and send no information about you beyond
-            what any web request carries, such as your IP address and user agent. If a
-            call fails, the page falls back to static content and keeps working.
-          </p>
-        </div>
-
-        <div>
-          <h3 class="font-mono text-[0.8125rem] text-ink">Downloads</h3>
-          <p class="mt-2 max-w-[68ch] text-[0.9375rem] leading-[1.6]">
-            The download buttons point at release assets hosted by GitHub. Downloading
-            the server jar is a request to GitHub, on GitHub's terms.
-          </p>
-        </div>
-
-        <div>
-          <h3 class="font-mono text-[0.8125rem] text-ink">The bug report form</h3>
-          <p class="mt-2 max-w-[68ch] text-[0.9375rem] leading-[1.6]">
-            The bug report form on the docs page does not send anything to us and does
-            not submit to any server. It takes what you typed, builds a GitHub issue
-            link with the text prefilled, and opens that link in a new tab. Nothing is
-            published until you review it and submit the issue yourself on GitHub, where
-            it becomes public. Do not put passwords, server IP addresses or other
-            private details into a bug report.
-          </p>
-        </div>
-      </div>
+    <section class="doc-section">
+      <h2 class="site-title">Requests your browser makes</h2>
+      <p class="lead">We collect nothing, but the page is served by a local preview server and asks GitHub for current release information.</p>
+      <div class="doc-block"><h3>Live release data</h3><p>One small script calls the public GitHub API from your browser so the download block shows current release details. If the call fails, the page falls back to the values already in the markup. These calls are unauthenticated and send no information about you beyond what any web request carries, such as your IP address and user agent.</p></div>
+      <div class="doc-block"><h3>Downloads</h3><p>The download buttons point at release assets hosted by GitHub. Downloading the server jar is a request to GitHub, on GitHub's terms.</p></div>
+      <div class="doc-block"><h3>Bug reports</h3><p>The docs page links to GitHub's issue form. Nothing is submitted by this site. Anything you post in a public issue is public and governed by GitHub's terms.</p></div>
     </section>
 
-    <!-- Local storage ---------------------------------------------------- -->
-    <section class="py-12 border-t border-line">
-      <h2 class="text-title text-ink">What stays on your device</h2>
-      <p class="mt-4 max-w-[60ch] text-[1.0625rem] leading-[1.65]">
-        The site uses your browser's local storage for a few interface settings.
-        This data never leaves your machine and is not readable by us.
-      </p>
-
-      <dl class="mt-10 space-y-8">
-        <div class="border-t border-line-soft pt-5">
-          <dt class="font-mono text-[0.8125rem] text-ink">Colour theme</dt>
-          <dd class="mt-2 text-[0.9375rem] leading-[1.6] text-muted">
-            Remembers whether you chose the light or dark theme. Until you press
-            the toggle the site follows your operating system setting, and nothing
-            is written. Key: <code>vibmc:theme</code>
-          </dd>
-        </div>
-        <div class="border-t border-line-soft pt-5">
-          <dt class="font-mono text-[0.8125rem] text-ink">Plugin blueprint</dt>
-          <dd class="mt-2 text-[0.9375rem] leading-[1.6] text-muted">
-            Saves your work in progress in the plugin blueprint builder on the docs page,
-            so a reload does not throw away what you were configuring. Key:
-            <code>vibmc-blueprint-v2</code>
-          </dd>
-        </div>
-      </dl>
-
-      <p class="mt-8 max-w-[68ch] text-[0.9375rem] leading-[1.6] text-muted">
-        Clearing site data for this domain in your browser removes all of them. The
-        site works normally without any of them.
-      </p>
-      <p class="mt-4 max-w-[68ch] text-[0.9375rem] leading-[1.6] text-muted">
-        The copy buttons write to your clipboard when you click them. They only ever
-        write, and never read what is already on your clipboard.
-      </p>
+    <section class="doc-section">
+      <h2 class="site-title">What stays on your device</h2>
+      <p class="lead">This preview does not use local storage. Copy buttons only write to your clipboard when you click them; they never read what is already on your clipboard.</p>
     </section>
 
-    <!-- Choices ---------------------------------------------------------- -->
-    <section class="py-12 border-t border-line">
-      <h2 class="text-title text-ink">Your choices</h2>
-      <p class="mt-4 max-w-[60ch] text-[1.0625rem] leading-[1.65]">
-        Because we hold no personal data, there is no account to delete and no export
-        to request from us.
-      </p>
-      <ul class="mt-8 max-w-[68ch] space-y-3 text-[0.9375rem] leading-[1.6] text-muted">
-        <li class="flex gap-3">
-          <span class="mt-[9px] h-1 w-1 shrink-0 bg-ember" aria-hidden="true"></span>
-          <span>To remove what the site stores locally, clear site data for this domain.</span>
-        </li>
-        <li class="flex gap-3">
-          <span class="mt-[9px] h-1 w-1 shrink-0 bg-ember" aria-hidden="true"></span>
-          <span>To avoid the GitHub API calls entirely, block scripts for this domain. The pages remain readable.</span>
-        </li>
-        <li class="flex gap-3">
-          <span class="mt-[9px] h-1 w-1 shrink-0 bg-ember" aria-hidden="true"></span>
-          <span>For data GitHub holds about your visit or your GitHub account, contact GitHub under their privacy statement.</span>
-        </li>
-        <li class="flex gap-3">
-          <span class="mt-[9px] h-1 w-1 shrink-0 bg-ember" aria-hidden="true"></span>
-          <span>Anything you post in a public GitHub issue is public and is governed by GitHub's terms.</span>
-        </li>
+    <section class="doc-section">
+      <h2 class="site-title">Your choices</h2>
+      <ul class="doc-list">
+        <li>To avoid the GitHub API call entirely, block scripts for this domain. The pages remain readable.</li>
+        <li>For data GitHub holds about your visit or your GitHub account, contact GitHub under their privacy statement.</li>
+        <li>Anything you post in a public GitHub issue is public and is governed by GitHub's terms.</li>
       </ul>
     </section>
 
-    <!-- Other ------------------------------------------------------------ -->
-    <section class="py-12 border-t border-line">
-      <h2 class="text-title text-ink">Other things worth stating</h2>
-      <div class="mt-10 space-y-8">
-        <div>
-          <h3 class="font-mono text-[0.8125rem] text-ink">Links off this site</h3>
-          <p class="mt-2 max-w-[68ch] text-[0.9375rem] leading-[1.6]">
-            Links to GitHub, Adoptium and other sites are outside our control. Once you
-            follow one, that site's own privacy policy applies.
-          </p>
-        </div>
-        <div>
-          <h3 class="font-mono text-[0.8125rem] text-ink">The server software</h3>
-          <p class="mt-2 max-w-[68ch] text-[0.9375rem] leading-[1.6]">
-            This policy covers this website only. If you download and run vib-MC, it
-            runs on your own machine and any data it writes, such as world files and
-            logs, stays under your control and your responsibility as the server
-            operator.
-          </p>
-        </div>
-        <div>
-          <h3 class="font-mono text-[0.8125rem] text-ink">Children</h3>
-          <p class="mt-2 max-w-[68ch] text-[0.9375rem] leading-[1.6]">
-            The site is not directed at children and collects no personal information
-            from anyone, regardless of age.
-          </p>
-        </div>
-        <div>
-          <h3 class="font-mono text-[0.8125rem] text-ink">Changes to this policy</h3>
-          <p class="mt-2 max-w-[68ch] text-[0.9375rem] leading-[1.6]">
-            If the site's behaviour changes, this page changes with it and the date at
-            the top is updated. The revision history is public in the website
-            repository. Questions about this policy can go to the issue tracker.
-          </p>
-        </div>
+    <section class="doc-section">
+      <h2 class="site-title">Other things worth stating</h2>
+      <div class="doc-grid">
+        <div><h3>Links off this site</h3><p>Links to GitHub, Adoptium and other sites are outside our control. Once you follow one, that site's own privacy policy applies.</p></div>
+        <div><h3>The server software</h3><p>This policy covers this website only. If you download and run vib-MC, it runs on your own machine and any data it writes, such as world files and logs, stays under your control and responsibility as the server operator.</p></div>
+        <div><h3>Children</h3><p>The site is not directed at children and collects no personal information from anyone, regardless of age.</p></div>
+        <div><h3>Changes</h3><p>If the site's behaviour changes, this page changes with it and the date at the top is updated.</p></div>
       </div>
     </section>
-  </main>
+  </div></main>
 
-  <footer class="border-t border-line">
-    <div class="mx-auto max-w-[1240px] px-5 md:px-8 py-10">
-      <div class="flex flex-wrap items-center justify-between gap-x-8 gap-y-4">
-        <div class="flex items-center gap-2.5">
-          <img src="files/mark.svg" alt="" width="16" height="16" class="h-4 w-4 shrink-0" aria-hidden="true" style="border-radius:2px">
-          <span class="font-mono text-[11px] tracking-[0.16em] uppercase text-muted">Vib Studios</span>
-        </div>
-        <nav class="flex flex-wrap items-center gap-x-6 gap-y-2 font-mono text-[12px] text-muted" aria-label="Footer">
-          <a href="index.html" class="hover:text-ink transition-colors">home</a>
-          <a href="docs.html" class="hover:text-ink transition-colors">docs</a>
-          <a href="terms.html" class="hover:text-ink transition-colors">terms</a>
-        </nav>
-      </div>
-      <p class="mt-8 border-t border-line-soft pt-6 font-mono text-[11px] leading-[1.7] text-faint">
-        Licensed GPL-3.0-or-later.
-      </p>
+  <footer class="site-footer"><div class="card footer-card">
+    <div class="footer-cols">
+      <div class="footer-brand"><img src="files/mark.svg" alt="" width="28" height="28"><span>Vib Studios</span></div>
+      <div><strong>Project</strong><a href="index.html">Home</a><a href="docs.html">Docs</a><a href="https://github.com/vib-studios/vib-MC" target="_blank" rel="noopener">Source</a></div>
+      <div><strong>Site</strong><a href="terms.html">Terms</a><a href="index.html#faq">FAQ</a></div>
     </div>
-  </footer>
-  <script src="theme.js"></script>
+    <div class="footer-bottom"><span>© 2026 Vib Studios.</span><span>Licensed GPL-3.0-or-later.</span></div>
+  </div></footer>
 </body>
 </html>
